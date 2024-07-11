@@ -9,7 +9,7 @@ WHAT
 - (opt) AI
 
 ## Every library has
-- **Include**
+- **Inc**
   - **<projectname>.h** - anything created specifically in said project
   - **Common.h** - anything common or external
 - **Src**
