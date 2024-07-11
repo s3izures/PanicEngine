@@ -10,7 +10,7 @@ WHAT
 
 ## Every library has
 - **Inc**
-  - **<projectname>.h** - anything created specifically in said project
+  - **\<projectname\>.h** - anything created specifically in said project
   - **Common.h** - anything common or external
 - **Src**
   - **Precompiled.h** - to compile headers and so you don't have to include header files everywhere.  Avoid cyclical dependancy (basically A includes B and vise versa bc they run into infinite loop)
