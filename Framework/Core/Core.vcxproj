@@ -24,6 +24,7 @@
     <ClInclude Include="Inc\Core.h" />
     <ClInclude Include="Inc\DebugUtil.h" />
     <ClInclude Include="Inc\TimeUtil.h" />
+    <ClInclude Include="Inc\Window.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Src\TimeUtil.cpp" />
+    <ClCompile Include="Src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

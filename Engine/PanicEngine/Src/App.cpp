@@ -6,19 +6,29 @@ using namespace PanicEngine::Core;
 
 void App::Run()
 {
+    Window myWindow;
+    myWindow.Initialize(
+        GetModuleHandle(nullptr),
+        L"Hello Window",
+        600,
+        400
+    );
+
     (void)TimeUtil::GetTime();
 
     mRunning = true;
+
     while (mRunning)
     {
         //Update
-        float time = TimeUtil::GetTime();
-        LOG("RUNNING : {%.3f}", time);
-        if (time > 20.0f)
+        myWindow.ProcessMessage();
+        if (!myWindow.IsActive())
         {
             Quit();
         }
     }
+
+    myWindow.Terminate();
 }
 
 void App::Quit()
