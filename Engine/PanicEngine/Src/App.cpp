@@ -17,6 +17,9 @@ void App::Run(const AppConfig& config)
 
     ASSERT(myWindow.IsActive(), "App: failed to create window");
 
+    auto handle = myWindow.GetWindowHandle();
+    GraphicsSystem::StaticInitialize(handle, false);
+
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
 
@@ -48,7 +51,7 @@ void App::Run(const AppConfig& config)
 
         //Rendering
     }
-
+    //End state
     mCurrentState->Terminate(); //FILO, First in Last Out
     myWindow.Terminate();
 }
