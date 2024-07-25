@@ -1,37 +1,68 @@
 #include "Precompiled.h"
 #include "App.h"
+#include "AppState.h"
 
 using namespace PanicEngine;
 using namespace PanicEngine::Core;
 
-void App::Run()
+void App::Run(const AppConfig& config)
 {
     Window myWindow;
     myWindow.Initialize(
         GetModuleHandle(nullptr),
-        L"Hello Window",
-        600,
-        400
+        config.appName,
+        config.winWidth,
+        config.winHeight
     );
 
-    (void)TimeUtil::GetTime();
+    ASSERT(myWindow.IsActive(), "App: failed to create window");
+
+    ASSERT(mCurrentState != nullptr, "App: no current state available");
+    mCurrentState->Initialize();
 
     mRunning = true;
-
     while (mRunning)
     {
-        //Update
         myWindow.ProcessMessage();
+
         if (!myWindow.IsActive())
         {
             Quit();
         }
+
+        if (mNextState != nullptr)
+        {
+            mCurrentState->Terminate();
+            mCurrentState = std::exchange(mNextState, nullptr);
+            mCurrentState->Initialize();
+        }
+
+        float deltaTime = TimeUtil::GetDeltaTime();
+
+#ifdef _DEBUG
+        if (deltaTime < 0.5f)
+#endif
+        {
+            mCurrentState->Update(deltaTime);
+        }
+
+        //Rendering
     }
 
+    mCurrentState->Terminate(); //FILO, First in Last Out
     myWindow.Terminate();
 }
 
 void App::Quit()
 {
     mRunning = false;
+}
+
+void PanicEngine::App::ChangeState(const std::string& stateName)
+{
+    auto iter = mAppStates.find(stateName);
+    if (iter != mAppStates.end())
+    {
+        mNextState = iter->second.get();
+    }
 }
