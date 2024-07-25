@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_HelloWindow", "VGP242\01
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PanicEngine", "Engine\PanicEngine\PanicEngine.vcxproj", "{61F155DA-7452-41D3-8A67-1806B226DF7A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graphics", "Framework\Graphics\Graphics.vcxproj", "{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -47,6 +49,14 @@ Global
 		{61F155DA-7452-41D3-8A67-1806B226DF7A}.Release|x64.Build.0 = Release|x64
 		{61F155DA-7452-41D3-8A67-1806B226DF7A}.Release|x86.ActiveCfg = Release|Win32
 		{61F155DA-7452-41D3-8A67-1806B226DF7A}.Release|x86.Build.0 = Release|Win32
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Debug|x64.ActiveCfg = Debug|x64
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Debug|x64.Build.0 = Debug|x64
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Debug|x86.ActiveCfg = Debug|Win32
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Debug|x86.Build.0 = Debug|Win32
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Release|x64.ActiveCfg = Release|x64
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Release|x64.Build.0 = Release|x64
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Release|x86.ActiveCfg = Release|Win32
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +65,7 @@ Global
 		{7A442769-C6A3-413A-8EA8-70D7E66136E3} = {6C05EF7B-AF5D-4FA3-9442-510201FECC0E}
 		{29F362CD-8325-4AD4-A212-2B225BF7CA66} = {4BE95D05-32B3-4E95-85B3-AAA95B863021}
 		{61F155DA-7452-41D3-8A67-1806B226DF7A} = {C4249138-3500-4726-94FF-73678D4FABF7}
+		{3FADB740-618E-4B16-ADCE-4832A8F7EF6B} = {6C05EF7B-AF5D-4FA3-9442-510201FECC0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C184FBC-0DB4-4D62-A125-350B5F50DB8A}
