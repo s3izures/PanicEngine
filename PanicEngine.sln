@@ -25,6 +25,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Math", "Framework\Math\Math
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Input", "Framework\Input\Input.vcxproj", "{3629F01A-6FED-42EB-B308-E9F7F1346EAF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_HelloShapes", "VGP242\02_HelloShapes\02_HelloShapes.vcxproj", "{0AD37274-6EF8-46EF-B280-50B39174F379}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{CCC06DA9-9802-4D99-95C8-DE087EB0727D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{BE135558-2CFA-47C4-848C-CF7C2A2C8267}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Shaders\DoColor.fx = Assets\Shaders\DoColor.fx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -89,6 +98,14 @@ Global
 		{3629F01A-6FED-42EB-B308-E9F7F1346EAF}.Release|x64.Build.0 = Release|x64
 		{3629F01A-6FED-42EB-B308-E9F7F1346EAF}.Release|x86.ActiveCfg = Release|Win32
 		{3629F01A-6FED-42EB-B308-E9F7F1346EAF}.Release|x86.Build.0 = Release|Win32
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Debug|x64.ActiveCfg = Debug|x64
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Debug|x64.Build.0 = Debug|x64
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Debug|x86.ActiveCfg = Debug|Win32
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Debug|x86.Build.0 = Debug|Win32
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Release|x64.ActiveCfg = Release|x64
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Release|x64.Build.0 = Release|x64
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Release|x86.ActiveCfg = Release|Win32
+		{0AD37274-6EF8-46EF-B280-50B39174F379}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +118,8 @@ Global
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {D68C5266-C8D3-4C9A-8F94-124E86E0A528}
 		{5F4F29CA-8725-4AD4-987A-9E7297084812} = {6C05EF7B-AF5D-4FA3-9442-510201FECC0E}
 		{3629F01A-6FED-42EB-B308-E9F7F1346EAF} = {6C05EF7B-AF5D-4FA3-9442-510201FECC0E}
+		{0AD37274-6EF8-46EF-B280-50B39174F379} = {4BE95D05-32B3-4E95-85B3-AAA95B863021}
+		{BE135558-2CFA-47C4-848C-CF7C2A2C8267} = {CCC06DA9-9802-4D99-95C8-DE087EB0727D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C184FBC-0DB4-4D62-A125-350B5F50DB8A}
