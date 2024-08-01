@@ -4,6 +4,8 @@
 
 using namespace PanicEngine;
 using namespace PanicEngine::Core;
+using namespace PanicEngine::Graphics;
+using namespace PanicEngine::Input;
 
 void App::Run(const AppConfig& config)
 {
@@ -17,18 +19,22 @@ void App::Run(const AppConfig& config)
 
     ASSERT(myWindow.IsActive(), "App: failed to create window");
 
+    //Init singletons
     auto handle = myWindow.GetWindowHandle();
     GraphicsSystem::StaticInitialize(handle, false);
+    InputSystem::StaticInitialize(handle);
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
 
+    InputSystem* input = InputSystem::Get();
     mRunning = true;
     while (mRunning)
     {
         myWindow.ProcessMessage();
+        input->Update();
 
-        if (!myWindow.IsActive())
+        if (!myWindow.IsActive() || input->IsKeyPressed(KeyCode::ESCAPE))
         {
             Quit();
         }
@@ -49,10 +55,20 @@ void App::Run(const AppConfig& config)
             mCurrentState->Update(deltaTime);
         }
 
-        //Rendering
+
+        GraphicsSystem* gs = GraphicsSystem::Get();
+        gs->BeginRender();
+
+        mCurrentState->Render();
+
+        gs->EndRender();
+
+
     }
     //End state
     mCurrentState->Terminate(); //FILO, First in Last Out
+    InputSystem::StaticTerminate();
+    GraphicsSystem::StaticTerminate();
     myWindow.Terminate();
 }
 

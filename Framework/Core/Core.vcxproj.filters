@@ -27,6 +27,9 @@
     <ClInclude Include="Inc\Window.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\WindowMessageHandler.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -36,6 +39,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Window.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\WindowMessageHandler.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,7 +7,7 @@ namespace PanicEngine::Graphics
     {
     public:
         static void StaticInitialize(HWND window, bool fullscreen);
-        static void SaticTerminate();
+        static void StaticTerminate();
         static GraphicsSystem* Get();
 
         GraphicsSystem() = default;
@@ -43,6 +43,8 @@ namespace PanicEngine::Graphics
         ID3D11DeviceContext* GetContext();
 
     private:
+        static LRESULT CALLBACK GraphicsSystemMessageHandler(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
+
         ID3D11Device* mD3DDevice = nullptr;
         ID3D11DeviceContext* mImmediateContext = nullptr;
 

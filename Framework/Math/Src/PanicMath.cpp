@@ -1,5 +1,5 @@
 #include "Precompiled.h"
-#include "DMath.h"
+#include "PanicMath.h"
 
 using namespace PanicEngine::Math;
 
