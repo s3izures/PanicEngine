@@ -22,9 +22,7 @@ protected:
 
     PanicEngine::Graphics::Camera mCamera;
     PanicEngine::Graphics::ConstantBuffer mConstantBuffer;
-
-    ID3D11Buffer* mVertexBuffer = nullptr;
-    ID3D11VertexShader* mVertexShader = nullptr;
-    ID3D11InputLayout* mInputLayout = nullptr;
-    ID3D11PixelShader* mPixelShader = nullptr;
+    PanicEngine::Graphics::MeshBuffer mMeshBuffer;
+    PanicEngine::Graphics::VertexShader mVertexShader;
+    PanicEngine::Graphics::PixelShader mPixelShader;
 };
