@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Core/Inc/Core.h>
+#include <Math/Inc/PanicMath.h>
 
 //DirectX
 #include <d3d11_1.h>
