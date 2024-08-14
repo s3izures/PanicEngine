@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Common.h"
 #include "Color.h"
 
 namespace PanicEngine::Graphics

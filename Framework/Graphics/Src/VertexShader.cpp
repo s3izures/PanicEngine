@@ -1,6 +1,8 @@
 #include "Precompiled.h"
 #include "VertexShader.h"
+
 #include "GraphicsSystem.h"
+
 #include "VertexTypes.h"
 
 using namespace PanicEngine;
@@ -48,8 +50,12 @@ namespace
 
 void VertexShader::Initialize(const std::filesystem::path& filePath, uint32_t format)
 {
+    auto device = GraphicsSystem::Get()->GetDevice();
+    ID3DBlob* shaderBlob = nullptr;
+    ID3DBlob* errorBlob = nullptr;
+    DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
     HRESULT hr = D3DCompileFromFile(
-        shaderFile.c_str(),
+        filePath.c_str(),
         nullptr,
         D3D_COMPILE_STANDARD_FILE_INCLUDE,
         "VS", "vs_5_0",
@@ -72,9 +78,7 @@ void VertexShader::Initialize(const std::filesystem::path& filePath, uint32_t fo
 
 
     //Input layout
-    std::vector<D3D11_INPUT_ELEMENT_DESC> vertexLayout;
-    vertexLayout.push_back({ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT });
-    vertexLayout.push_back({ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT });
+    std::vector<D3D11_INPUT_ELEMENT_DESC> vertexLayout = GetVertexLayout(format);
 
     hr = device->CreateInputLayout(
         vertexLayout.data(),

@@ -36,10 +36,10 @@
     <ClInclude Include="Inc\VertexShader.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\PanicEngine\Inc\VertexTypes.h">
+    <ClInclude Include="Inc\PixelShader.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\PixelShader.h">
+    <ClInclude Include="Inc\VertexTypes.h">
       <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,6 +30,7 @@ void MeshBuffer::SetTopology(Topology topology)
         break;
     default:
         ASSERT(false, "MeshBuffer: invalid topology");
+        break;
     }
 }
 

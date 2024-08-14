@@ -29,7 +29,7 @@ void ShapeState::CreateShape()
 
     //Right
     mVertices.push_back({ { 0.5f, -0.5f, -0.5f }, Colors::Red });
-    mVertices.push_back({ { 0.5f, 0.5f, 0.5f }, Colors::Blue });
+    mVertices.push_back({ { 0.5f, 0.5f, -0.5f }, Colors::Blue });
     mVertices.push_back({ { 0.5f, 0.5f, 0.5f }, Colors::Green });
 
     mVertices.push_back({ { 0.5f, -0.5f, -0.5f }, Colors::Red });
@@ -38,8 +38,8 @@ void ShapeState::CreateShape()
 
     //Left
     mVertices.push_back({ { -0.5f, -0.5f, -0.5f }, Colors::Red });
-    mVertices.push_back({ { -0.5f, 0.5f, 0.5f }, Colors::Blue });
-    mVertices.push_back({ { -0.5f, 0.5f, -0.5f }, Colors::Green });
+    mVertices.push_back({ { -0.5f, 0.5f, 0.5f }, Colors::Green });
+    mVertices.push_back({ { -0.5f, 0.5f, -0.5f }, Colors::Blue });
 
     mVertices.push_back({ { -0.5f, -0.5f, -0.5f }, Colors::Red });
     mVertices.push_back({ { -0.5f, -0.5f, 0.5f }, Colors::Green });
@@ -54,7 +54,7 @@ void ShapeState::CreateShape()
     mVertices.push_back({ { 0.5f, 0.5f, 0.5f }, Colors::Blue });
     mVertices.push_back({ { 0.5f, 0.5f, -0.5f }, Colors::Green });
 
-    //Top
+    //Bottom
     mVertices.push_back({ { -0.5f, -0.5f, -0.5f }, Colors::Red });
     mVertices.push_back({ { 0.5f, -0.5f, 0.5f }, Colors::Blue });
     mVertices.push_back({ { -0.5f, -0.5f, 0.5f }, Colors::Green });
@@ -74,18 +74,10 @@ void ShapeState::Initialize()
     mMeshBuffer.Initialize(mVertices.data(), sizeof(Vertex), mVertices.size());
     mConstantBuffer.Initialize(sizeof(Matrix4));
 
-
-
     //Vertex shader
     std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTransform.fx";
     mVertexShader.Initialize(shaderFile, VE_Position | VE_Color);
-
-    auto device = GraphicsSystem::Get()->GetDevice();
-    DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
-    ID3DBlob* shaderBlob = nullptr;
-    ID3DBlob* errorBlob = nullptr;
-    
-    //Pixel shader
+    mPixelShader.Initialize(shaderFile);
 }
 
 void ShapeState::Terminate()
@@ -109,9 +101,6 @@ void ShapeState::Render()
 {
     mVertexShader.Bind();
     mPixelShader.Bind();
-
-    auto context = GraphicsSystem::Get()->GetContext();
-    context->PSSetShader(mPixelShader, nullptr, 0);
 
     // constant buffer
     Matrix4 matWorld = Matrix4::RotationY(gRotY) * Matrix4::RotationX(gRotX);
