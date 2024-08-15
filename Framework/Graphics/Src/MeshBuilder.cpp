@@ -163,6 +163,37 @@ MeshPC MeshBuilder::CreatePlanePC(int numRows, int numCols, float spacing)
     return mesh;
 }
 
+MeshPX PanicEngine::Graphics::MeshBuilder::CreatePlanePX(int numRows, int numCols, float spacing)
+{
+    MeshPX mesh;
+
+    const float hpw = static_cast<float>(numCols) * spacing * 0.5f;
+    const float hph = static_cast<float>(numRows) * spacing * 0.5f;
+
+    float x = -hpw;
+    float y = -hph;
+    float uInc = 1.0f / static_cast<float>(numCols);
+    float vInc = -1.0f / static_cast<float>(numRows);
+    float u = 0.0f;
+    float v = 1.0f;
+
+    for (int r = 0; r <= numRows; ++r)
+    {
+        for (int c = 0; c <= numCols; ++c)
+        {
+            mesh.vertices.push_back({ { x,y,0.0f }, {u, v} });
+            x += spacing;
+            u += uInc;
+        }
+        x = -hpw;
+        y += spacing;
+        u = 0.0f;
+        v += vInc;
+    }
+    CreatePlaneIndices(mesh.indices, numRows, numCols);
+    return mesh;
+}
+
 MeshPC MeshBuilder::CreateCylinderPC(int slices, int rings)
 {
     MeshPC mesh;
@@ -214,6 +245,39 @@ MeshPC MeshBuilder::CreateSpherePC(int slices, int rings, float radius)
                 radius * cos(phi),
                 radius * cos(rot) * sin(phi) },
                 GetNextColor(index) });
+        }
+    }
+
+    CreatePlaneIndices(mesh.indices, rings, slices);
+    return mesh;
+}
+
+MeshPX MeshBuilder::CreateSpherePX(int slices, int rings, float radius)
+{
+    MeshPX mesh;
+
+    float verRot = (Math::Constants::Pi / static_cast<float>(rings - 1));
+    float horRot = (Math::Constants::TwoPi / static_cast<float>(slices));
+    float uStep = 1.0f / static_cast<float>(slices);
+    float vStep = 1.0f / static_cast<float>(rings);
+
+    for (int r = 0; r <= rings; ++r)
+    {
+        float ring = static_cast<float>(r);
+        float phi = ring * verRot;
+        for (int s = 0; s <= slices; ++s)
+        {
+            float slice = static_cast<float>(s);
+            float rot = slice * horRot;
+
+            float u = 1.0f - (uStep * slice);
+            float v = vStep * ring;
+
+            mesh.vertices.push_back({ {
+                radius * sin(rot) * sin(phi),
+                radius * cos(phi),
+                radius * cos(rot) * sin(phi) },
+                {u, v} });
         }
     }
 

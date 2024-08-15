@@ -5,6 +5,12 @@ namespace PanicEngine::Graphics
     class VertexShader final
     {
     public:
+        template <class VertexType>
+        void Initialize(const std::filesystem::path& filePath)
+        {
+            Initialize(filePath, VertexType::Format);
+        }
+
         void Initialize(const std::filesystem::path& filePath, uint32_t format);
         void Terminate();
 

@@ -23,4 +23,6 @@ protected:
     PanicEngine::Graphics::MeshBuffer mMeshBuffer;
     PanicEngine::Graphics::VertexShader mVertexShader;
     PanicEngine::Graphics::PixelShader mPixelShader;
+    PanicEngine::Graphics::Texture mDiffuseTexture;
+    PanicEngine::Graphics::Sampler mSampler;
 };
