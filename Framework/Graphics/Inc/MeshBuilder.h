@@ -6,6 +6,9 @@ namespace PanicEngine::Graphics
     class MeshBuilder
     {
     public:
+        static MeshPX CreateSkyboxPX(float size);
+        static MeshPX CreateSkyspherePX(int slices, int rings, float radius);
+
         static MeshPC CreateCubePC(float size);
         static MeshPX CreateCubePX(float size);
 

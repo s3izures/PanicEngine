@@ -23,6 +23,7 @@ void App::Run(const AppConfig& config)
     auto handle = myWindow.GetWindowHandle();
     GraphicsSystem::StaticInitialize(handle, false);
     InputSystem::StaticInitialize(handle);
+    DebugUI::StaticInitialize(handle, false, true);
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
@@ -37,6 +38,7 @@ void App::Run(const AppConfig& config)
         if (!myWindow.IsActive() || input->IsKeyPressed(KeyCode::ESCAPE))
         {
             Quit();
+            break;
         }
 
         if (mNextState != nullptr)
@@ -58,15 +60,17 @@ void App::Run(const AppConfig& config)
 
         GraphicsSystem* gs = GraphicsSystem::Get();
         gs->BeginRender();
-
-        mCurrentState->Render();
-
+            mCurrentState->Render();
+            DebugUI::BeginRender();
+                mCurrentState->DebugUI();
+            DebugUI::EndRender();
         gs->EndRender();
 
 
     }
     //End state
     mCurrentState->Terminate(); //FILO, First in Last Out
+    DebugUI::StaticTerminate();
     InputSystem::StaticTerminate();
     GraphicsSystem::StaticTerminate();
     myWindow.Terminate();

@@ -96,3 +96,16 @@ void GameState::UpdateCamera(float deltaTime)
         mCamera.Pitch(input->GetMouseMoveY() * turnSpeed);
     }
 }
+
+bool button = false;
+int intVal = 0;
+void GameState::DebugUI()
+{
+    ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::LabelText("testLable", "AAAAAAAAAAAAA");
+    ImGui::Checkbox("testbutton", &button);
+    ImGui::DragInt("hh", &intVal, 1, 0, 100);
+    ImGui::DragFloat("rotX", &gRotX, 0.001f);
+    ImGui::DragFloat("rotY", &gRotY, 0.001f);
+    ImGui::End();
+}
