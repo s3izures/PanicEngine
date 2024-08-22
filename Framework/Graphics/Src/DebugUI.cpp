@@ -13,7 +13,7 @@ using namespace PanicEngine::Core;
 namespace
 {
     WindowMessageHandler sWindowMessageHandler;
-    bool isMouseInput(UINT message)
+    bool IsMouseInput(UINT message)
     {
         switch (message)
         {
@@ -31,7 +31,7 @@ namespace
         }
         return false;
     }
-    bool isKeyboardInput(UINT message)
+    bool IsKeyboardInput(UINT message)
     {
         switch (message)
         {
@@ -47,11 +47,11 @@ namespace
     LRESULT CALLBACK DebugUIMessageHandler(HWND window, UINT message, WPARAM wParam, LPARAM lParam)
     {
         ImGuiIO& io = ImGui::GetIO();
-        if (io.WantCaptureMouse && isMouseInput(message))
+        if (io.WantCaptureMouse && IsMouseInput(message))
         {
             return ImGui_ImplWin32_WndProcHandler(window, message, wParam, lParam);
         }
-        if (io.WantCaptureKeyboard && isKeyboardInput(message))
+        if (io.WantCaptureKeyboard && IsKeyboardInput(message))
         {
             return ImGui_ImplWin32_WndProcHandler(window, message, wParam, lParam);
         }
