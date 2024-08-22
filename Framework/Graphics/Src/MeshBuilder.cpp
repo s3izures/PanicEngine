@@ -112,6 +112,77 @@ MeshPC MeshBuilder::CreateCubePC(float size)
     return mesh;
 }
 
+MeshPX MeshBuilder::CreateCubePX(float size)
+{
+    MeshPX mesh;
+
+    const float hs = size * 0.5f;    // half size
+    const float ot = 1.0f / 3.0f;    // one third
+    const float tt = 2.0f / 3.0f;    // two third
+
+    // front
+    mesh.vertices.push_back({ {-hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ {-hs,  hs, -hs}, {0.25f, ot} });
+    mesh.vertices.push_back({ { hs,  hs, -hs}, { 0.5f, ot} });
+
+    mesh.vertices.push_back({ {-hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ { hs,  hs, -hs}, { 0.5f, ot} });
+    mesh.vertices.push_back({ { hs, -hs, -hs}, { 0.5f, tt} });
+
+    // right
+    mesh.vertices.push_back({ { hs, -hs, -hs}, { 0.5f, tt} });
+    mesh.vertices.push_back({ { hs,  hs, -hs}, { 0.5f, ot} });
+    mesh.vertices.push_back({ { hs,  hs,  hs}, {0.75f, ot} });
+
+    mesh.vertices.push_back({ { hs, -hs, -hs}, { 0.5f, tt} });
+    mesh.vertices.push_back({ { hs,  hs,  hs}, {0.75f, ot} });
+    mesh.vertices.push_back({ { hs, -hs,  hs}, {0.75f, tt} });
+
+    // back
+    mesh.vertices.push_back({ { hs, -hs,  hs}, {0.75f, tt} });
+    mesh.vertices.push_back({ { hs,  hs,  hs}, {0.75f, ot} });
+    mesh.vertices.push_back({ {-hs,  hs,  hs}, { 1.0f, ot} });
+
+    mesh.vertices.push_back({ { hs, -hs,  hs}, {0.75f, tt} });
+    mesh.vertices.push_back({ {-hs,  hs,  hs}, { 1.0f, ot} });
+    mesh.vertices.push_back({ {-hs, -hs,  hs}, { 1.0f, tt} });
+
+    // left
+    mesh.vertices.push_back({ {-hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ {-hs,  hs,  hs}, { 0.0f, ot} });
+    mesh.vertices.push_back({ {-hs,  hs, -hs}, {0.25f, ot} });
+
+    mesh.vertices.push_back({ {-hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ {-hs,  -hs, hs}, { 0.0f, tt} });
+    mesh.vertices.push_back({ {-hs,  hs,  hs}, { 0.0f, ot} });
+
+    // top
+    mesh.vertices.push_back({ {-hs,  hs, -hs}, {0.25f, ot} });
+    mesh.vertices.push_back({ {-hs,  hs,  hs}, {0.25f, 0.0f} });
+    mesh.vertices.push_back({ { hs,  hs,  hs}, { 0.5f, 0.0f} });
+
+    mesh.vertices.push_back({ {-hs,  hs, -hs}, {0.25f, ot} });
+    mesh.vertices.push_back({ { hs,  hs,  hs}, { 0.5f, 0.0f} });
+    mesh.vertices.push_back({ { hs,  hs,  -hs}, { 0.5f, ot} });
+
+
+    // bottom
+    mesh.vertices.push_back({ {-hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ { hs, -hs,  hs}, { 0.5f, 1.0f} });
+    mesh.vertices.push_back({ {-hs, -hs,  hs}, {0.25f, 1.0f} });
+
+    mesh.vertices.push_back({ {-hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ { hs, -hs, -hs}, { 0.5f, tt} });
+    mesh.vertices.push_back({ { hs, -hs,  hs}, { 0.5f, 1.0f} });
+
+    for (uint32_t i = 0; i < mesh.vertices.size(); ++i)
+    {
+        mesh.indices.push_back(i);
+    }
+
+    return mesh;
+}
+
 MeshPC MeshBuilder::CreateRectPC(float height, float width, float length)
 {
     MeshPC mesh;

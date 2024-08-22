@@ -8,7 +8,8 @@ using namespace PanicEngine::Input;
 
 void GameState::Initialize()
 {
-    MeshPX mesh = MeshBuilder::CreateSpherePX(30, 30, 1.0f);
+    //MeshPX mesh = MeshBuilder::CreateSpherePX(30, 30, 1.0f);
+    MeshPX mesh = MeshBuilder::CreateCubePX(1.0f);
 
     mCamera.SetPosition({ 0.0f,1.0f,-3.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
@@ -21,7 +22,7 @@ void GameState::Initialize()
     std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTexture.fx";
     mVertexShader.Initialize<VertexPX>(shaderFile);
     mPixelShader.Initialize(shaderFile);
-    mDiffuseTexture.Initialize("../../Assets/Images/misc/basketball.jpg");
+    mDiffuseTexture.Initialize("../../Assets/Images/skybox/skybox_texture.jpg");
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 }
 
@@ -39,8 +40,7 @@ float gRotY = 0.0f;
 float gRotX = 0.0f;
 void GameState::Update(float deltaTime)
 {
-    gRotY += Math::Constants::HalfPi * deltaTime * 0.5f;
-    gRotX += Math::Constants::HalfPi * deltaTime * 0.25f;
+    UpdateCamera(deltaTime);
 }
 
 void GameState::Render()
@@ -59,4 +59,40 @@ void GameState::Render()
     mConstantBuffer.Update(&wvp);
     mConstantBuffer.BindVS(0);
     mMeshBuffer.Render();
+}
+
+void GameState::UpdateCamera(float deltaTime)
+{
+    auto input = InputSystem::Get();
+    const float moveSPeed = (input->IsKeyDown(KeyCode::LSHIFT) ? 10.0f : 1.0f) * deltaTime;
+    const float turnSpeed = 0.1f * deltaTime;
+    if (input->IsKeyDown(KeyCode::W))
+    {
+        mCamera.Walk(moveSPeed);
+    }
+    else if (input->IsKeyDown(KeyCode::S))
+    {
+        mCamera.Walk(-moveSPeed);
+    }
+    if (input->IsKeyDown(KeyCode::A))
+    {
+        mCamera.Strafe(-moveSPeed);
+    }
+    else if (input->IsKeyDown(KeyCode::D))
+    {
+        mCamera.Strafe(moveSPeed);
+    }
+    if (input->IsKeyDown(KeyCode::E))
+    {
+        mCamera.Rise(moveSPeed);
+    }
+    else if (input->IsKeyDown(KeyCode::Q))
+    {
+        mCamera.Rise(-moveSPeed);
+    }
+    if (input->IsMouseDown(MouseButton::LBUTTON))
+    {
+        mCamera.Yaw(input->GetMouseMoveX() * turnSpeed);
+        mCamera.Pitch(input->GetMouseMoveY() * turnSpeed);
+    }
 }

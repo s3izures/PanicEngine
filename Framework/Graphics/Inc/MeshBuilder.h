@@ -7,6 +7,7 @@ namespace PanicEngine::Graphics
     {
     public:
         static MeshPC CreateCubePC(float size);
+        static MeshPX CreateCubePX(float size);
 
         static MeshPC CreateRectPC(float height, float width, float length);
 

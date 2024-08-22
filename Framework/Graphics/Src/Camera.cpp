@@ -120,3 +120,32 @@ Math::Matrix4 Camera::GetOrthographicMatrix() const
         0.0f, 0.0f, n/(n-f) , 1.0f
     };
 }
+
+void Camera::Walk(float distance)
+{
+    mPosition += mDirection * distance;
+}
+
+void Camera::Strafe(float distance)
+{
+    const Math::Vector3 right = Math::Normalize(Math::Cross(Math::Vector3::YAxis, mDirection));
+    mPosition += right * distance;
+}
+
+void Camera::Rise(float distance)
+{
+    mPosition += Math::Vector3::YAxis * distance;
+}
+
+void Camera::Yaw(float radians)
+{
+    Math::Matrix4 matRot = Math::Matrix4::RotationY(radians);
+    SetDirection(Math::TransformNormal(mDirection, matRot));
+}
+
+void Camera::Pitch(float radians)
+{
+    Math::Vector3 right = Math::Normalize(Math::Cross(Math::Vector3::YAxis, mDirection));
+    Math::Matrix4 matRot = Math::Matrix4::RotationAxis(right, radians);
+    SetDirection(Math::TransformNormal(mDirection, matRot));
+}

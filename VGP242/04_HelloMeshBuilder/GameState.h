@@ -10,6 +10,7 @@ public:
     void Render() override;
 
 protected:
+    void UpdateCamera(float deltaTime);
     struct Vertex
     {
         PanicEngine::Math::Vector3 pos;
