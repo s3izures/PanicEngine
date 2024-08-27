@@ -6,23 +6,31 @@ using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
 
+float gRotY = 0.0f;
+float gRotX = 0.0f;
+const char* shapeOptions[] = { "Skybox","Skysphere","Cube","Sphere","Plane","Cylinder","Rect" };
+static int currentShape = 0;
+static int prevShape = 0;
+MeshPC meshPC;
+MeshPX meshPX;
+std::filesystem::path shaderFilePX = L"../../Assets/Shaders/DoTexture.fx";
+std::filesystem::path shaderFilePC = L"../../Assets/Shaders/DoTransform.fx";
+
 void GameState::Initialize()
 {
-    //MeshPX mesh = MeshBuilder::CreateSpherePX(30, 30, 1.0f);
-    MeshPX mesh = MeshBuilder::CreateSkyspherePX(30, 30, 100.0f);
-
-    mCamera.SetPosition({ 0.0f,1.0f,-3.0f });
+    mCamera.SetPosition({ 0.0f,0.0f,-50.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
 
-    mMeshBuffer.Initialize<MeshPX>(mesh);
+    //Default is Skybox
+    meshPX = MeshBuilder::CreateSkyboxPX(1000);
     mConstantBuffer.Initialize(sizeof(Matrix4));
 
+    mMeshBuffer.Initialize<MeshPX>(meshPX);
+
     //Vertex shader
-    //std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTransform.fx";
-    std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTexture.fx";
-    mVertexShader.Initialize<VertexPX>(shaderFile);
-    mPixelShader.Initialize(shaderFile);
-    mDiffuseTexture.Initialize("../../Assets/Images/skysphere/sky.jpg");
+    mVertexShader.Initialize<VertexPX>(shaderFilePX);
+    mPixelShader.Initialize(shaderFilePX);
+    mDiffuseTexture.Initialize("../../Assets/Images/skybox/skybox_texture.jpg");
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 }
 
@@ -36,11 +44,102 @@ void GameState::Terminate()
     mMeshBuffer.Terminate();
 }
 
-float gRotY = 0.0f;
-float gRotX = 0.0f;
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
+
+    enum ShapeOptions { Skybox, Skysphere, Cube, Sphere, Plane, Cylinder, Rect };
+
+    if (currentShape != prevShape)
+    {
+        switch (currentShape)
+        {
+        case Skybox:
+            meshPX = MeshBuilder::CreateSkyboxPX(1000);
+
+            mMeshBuffer.Initialize<MeshPX>(meshPX);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPX>(shaderFilePX);
+            mPixelShader.Initialize(shaderFilePX);
+            mDiffuseTexture.Initialize("../../Assets/Images/skybox/skybox_texture.jpg");
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        case Skysphere:
+            //MeshPX mesh = MeshBuilder::CreateSpherePX(30, 30, 1.0f);
+            meshPX = MeshBuilder::CreateSkyspherePX(30, 30, 100.0f);
+
+            mMeshBuffer.Initialize<MeshPX>(meshPX);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPX>(shaderFilePX);
+            mPixelShader.Initialize(shaderFilePX);
+            mDiffuseTexture.Initialize("../../Assets/Images/skysphere/sky.jpg");
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        case Cube:
+            meshPC = MeshBuilder::CreateCubePC(10);
+
+            mMeshBuffer.Initialize<MeshPC>(meshPC);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPC>(shaderFilePC);
+            mPixelShader.Initialize(shaderFilePC);
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        case Sphere:
+            meshPC = MeshBuilder::CreateSpherePC(10, 10, 10);
+
+            mMeshBuffer.Initialize<MeshPC>(meshPC);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPC>(shaderFilePC);
+            mPixelShader.Initialize(shaderFilePC);
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        case Plane:
+            meshPC = MeshBuilder::CreatePlanePC(5, 5, 5);
+
+            mMeshBuffer.Initialize<MeshPC>(meshPC);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPC>(shaderFilePC);
+            mPixelShader.Initialize(shaderFilePC);
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        case Cylinder:
+            meshPC = MeshBuilder::CreateCylinderPC(10, 15);
+
+            mMeshBuffer.Initialize<MeshPC>(meshPC);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPC>(shaderFilePC);
+            mPixelShader.Initialize(shaderFilePC);
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        case Rect:
+            meshPC = MeshBuilder::CreateRectPC(10, 50, 20);
+
+            mMeshBuffer.Initialize<MeshPC>(meshPC);
+
+            //Vertex shader
+            mVertexShader.Initialize<VertexPC>(shaderFilePC);
+            mPixelShader.Initialize(shaderFilePC);
+            mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+            break;
+
+        default:
+            break;
+        }
+
+        prevShape = currentShape;
+    }
 }
 
 void GameState::Render()
@@ -97,15 +196,13 @@ void GameState::UpdateCamera(float deltaTime)
     }
 }
 
-bool button = false;
-int intVal = 0;
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::LabelText("testLable", "AAAAAAAAAAAAA");
-    ImGui::Checkbox("testbutton", &button);
-    ImGui::DragInt("hh", &intVal, 1, 0, 100);
     ImGui::DragFloat("rotX", &gRotX, 0.001f);
     ImGui::DragFloat("rotY", &gRotY, 0.001f);
+
+    ImGui::ListBox("CurrentShape", &currentShape, shapeOptions, IM_ARRAYSIZE(shapeOptions), 4);
+
     ImGui::End();
 }

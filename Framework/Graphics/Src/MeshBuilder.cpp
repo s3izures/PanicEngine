@@ -25,24 +25,28 @@ namespace
 
     void CreateCubeIndices(std::vector<uint32_t>& indices)
     {
-        indices =
-        {
-            //front
+        indices = {
+            // front
             0, 1, 2,
             0, 2, 3,
-            //back
+
+            // back
             7, 6, 5,
             7, 5, 4,
-            //right
+
+            // right
             3, 2, 6,
             3, 6, 7,
-            //left
+
+            // left
             0, 5, 1,
             0, 4, 5,
-            //top
+
+            // top
             1, 5, 6,
             1, 6, 2,
-            //bottom
+
+            // bottom
             0, 3, 7,
             0, 7, 4
         };
@@ -56,12 +60,12 @@ namespace
             {
                 int i = (r * (numCols + 1)) + c;
 
-                //triangle 0
+                // triangle 0
                 indices.push_back(i);
                 indices.push_back(i + numCols + 2);
                 indices.push_back(i + 1);
 
-                //triangle 1
+                // triangle 1
                 indices.push_back(i);
                 indices.push_back(i + numCols + 1);
                 indices.push_back(i + numCols + 2);
@@ -73,12 +77,12 @@ namespace
     {
         for (int s = 0; s < slices; ++s)
         {
-            //bot trig
+            // bottom triangle
             indices.push_back(bottomIndex);
             indices.push_back(s);
             indices.push_back(s + 1);
 
-            //top trig
+            // top triangle
             int topRowIndex = topIndex - slices - 1 + s;
             indices.push_back(topIndex);
             indices.push_back(topRowIndex + 1);
@@ -197,20 +201,23 @@ MeshPC MeshBuilder::CreateCubePC(float size)
 
     int index = rand() % 10;
 
-    const float hs = size * 0.5f;
 
-    // Front vertices
-    mesh.vertices.push_back({ { -hs, -hs, -hs }, GetNextColor(index)});
+    const float hs = size * 0.5f;	// half size
+
+    // front
+    mesh.vertices.push_back({ { -hs, -hs, -hs }, GetNextColor(index) });
     mesh.vertices.push_back({ { -hs,  hs, -hs }, GetNextColor(index) });
     mesh.vertices.push_back({ {  hs,  hs, -hs }, GetNextColor(index) });
     mesh.vertices.push_back({ {  hs, -hs, -hs }, GetNextColor(index) });
 
-    // Back
-    mesh.vertices.push_back({ { -hs, -hs,  hs }, GetNextColor(index) });
-    mesh.vertices.push_back({ { -hs, -hs,  hs }, GetNextColor(index) });
-    mesh.vertices.push_back({ {  hs, -hs,  hs }, GetNextColor(index) });
-    mesh.vertices.push_back({ {  hs, -hs,  hs }, GetNextColor(index) });
+    // back
+    mesh.vertices.push_back({ { -hs, -hs, hs }, GetNextColor(index) });
+    mesh.vertices.push_back({ { -hs,  hs, hs }, GetNextColor(index) });
+    mesh.vertices.push_back({ {  hs,  hs, hs }, GetNextColor(index) });
+    mesh.vertices.push_back({ {  hs, -hs, hs }, GetNextColor(index) });
 
+
+    // indices
     CreateCubeIndices(mesh.indices);
 
     return mesh;
@@ -297,19 +304,20 @@ MeshPC MeshBuilder::CreateRectPC(float height, float width, float length)
     const float hh = height * 0.5f;
     const float hl = length * 0.5f;
 
-    // Front vertices
+    // front
     mesh.vertices.push_back({ { -hw, -hh, -hl }, GetNextColor(index) });
     mesh.vertices.push_back({ { -hw,  hh, -hl }, GetNextColor(index) });
     mesh.vertices.push_back({ {  hw,  hh, -hl }, GetNextColor(index) });
     mesh.vertices.push_back({ {  hw, -hh, -hl }, GetNextColor(index) });
 
-    // Back
-    mesh.vertices.push_back({ { -hw, -hh,  hl }, GetNextColor(index) });
-    mesh.vertices.push_back({ { -hw, -hh,  hl }, GetNextColor(index) });
-    mesh.vertices.push_back({ {  hw, -hh,  hl }, GetNextColor(index) });
-    mesh.vertices.push_back({ {  hw, -hh,  hl }, GetNextColor(index) });
+    // back
+    mesh.vertices.push_back({ { -hw, -hh, hl }, GetNextColor(index) });
+    mesh.vertices.push_back({ { -hw,  hh, hl }, GetNextColor(index) });
+    mesh.vertices.push_back({ {  hw,  hh, hl }, GetNextColor(index) });
+    mesh.vertices.push_back({ {  hw, -hh, hl }, GetNextColor(index) });
 
     CreateCubeIndices(mesh.indices);
+
     return mesh;
 }
 
