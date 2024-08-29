@@ -113,7 +113,7 @@ void GameState::Update(float deltaTime)
             break;
 
         case Cylinder:
-            meshPC = MeshBuilder::CreateCylinderPC(10, 15);
+            meshPC = MeshBuilder::CreateCylinderPC(30, 20);
 
             mMeshBuffer.Initialize<MeshPC>(meshPC);
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BlendState.h"
 #include "Common.h"
 #include "Camera.h"
 #include "Color.h"
@@ -14,3 +15,4 @@
 #include "VertexShader.h"
 #include "VertexTypes.h"
 #include "Sampler.h"
+#include "SimpleDraw.h"
