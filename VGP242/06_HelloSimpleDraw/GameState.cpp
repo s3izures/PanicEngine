@@ -6,6 +6,19 @@ using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
 
+const char* gDebugDrawShape[] =
+{
+    "None",
+    "Line",
+    "Sphere",
+    "Circle",
+    "Face",
+    "Plane",
+    "AABB",
+    "AABBFilled",
+    "Transform"
+};
+
 void GameState::Initialize()
 {
     mCamera.SetPosition({ 0.0f,10.0f,-3.0f });
@@ -22,9 +35,13 @@ void GameState::Update(float deltaTime)
     UpdateCamera(deltaTime);
 }
 
+Matrix4 transMat = Matrix4::Identity;
+
+int planeSize = 10;
+
 Vector3 faceStartPos = Vector3::Zero;
-Vector3 faceEndPos = Vector3::Zero;
-Vector3 faceCenterPos = Vector3::Zero;
+Vector3 faceCenterPos = { 0.0f,1.0f,0.0f };
+Vector3 faceEndPos = { 1.0f,0.0f,0.0f };
 Color faceColor = Colors::White;
 
 Vector3 lineStartPos = Vector3::Zero;
@@ -48,14 +65,45 @@ Color sphereColor = Colors::Wheat;
 
 void GameState::Render()
 {
-    SimpleDraw::AddSphere(sphereSlices, sphereRings, sphereRadius, spherePos, sphereColor);
-    /*SimpleDraw::AddGroundCircle(circleSlices, circleRadius, circlePos, circleColor);
-    SimpleDraw::AddTransform(Matrix4::Identity);
-    SimpleDraw::AddGroundPlane(10, Colors::White);
-    SimpleDraw::AddAABB(minExtents, maxExtents, aabbColor);
-    SimpleDraw::AddFilledAABB(minExtents, maxExtents, aabbColor);
-    SimpleDraw::AddLine(lineStartPos, lineEndPos, lineColor);
-    SimpleDraw::AddFace(faceStartPos, faceCenterPos, faceEndPos, faceColor);*/
+    switch (mDebugDrawType)
+    {
+    case DebugDrawType::Sphere:
+        SimpleDraw::AddSphere(sphereSlices, sphereRings, sphereRadius, spherePos, sphereColor);
+        break;
+
+    case DebugDrawType::Circle:
+        SimpleDraw::AddGroundCircle(circleSlices, circleRadius, circlePos, circleColor);
+        break;
+
+    case DebugDrawType::Line:
+        SimpleDraw::AddLine(lineStartPos, lineEndPos, lineColor);
+        break;
+
+    case DebugDrawType::Face:
+        SimpleDraw::AddFace(faceStartPos, faceCenterPos, faceEndPos, faceColor);
+        break;
+
+    case DebugDrawType::Plane:
+        SimpleDraw::AddGroundPlane(planeSize, Colors::White);
+        break;
+
+    case DebugDrawType::AABB:
+        SimpleDraw::AddAABB(minExtents, maxExtents, aabbColor);
+        break;
+
+    case DebugDrawType::AABBFilled:
+        SimpleDraw::AddFilledAABB(minExtents, maxExtents, aabbColor);
+        break;
+
+    case DebugDrawType::Transform:
+        SimpleDraw::AddTransform(transMat);
+        break;
+
+    case DebugDrawType::None:
+    default:
+        break;
+    }
+
     SimpleDraw::Render(mCamera);
 }
 
@@ -98,27 +146,56 @@ void GameState::UpdateCamera(float deltaTime)
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-    /*ImGui::DragFloat3("LineStartPosition", &lineStartPos.x, 0.1f);
-    ImGui::DragFloat3("LineEndPosition", &lineEndPos.x, 0.1f);
-    ImGui::ColorEdit4("LineColor", &lineColor.r);
+    int currentDrawType = static_cast<int>(mDebugDrawType);
 
-    ImGui::DragFloat3("FaceStartPosition", &faceStartPos.x, 0.1f);
-    ImGui::DragFloat3("FaceCenterPosition", &faceCenterPos.x, 0.1f);
-    ImGui::DragFloat3("FaceEndPosition", &faceEndPos.x, 0.1f);
-    ImGui::ColorEdit4("FaceColor", &faceColor.r);
+    if (ImGui::Combo("DrawType", &currentDrawType, gDebugDrawShape, static_cast<int>(std::size(gDebugDrawShape))))
+    {
+        mDebugDrawType = (DebugDrawType)currentDrawType;
+    }
 
-    ImGui::DragFloat3("AABBStartPosition", &minExtents.x, 0.1f);
-    ImGui::DragFloat3("AABBEndPosition", &maxExtents.x, 0.1f);
-    ImGui::ColorEdit4("AABBColor", &aabbColor.r);
+    switch (mDebugDrawType)
+    {
+    case DebugDrawType::Sphere:
+        ImGui::DragInt("SphereSlices", &sphereSlices, 1);
+        ImGui::DragInt("SphereRings", &sphereRings, 1);
+        ImGui::DragFloat("SphereRadius", &sphereRadius, 0.1f);
+        ImGui::ColorEdit4("SphereColor", &sphereColor.r);
+        break;
 
-    ImGui::DragInt("CircleSlices", &circleSlices);
-    ImGui::DragFloat("CircleRadius", &circleRadius, 0.1f);
-    ImGui::ColorEdit4("CircleColor", &circleColor.r);*/
+    case DebugDrawType::Circle:
+        ImGui::DragInt("CircleSlices", &circleSlices, 1);
+        ImGui::DragFloat("CircleRadius", &circleRadius, 0.1f);
+        ImGui::ColorEdit4("CircleColor", &circleColor.r);
+        break;
 
-    ImGui::DragInt("SphereSlices", &sphereSlices);
-    ImGui::DragInt("SphereRings", &sphereRings);
-    ImGui::DragFloat("SphereRadius", &sphereRadius, 0.1f);
-    ImGui::ColorEdit4("SphereColor", &sphereColor.r);
+    case DebugDrawType::Line:
+        ImGui::DragFloat3("LineStartPosition", &lineStartPos.x, 0.1f);
+        ImGui::DragFloat3("LineEndPosition", &lineEndPos.x, 0.1f);
+        ImGui::ColorEdit4("LineColor", &lineColor.r);
+        break;
 
+    case DebugDrawType::Face:
+        ImGui::DragFloat3("FaceStartPosition", &faceStartPos.x, 0.1f);
+        ImGui::DragFloat3("FaceCenterPosition", &faceCenterPos.x, 0.1f);
+        ImGui::DragFloat3("FaceEndPosition", &faceEndPos.x, 0.1f);
+        ImGui::ColorEdit4("FaceColor", &faceColor.r);
+        break;
+
+    case DebugDrawType::Plane:
+        ImGui::DragInt("PlaneSize", &planeSize, 1);
+        break;
+
+    case DebugDrawType::AABB:
+    case DebugDrawType::AABBFilled:
+        ImGui::DragFloat3("AABBStartPosition", &minExtents.x, 0.1f);
+        ImGui::DragFloat3("AABBEndPosition", &maxExtents.x, 0.1f);
+        ImGui::ColorEdit4("AABBColor", &aabbColor.r);
+        break;
+
+    case DebugDrawType::Transform:
+    case DebugDrawType::None:
+    default:
+        break;
+    }
     ImGui::End();
 }

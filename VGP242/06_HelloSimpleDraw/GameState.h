@@ -1,6 +1,19 @@
 #pragma once
 #include <PanicEngine/Inc/PanicEngine.h>
 
+enum class DebugDrawType
+{
+    None,
+    Line,
+    Sphere,
+    Circle,
+    Face,
+    Plane,
+    AABB,
+    AABBFilled,
+    Transform
+};
+
 class GameState : public PanicEngine::AppState
 {
 public:
@@ -21,4 +34,5 @@ protected:
     using Vertices = std::vector<Vertex>;
 
     PanicEngine::Graphics::Camera mCamera;
+    DebugDrawType mDebugDrawType = DebugDrawType::None;
 };
