@@ -10,8 +10,8 @@ enum class DebugDrawType
     Face,
     Plane,
     AABB,
-    AABBFilled,
-    Transform
+    Transform,
+    Diamond
 };
 
 class GameState : public PanicEngine::AppState

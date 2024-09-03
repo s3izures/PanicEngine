@@ -15,13 +15,13 @@ const char* gDebugDrawShape[] =
     "Face",
     "Plane",
     "AABB",
-    "AABBFilled",
-    "Transform"
+    "Transform",
+    "Diamond"
 };
 
 void GameState::Initialize()
 {
-    mCamera.SetPosition({ 0.0f,10.0f,-3.0f });
+    mCamera.SetPosition({ 0.0f,0.0f,-10.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
 }
 
@@ -48,6 +48,7 @@ Vector3 lineStartPos = Vector3::Zero;
 Vector3 lineEndPos = Vector3::Zero;
 Color lineColor = Colors::White;
 
+bool onlyWireframe = true;
 Vector3 minExtents = -Vector3::One;
 Vector3 maxExtents = Vector3::One;
 Color aabbColor = Colors::White;
@@ -62,6 +63,10 @@ int sphereSlices = 30;
 int sphereRings = 30;
 float sphereRadius = 1;
 Color sphereColor = Colors::Wheat;
+
+float diamondSize = 5;
+Color diamondColorA = Colors::Blue;
+Color diamondColorB = Colors::BlueViolet;
 
 void GameState::Render()
 {
@@ -88,15 +93,20 @@ void GameState::Render()
         break;
 
     case DebugDrawType::AABB:
-        SimpleDraw::AddAABB(minExtents, maxExtents, aabbColor);
-        break;
-
-    case DebugDrawType::AABBFilled:
-        SimpleDraw::AddFilledAABB(minExtents, maxExtents, aabbColor);
+        if (onlyWireframe) {SimpleDraw::AddAABB(minExtents, maxExtents, aabbColor);}
+        else { SimpleDraw::AddFilledAABB(minExtents, maxExtents, aabbColor); }
         break;
 
     case DebugDrawType::Transform:
         SimpleDraw::AddTransform(transMat);
+        break;
+
+    case DebugDrawType::Diamond:
+        SimpleDraw::AddFace({ 0,0,0 }, { 0,1 * diamondSize,0 }, { 1 * diamondSize,0,0 }, diamondColorA); //up right
+        SimpleDraw::AddFace({ -1 * diamondSize,0,0 }, { 0,1 * diamondSize,0 }, { 0,0,0 }, diamondColorB); //up left
+        SimpleDraw::AddFace({ -1 * diamondSize,0,0 }, { 0,0,0 }, { 0,-1 * diamondSize,0 }, diamondColorA); //down left
+        SimpleDraw::AddFace( { 0,0,0 }, {1 * diamondSize,0,0 }, { 0,-1 * diamondSize,0 }, diamondColorB); //down right
+        SimpleDraw::AddGroundCircle(3, 2 * diamondSize, { 0,0,0 }, Colors::White);
         break;
 
     case DebugDrawType::None:
@@ -186,10 +196,16 @@ void GameState::DebugUI()
         break;
 
     case DebugDrawType::AABB:
-    case DebugDrawType::AABBFilled:
+        ImGui::Checkbox("IsWireframe", &onlyWireframe);
         ImGui::DragFloat3("AABBStartPosition", &minExtents.x, 0.1f);
         ImGui::DragFloat3("AABBEndPosition", &maxExtents.x, 0.1f);
         ImGui::ColorEdit4("AABBColor", &aabbColor.r);
+        break;
+
+    case DebugDrawType::Diamond:
+        ImGui::DragFloat("DiamondSize", &diamondSize, 0.1f);
+        ImGui::ColorEdit4("DiamondColor1", &diamondColorA.r);
+        ImGui::ColorEdit4("DiamondColor2", &diamondColorB.r);
         break;
 
     case DebugDrawType::Transform:
