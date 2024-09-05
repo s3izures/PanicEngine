@@ -7,6 +7,12 @@ namespace PanicEngine::Graphics
     public:
         static void UnbindPS(uint32_t slot);
 
+        enum class Format
+        {
+            RGBA_U8,
+            RGBA_U32
+        };
+
         Texture() = default;
         virtual ~Texture();
 
@@ -19,6 +25,7 @@ namespace PanicEngine::Graphics
         Texture& operator=(Texture&& rhs) noexcept;
 
         virtual void Initialize(const std::filesystem::path& fileName);
+        virtual void Initialize(uint32_t width, uint32_t height, Format format);
         virtual void Terminate();
 
         void BindVS(uint32_t slot) const;
@@ -26,7 +33,8 @@ namespace PanicEngine::Graphics
 
         void* GetRawData() const;
 
-    private:
+    protected:
+        DXGI_FORMAT GetDXGIFormat(Format format);
         ID3D11ShaderResourceView* mShaderResourceView = nullptr;
     };
 }

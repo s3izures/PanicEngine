@@ -38,6 +38,11 @@ void Texture::Initialize(const std::filesystem::path& fileName)
     ASSERT(SUCCEEDED(hr), "Texture: failed to create texture %s", fileName.c_str());
 }
 
+void Texture::Initialize(uint32_t width, uint32_t height, Format format)
+{
+    ASSERT(false, "Texture: function not available in base Texture.");
+}
+
 void Texture::Terminate()
 {
     SafeRelease(mShaderResourceView);
@@ -58,4 +63,16 @@ void Texture::BindPS(uint32_t slot) const
 void* PanicEngine::Graphics::Texture::GetRawData() const
 {
     return mShaderResourceView;
+}
+
+DXGI_FORMAT Texture::GetDXGIFormat(Format format)
+{
+    switch (format)
+    {
+    case Format::RGBA_U8: 
+        return DXGI_FORMAT_R8G8B8A8_UNORM;
+    case Format::RGBA_U32: 
+        return DXGI_FORMAT_R32G32B32A32_UINT;
+    }
+    return DXGI_FORMAT_R8G8B8A8_UNORM;
 }
