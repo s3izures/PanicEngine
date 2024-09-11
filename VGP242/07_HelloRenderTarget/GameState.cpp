@@ -42,6 +42,11 @@ void GameState::Terminate()
     mMeshBuffer.Terminate();
 }
 
+void GameState::Update(float deltaTime)
+{
+    UpdateCamera(deltaTime);
+}
+
 void GameState::UpdateCamera(float deltaTime)
 {
     auto input = InputSystem::Get();
@@ -98,12 +103,12 @@ void GameState::Render()
     // mesh buffer
     mMeshBuffer.Render();
 
-    matWorld = Matrix4::Identity;
-    matView = mRenderTargetCamera.GetViewMatrix();
-    matProj = mRenderTargetCamera.GetProjectionMatrix();
-    matFinal = matWorld * matView * matProj;
-    wvp = Transpose(matFinal);
-    mConstantBuffer.Update(&wvp);
+    Matrix4 matWorld1 = Matrix4::Identity;
+    Matrix4 matView1 = mRenderTargetCamera.GetViewMatrix();
+    Matrix4 matProj1 = mRenderTargetCamera.GetProjectionMatrix();
+    Matrix4 matFinal1 = matWorld1 * matView1 * matProj1;
+    Matrix4 wvp1 = Transpose(matFinal1);
+    mConstantBuffer.Update(&wvp1);
     mConstantBuffer.BindVS(0);
 
     mRenderTarget.BeginRender();
@@ -111,16 +116,14 @@ void GameState::Render()
     mRenderTarget.EndRender();
 }
 
-bool buttonValue = false;
-int intValue = 0;
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::Image(
         mRenderTarget.GetRawData(),
         { 256, 256 },
-        { 0, 0 },   //uv0
-        { 1, 1 },   //uv1
+        { 0, 0 },	//uv0
+        { 1, 1 },	//uv1
         { 1, 1, 1, 1 },
         { 1, 1, 1, 1 });
     ImGui::End();

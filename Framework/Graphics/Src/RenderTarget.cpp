@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "RenderTarget.h"
+
 #include "GraphicsSystem.h"
 
 using namespace PanicEngine;
@@ -7,12 +8,12 @@ using namespace PanicEngine::Graphics;
 
 RenderTarget::~RenderTarget()
 {
-    ASSERT(mRenderTargetView == nullptr && mDepthStencilView == nullptr, "RenderTarget: terminate must be called.");
+    ASSERT(mRenderTargetView == nullptr && mDepthStencilView == nullptr, "RenderTarget: texture not terminated");
 }
 
 void RenderTarget::Initialize(const std::filesystem::path& fileName)
 {
-    ASSERT(false, "RenderTarget: initialize not available in Render Target.");
+    ASSERT(false, "RenderTarget: initialize not available in Render Target");
 }
 
 void RenderTarget::Initialize(uint32_t width, uint32_t height, Format format)
@@ -21,7 +22,7 @@ void RenderTarget::Initialize(uint32_t width, uint32_t height, Format format)
     desc.Width = width;
     desc.Height = height;
     desc.MipLevels = 1;
-    desc.ArraySize = 1;
+    desc.ArraySize = 1;	// number of textures
     desc.Format = GetDXGIFormat(format);
     desc.SampleDesc.Count = 1;
     desc.SampleDesc.Quality = 0;
@@ -31,15 +32,16 @@ void RenderTarget::Initialize(uint32_t width, uint32_t height, Format format)
     desc.MiscFlags = 0;
 
     auto device = GraphicsSystem::Get()->GetDevice();
+
     ID3D11Texture2D* texture = nullptr;
     HRESULT hr = device->CreateTexture2D(&desc, nullptr, &texture);
-    ASSERT(SUCCEEDED(hr), "RenderTarget: failed to create texture.");
+    ASSERT(SUCCEEDED(hr), "RenderTarget: Failed to create texture");
 
     hr = device->CreateShaderResourceView(texture, nullptr, &mShaderResourceView);
-    ASSERT(SUCCEEDED(hr), "RenderTarget: failed to create shader resource view.");
+    ASSERT(SUCCEEDED(hr), "RenderTarget: Failed to create shader resource view");
 
     hr = device->CreateRenderTargetView(texture, nullptr, &mRenderTargetView);
-    ASSERT(SUCCEEDED(hr), "RenderTarget: failed to create render target view.");
+    ASSERT(SUCCEEDED(hr), "RenderTarget: Failed to create render target view");
 
     SafeRelease(texture);
 
@@ -47,10 +49,10 @@ void RenderTarget::Initialize(uint32_t width, uint32_t height, Format format)
     desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
     hr = device->CreateTexture2D(&desc, nullptr, &texture);
-    ASSERT(SUCCEEDED(hr), "RenderTarget: failed to create depth stencil texture.");
+    ASSERT(SUCCEEDED(hr), "RenderTarget: Failed to create depth stencil texture");
 
     hr = device->CreateDepthStencilView(texture, nullptr, &mDepthStencilView);
-    ASSERT(SUCCEEDED(hr), "RenderTarget: failed to create depth stencil view");
+    ASSERT(SUCCEEDED(hr), "RenderTarget: Failed to create depth stencil view");
 
     SafeRelease(texture);
 
@@ -65,6 +67,7 @@ void RenderTarget::Initialize(uint32_t width, uint32_t height, Format format)
 void RenderTarget::Terminate()
 {
     Texture::Terminate();
+
     SafeRelease(mRenderTargetView);
     SafeRelease(mDepthStencilView);
 }
@@ -73,12 +76,12 @@ void RenderTarget::BeginRender(Color clearColor)
 {
     auto context = GraphicsSystem::Get()->GetContext();
 
-    //main system info
+    // main system info
     UINT numViewports = 1;
     context->OMGetRenderTargets(1, &mOldRenderTargetView, &mOldDepthStencilView);
     context->RSGetViewports(&numViewports, &mOldViewport);
 
-    //render target info
+    // render target info
     context->ClearRenderTargetView(mRenderTargetView, &clearColor.r);
     context->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
     context->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);

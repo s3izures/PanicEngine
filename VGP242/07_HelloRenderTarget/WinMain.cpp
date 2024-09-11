@@ -6,7 +6,7 @@ using namespace PanicEngine;
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
     AppConfig config;
-    config.appName = L"Hello Mesh Builder";
+    config.appName = L"Hello Render Target";
     config.winWidth = 800;
     config.winHeight = 800;
 
