@@ -14,7 +14,7 @@ void GameState::Initialize()
     mCamera.SetPosition({ 0.0f, 1.0f, -5.0f });
     mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
     mRenderTargetCamera.SetPosition({ 0.0f, 1.0f, -5.0f });
-    mRenderTargetCamera.SetPosition({ 0.0f, 0.0f, 0.0f });
+    mRenderTargetCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
     mRenderTargetCamera.SetAspectRatio(1.0f);
 
     mMeshBuffer.Initialize<MeshPX>(mesh);
