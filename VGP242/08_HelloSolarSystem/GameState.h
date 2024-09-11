@@ -1,6 +1,21 @@
 #pragma once
 #include <PanicEngine/Inc/PanicEngine.h>
 
+enum class Celestials
+{
+    None,
+    Sun,
+    Mercury,
+    Venus,
+    Earth,
+    Mars,
+    Jupiter,
+    Saturn,
+    Uranus,
+    Neptune,
+    Pluto
+};
+
 class GameState : public PanicEngine::AppState
 {
 public:
@@ -13,15 +28,15 @@ public:
 protected:
     void UpdateCamera(float deltaTime);
 
-    std::vector<MeshPX> celestialObjects;
-
     PanicEngine::Graphics::Camera mCamera;
     PanicEngine::Graphics::Camera mRenderTargetCamera;
     PanicEngine::Graphics::ConstantBuffer mConstantBuffer;
-    PanicEngine::Graphics::MeshBuffer mMeshBuffer;
+    PanicEngine::Graphics::MeshBuffer mMeshBuffer[11];
     PanicEngine::Graphics::VertexShader mVertexShader;
     PanicEngine::Graphics::PixelShader mPixelShader;
-    PanicEngine::Graphics::Texture mDiffuseTexture;
+    PanicEngine::Graphics::Texture mDiffuseTexture[11];
     PanicEngine::Graphics::Sampler mSampler;
     PanicEngine::Graphics::RenderTarget mRenderTarget;
+
+    Celestials mCelestials = Celestials::None;
 };

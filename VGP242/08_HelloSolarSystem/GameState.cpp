@@ -6,28 +6,141 @@ using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
 
+const char* gCelestials[] =
+{
+    "None",
+    "Sun",
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune",
+    "Pluto"
+};
+
 void GameState::Initialize()
 {
-    mCamera.SetPosition({ 0.0f,0.0f,-10.0f });
-    mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
+    mCamera.SetPosition({ 0.0f, 0.0f, -300.0f });
+    mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
+    mRenderTargetCamera.SetPosition({ 0.0f, 0.0f, -300.0f });
+    mRenderTargetCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
+    mRenderTargetCamera.SetAspectRatio(1.0f);
 
-    MeshPX mesh = MeshBuilder::CreateSkyspherePX(30, 30, 100.0f);
+    MeshPX space = MeshBuilder::CreateSkyspherePX(100, 100, 1000.0f);
+    MeshPX sun = MeshBuilder::CreateSpherePX(100, 100, 100.0f);
+
+    MeshPX mercury = MeshBuilder::CreateSpherePX(100, 100, 1.0f);
+    MeshPX venus = MeshBuilder::CreateSpherePX(100, 100, 1.5f);
+    MeshPX earth = MeshBuilder::CreateSpherePX(100, 100, 3.0f);
+    MeshPX mars = MeshBuilder::CreateSpherePX(100, 100, 2.0f);
+    MeshPX jupiter = MeshBuilder::CreateSpherePX(100, 100, 10.0f);
+    MeshPX saturn = MeshBuilder::CreateSpherePX(100, 100, 5.0f);
+    MeshPX uranus = MeshBuilder::CreateSpherePX(100, 100, 3.0f);
+    MeshPX neptune = MeshBuilder::CreateSpherePX(100, 100, 3.0f);
+    MeshPX pluto = MeshBuilder::CreateSpherePX(100, 100, 0.5f);
+
+    mMeshBuffer[0].Initialize<MeshPX>(space);
+    mMeshBuffer[1].Initialize<MeshPX>(sun);
+    mMeshBuffer[2].Initialize<MeshPX>(mercury);
+    mMeshBuffer[3].Initialize<MeshPX>(venus);
+    mMeshBuffer[4].Initialize<MeshPX>(earth);
+    mMeshBuffer[5].Initialize<MeshPX>(mars);
+    mMeshBuffer[6].Initialize<MeshPX>(jupiter);
+    mMeshBuffer[7].Initialize<MeshPX>(saturn);
+    mMeshBuffer[8].Initialize<MeshPX>(uranus);
+    mMeshBuffer[9].Initialize<MeshPX>(neptune);
+    mMeshBuffer[10].Initialize<MeshPX>(pluto);
+
+    mConstantBuffer.Initialize(sizeof(Matrix4));
+
+    std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTexture.fx";
+    mVertexShader.Initialize<VertexPX>(shaderFile);
+    mPixelShader.Initialize(shaderFile);
+
+    mDiffuseTexture[0].Initialize("../../Assets/Images/skysphere/space.jpg");
+    mDiffuseTexture[1].Initialize("../../Assets/Images/planets/sun.jpg");
+    mDiffuseTexture[2].Initialize("../../Assets/Images/planets/mercury.jpg");
+    mDiffuseTexture[3].Initialize("../../Assets/Images/planets/venus.jpg");
+    mDiffuseTexture[4].Initialize("../../Assets/Images/planets/earth/earth.jpg");
+    mDiffuseTexture[5].Initialize("../../Assets/Images/planets/mars.jpg");
+    mDiffuseTexture[6].Initialize("../../Assets/Images/planets/jupiter.jpg");
+    mDiffuseTexture[7].Initialize("../../Assets/Images/planets/saturn.jpg");
+    mDiffuseTexture[8].Initialize("../../Assets/Images/planets/uranus.jpg");
+    mDiffuseTexture[9].Initialize("../../Assets/Images/planets/neptune.jpg");
+    mDiffuseTexture[10].Initialize("../../Assets/Images/planets/pluto.jpg");
+    
+    mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+
+    constexpr uint32_t size = 512;
+    mRenderTarget.Initialize(size, size, Texture::Format::RGBA_U32);
 }
 
 void GameState::Terminate()
 {
-
+    mRenderTarget.Terminate();
+    mSampler.Terminate();
+    for (int i = 0; i < 11; i++)
+    {
+        mDiffuseTexture[i].Terminate();
+    }
+    mPixelShader.Terminate();
+    mVertexShader.Terminate();
+    mConstantBuffer.Terminate();
+    for (int i = 0; i < 11; i++)
+    {
+        mMeshBuffer[i].Terminate();
+    }
 }
 
+float gRotX = 0;
+float gRotY = 0;
+float revSpeed = 0.01;
+float orbSpeed = 0.01;
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
+    gRotY += revSpeed * deltaTime;
+    //gRotX += Math::Constants::HalfPi * deltaTime * 0.25f;
 }
 
 void GameState::Render()
 {
-    
-    SimpleDraw::Render(mCamera);
+    mVertexShader.Bind();
+    mPixelShader.Bind();
+
+    for (int i = 0; i < 11; i++)
+    {
+        mDiffuseTexture[i].BindPS(0);
+    }
+    mSampler.BindPS(0);
+
+    // constant buffer
+    Matrix4 matWorld = Matrix4::RotationY(gRotY) * Matrix4::RotationX(gRotX);
+    Matrix4 matView = mCamera.GetViewMatrix();
+    Matrix4 matProj = mCamera.GetProjectionMatrix();
+    Matrix4 matFinal = matWorld * matView * matProj;
+    Matrix4 wvp = Transpose(matFinal);
+    mConstantBuffer.Update(&wvp);
+    mConstantBuffer.BindVS(0);
+
+    // mesh buffer
+    for (int i = 0; i < 11; i++)
+    {
+        mMeshBuffer[i].Render();
+    }
+
+    Matrix4 matWorld1 = Matrix4::Identity;
+    Matrix4 matView1 = mRenderTargetCamera.GetViewMatrix();
+    Matrix4 matProj1 = mRenderTargetCamera.GetProjectionMatrix();
+    Matrix4 matFinal1 = matWorld1 * matView1 * matProj1;
+    Matrix4 wvp1 = Transpose(matFinal1);
+    mConstantBuffer.Update(&wvp1);
+    mConstantBuffer.BindVS(0);
+
+    //SimpleDraw::Render(mCamera);
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -66,9 +179,48 @@ void GameState::UpdateCamera(float deltaTime)
     }
 }
 
+float renderTargetDistance = -200.0f;
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+    int currentRender = static_cast<int>(mCelestials);
+
+    if (ImGui::Combo("ShowWhichPlanet", &currentRender, gCelestials, static_cast<int>(std::size(gCelestials))))
+    {
+        mCelestials = (Celestials)currentRender;
+    }
+
+
+    //Change render target
+    ImGui::DragFloat("RenderDistance", &renderTargetDistance, 1.0f, -300.0f,-2.0f);
+
+    mRenderTargetCamera.SetPosition({ 0.0f, 0.0f, renderTargetDistance });
+    mRenderTarget.BeginRender();
+    mMeshBuffer[currentRender].Render();
+    mRenderTarget.EndRender();
+
+
+    //Planet display
+    ImGui::Image(
+        mRenderTarget.GetRawData(),
+        { 256, 256 },
+        { 0, 0 },	//uv0
+        { 1, 1 },	//uv1
+        { 1, 1, 1, 1 },
+        { 1, 1, 1, 1 });
+
+
+    //For rings and rotation speed
+    ImGui::DragFloat("RevolutionSpeed", &revSpeed, 0.01f);
+    ImGui::DragFloat("OrbitSpeed", &orbSpeed, 0.01f);
+
+    /*switch (mCelestials)
+    {
     
+    case Celestials::None:
+    default:
+        break;
+    }*/
     ImGui::End();
 }
