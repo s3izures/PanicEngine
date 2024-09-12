@@ -30,12 +30,12 @@ protected:
 
     PanicEngine::Graphics::Camera mCamera;
     PanicEngine::Graphics::Camera mRenderTargetCamera;
-    PanicEngine::Graphics::ConstantBuffer mConstantBuffer;
+    PanicEngine::Graphics::ConstantBuffer mConstantBuffer[11];
     PanicEngine::Graphics::MeshBuffer mMeshBuffer[11];
-    PanicEngine::Graphics::VertexShader mVertexShader;
-    PanicEngine::Graphics::PixelShader mPixelShader;
+    PanicEngine::Graphics::VertexShader mVertexShader[11];
+    PanicEngine::Graphics::PixelShader mPixelShader[11];
     PanicEngine::Graphics::Texture mDiffuseTexture[11];
-    PanicEngine::Graphics::Sampler mSampler;
+    PanicEngine::Graphics::Sampler mSampler[11];
     PanicEngine::Graphics::RenderTarget mRenderTarget;
 
     Celestials mCelestials = Celestials::None;

@@ -24,6 +24,7 @@
     <ProjectGuid>{a952d93e-968f-4f7e-9be8-e06914e02f42}</ProjectGuid>
     <RootNamespace>My08HelloSolarSystem</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>08_HelloSolarSystem</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
