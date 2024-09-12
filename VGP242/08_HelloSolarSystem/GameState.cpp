@@ -20,6 +20,62 @@ const char* gCelestials[] =
     "Neptune",
     "Pluto"
 };
+float localRotation[11]
+{
+    0,
+    1,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+};
+float localTranslation[11]
+{
+   0,
+   0,
+   150,
+   200,
+   350,
+   400,
+   590,
+   700,
+   750,
+   800,
+   900,
+};
+float localOrbit[11]
+{
+    0,
+    0,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+};
+float rings[11]
+{
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    25,
+    0,
+    0,
+    0
+};
 
 void GameState::Initialize()
 {
@@ -30,7 +86,7 @@ void GameState::Initialize()
     mRenderTargetCamera.SetAspectRatio(1.0f);
 
     MeshPX space = MeshBuilder::CreateSkyspherePX(100, 100, 1000.0f);
-    MeshPX sun = MeshBuilder::CreateSpherePX(100, 100, 109.0f);
+    MeshPX sun = MeshBuilder::CreateSpherePX(100, 100, 100.0f);
 
     MeshPX mercury = MeshBuilder::CreateSpherePX(100, 100, 0.35f);
     MeshPX venus = MeshBuilder::CreateSpherePX(100, 100, 0.8f);
@@ -101,25 +157,38 @@ void GameState::Terminate()
     }
 }
 
-float gRotY = 0;
-float revSpeed = 0.01;
-float orbSpeed = 0.01;
+float revSpeed;
+float orbSpeed;
+float gRotR;
+float gRotO;
 int currentRender = 0;
 float renderTargetDistance = -200.0f;
-bool renderRings = false;
+bool renderRings = true;
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
-    gRotY += revSpeed * deltaTime;
+    gRotR += deltaTime * revSpeed;
+    gRotO += deltaTime * orbSpeed;
 }
 
 void GameState::Render()
 {
+    for (int i = 0; i < 11; i++)
+    {
+        SimpleDraw::AddGroundCircle(100, localTranslation[i], { 0,0,0 }, Colors::Gray);
+    }
+
     if (renderRings)
     {
-        SimpleDraw::AddGroundCircle(100, 200, Vector3{ 0,0,0 }, Colors::White);
-        SimpleDraw::Render(mCamera);
-        SimpleDraw::Render(mRenderTargetCamera);
+        for (int i = 0; i < 11; i++)
+        {
+            if (rings[i] > 0)
+            {
+                Matrix4 ringWorld = Matrix4::RotationY(localRotation[i] * gRotR) * Matrix4::Translation(Vector3::ZAxis * localTranslation[i]) * Matrix4::RotationY(localOrbit[i] * gRotO);
+                Vector3 ringVec = { ringWorld._41,ringWorld._42,ringWorld._43 };
+                SimpleDraw::AddGroundCircle(100, rings[i], ringVec, Colors::White);
+            }
+        }
     }
 
     for (int i = 0; i < 11; i++)
@@ -130,7 +199,7 @@ void GameState::Render()
         mSampler.BindPS(0);
 
         // constant buffer
-        Matrix4 matWorld = Matrix4::RotationY(gRotY);
+        Matrix4 matWorld = Matrix4::RotationY(localRotation[i] * gRotR) * Matrix4::Translation(Vector3::ZAxis * localTranslation[i]) * Matrix4::RotationY(localOrbit[i] * gRotO);
         Matrix4 matView = mCamera.GetViewMatrix();
         Matrix4 matProj = mCamera.GetProjectionMatrix();
         Matrix4 matFinal = matWorld * matView * matProj;
@@ -142,12 +211,16 @@ void GameState::Render()
         mMeshBuffer[i].Render();
     }
 
+    SimpleDraw::Render(mCamera);
+
+
+
     mVertexShader.Bind();
     mPixelShader.Bind();
     mDiffuseTexture[currentRender].BindPS(0);
     mSampler.BindPS(0);
 
-    Matrix4 matWorld1 = Matrix4::RotationY(gRotY);
+    Matrix4 matWorld1 = Matrix4::RotationY(localRotation[currentRender] * gRotR);
     Matrix4 matView1 = mRenderTargetCamera.GetViewMatrix();
     Matrix4 matProj1 = mRenderTargetCamera.GetProjectionMatrix();
     Matrix4 matFinal1 = matWorld1 * matView1 * matProj1;
@@ -164,7 +237,7 @@ void GameState::Render()
 void GameState::UpdateCamera(float deltaTime)
 {
     auto input = InputSystem::Get();
-    const float moveSpeed = (input->IsKeyDown(KeyCode::LSHIFT) ? 10.0f : 1.0f) * deltaTime;
+    const float moveSpeed = (input->IsKeyDown(KeyCode::LSHIFT) ? 100.0f : 1.0f) * deltaTime;
     const float turnSpeed = 0.1f * deltaTime;
     if (input->IsKeyDown(KeyCode::W))
     {
@@ -224,8 +297,8 @@ void GameState::DebugUI()
 
     //For rings and rotation speed
     ImGui::Checkbox("DisplayRings", &renderRings);
-    ImGui::DragFloat("RotationSpeed", &revSpeed, 0.01f);
-    ImGui::DragFloat("OrbitSpeed", &orbSpeed, 0.01f);
+    ImGui::DragFloat("RotationSpeed", &revSpeed, 0.0001f);
+    ImGui::DragFloat("OrbitSpeed", &orbSpeed, 0.0001f);
 
     /*switch (mCelestials)
     {
