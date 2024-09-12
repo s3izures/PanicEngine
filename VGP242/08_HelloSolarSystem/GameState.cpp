@@ -29,7 +29,7 @@ void GameState::Initialize()
     mRenderTargetCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
     mRenderTargetCamera.SetAspectRatio(1.0f);
 
-    MeshPX space = MeshBuilder::CreateSkyspherePX(100, 100, 500.0f);
+    MeshPX space = MeshBuilder::CreateSkyspherePX(100, 100, 1000.0f);
     MeshPX sun = MeshBuilder::CreateSpherePX(100, 100, 109.0f);
 
     MeshPX mercury = MeshBuilder::CreateSpherePX(100, 100, 0.35f);
@@ -59,8 +59,8 @@ void GameState::Initialize()
     {
         mConstantBuffer[i].Initialize(sizeof(Matrix4));
 
-        mVertexShader[i].Initialize<VertexPX>(shaderFile);
-        mPixelShader[i].Initialize(shaderFile);
+        mVertexShader.Initialize<VertexPX>(shaderFile);
+        mPixelShader.Initialize(shaderFile);
     }
 
     mDiffuseTexture[0].Initialize("../../Assets/Images/skysphere/space.jpg");
@@ -74,11 +74,8 @@ void GameState::Initialize()
     mDiffuseTexture[8].Initialize("../../Assets/Images/planets/uranus.jpg");
     mDiffuseTexture[9].Initialize("../../Assets/Images/planets/neptune.jpg");
     mDiffuseTexture[10].Initialize("../../Assets/Images/planets/pluto.jpg");
-    
-    for (int i = 0; i < 11; i++)
-    {
-        mSampler[i].Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
-    }
+
+    mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 
     constexpr uint32_t size = 512;
     mRenderTarget.Initialize(size, size, Texture::Format::RGBA_U32);
@@ -87,41 +84,53 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mRenderTarget.Terminate();
+        mSampler.Terminate();
     for (int i = 0; i < 11; i++)
     {
-        mSampler[i].Terminate();
         mDiffuseTexture[i].Terminate();
-        mPixelShader[i].Terminate();
-        mVertexShader[i].Terminate();
+    }
+    mPixelShader.Terminate();
+    mVertexShader.Terminate();
+    for (int i = 0; i < 11; i++)
+    {
+        mDiffuseTexture[i].Terminate();
+        mPixelShader.Terminate();
+        mVertexShader.Terminate();
         mConstantBuffer[i].Terminate();
         mMeshBuffer[i].Terminate();
     }
 }
 
-float gRotX = 0;
 float gRotY = 0;
 float revSpeed = 0.01;
 float orbSpeed = 0.01;
 int currentRender = 0;
 float renderTargetDistance = -200.0f;
+bool renderRings = false;
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
     gRotY += revSpeed * deltaTime;
-    //gRotX += Math::Constants::HalfPi * deltaTime * 0.25f;
 }
 
 void GameState::Render()
 {
+    if (renderRings)
+    {
+        SimpleDraw::AddGroundCircle(100, 200, Vector3{ 0,0,0 }, Colors::White);
+        SimpleDraw::Render(mCamera);
+        SimpleDraw::Render(mRenderTargetCamera);
+    }
+
     for (int i = 0; i < 11; i++)
     {
-        mVertexShader[i].Bind();
-        mPixelShader[i].Bind();
+        mVertexShader.Bind();
+        mPixelShader.Bind();
         mDiffuseTexture[i].BindPS(0);
-        mSampler[i].BindPS(0);
+        mSampler.BindPS(0);
 
         // constant buffer
-        Matrix4 matWorld = Matrix4::RotationY(gRotY) * Matrix4::RotationX(gRotX);
+        Matrix4 matWorld = Matrix4::RotationY(gRotY);
         Matrix4 matView = mCamera.GetViewMatrix();
         Matrix4 matProj = mCamera.GetProjectionMatrix();
         Matrix4 matFinal = matWorld * matView * matProj;
@@ -133,12 +142,12 @@ void GameState::Render()
         mMeshBuffer[i].Render();
     }
 
-    mVertexShader[currentRender].Bind();
-    mPixelShader[currentRender].Bind();
+    mVertexShader.Bind();
+    mPixelShader.Bind();
     mDiffuseTexture[currentRender].BindPS(0);
-    mSampler[currentRender].BindPS(0);
+    mSampler.BindPS(0);
 
-    Matrix4 matWorld1 = Matrix4::RotationY(gRotY) * Matrix4::RotationX(gRotX);
+    Matrix4 matWorld1 = Matrix4::RotationY(gRotY);
     Matrix4 matView1 = mRenderTargetCamera.GetViewMatrix();
     Matrix4 matProj1 = mRenderTargetCamera.GetProjectionMatrix();
     Matrix4 matFinal1 = matWorld1 * matView1 * matProj1;
@@ -150,8 +159,6 @@ void GameState::Render()
     mRenderTarget.BeginRender();
     mMeshBuffer[currentRender].Render();
     mRenderTarget.EndRender();
-
-    //SimpleDraw::Render(mCamera);
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -216,7 +223,8 @@ void GameState::DebugUI()
 
 
     //For rings and rotation speed
-    ImGui::DragFloat("RevolutionSpeed", &revSpeed, 0.01f);
+    ImGui::Checkbox("DisplayRings", &renderRings);
+    ImGui::DragFloat("RotationSpeed", &revSpeed, 0.01f);
     ImGui::DragFloat("OrbitSpeed", &orbSpeed, 0.01f);
 
     /*switch (mCelestials)
