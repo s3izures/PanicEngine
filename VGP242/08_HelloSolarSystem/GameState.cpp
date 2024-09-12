@@ -163,7 +163,8 @@ float gRotR;
 float gRotO;
 int currentRender = 0;
 float renderTargetDistance = -200.0f;
-bool renderRings = true;
+bool renderPlanetRings = true;
+bool renderOrbitRings = true;
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
@@ -173,12 +174,15 @@ void GameState::Update(float deltaTime)
 
 void GameState::Render()
 {
-    for (int i = 0; i < 11; i++)
+    if (renderOrbitRings)
     {
-        SimpleDraw::AddGroundCircle(100, localTranslation[i], { 0,0,0 }, Colors::Gray);
+        for (int i = 0; i < 11; i++)
+        {
+            SimpleDraw::AddGroundCircle(100, localTranslation[i], { 0,0,0 }, Colors::Gray);
+        }
     }
 
-    if (renderRings)
+    if (renderPlanetRings)
     {
         for (int i = 0; i < 11; i++)
         {
@@ -294,18 +298,11 @@ void GameState::DebugUI()
         { 1, 1, 1, 1 },
         { 1, 1, 1, 1 });
 
-
     //For rings and rotation speed
-    ImGui::Checkbox("DisplayRings", &renderRings);
+    ImGui::Checkbox("DisplayPlanetRings", &renderPlanetRings);
+    ImGui::Checkbox("DisplayOrbits", &renderOrbitRings);
     ImGui::DragFloat("RotationSpeed", &revSpeed, 0.0001f);
     ImGui::DragFloat("OrbitSpeed", &orbSpeed, 0.0001f);
 
-    /*switch (mCelestials)
-    {
-    
-    case Celestials::None:
-    default:
-        break;
-    }*/
     ImGui::End();
 }
