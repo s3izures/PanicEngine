@@ -25,6 +25,7 @@ void App::Run(const AppConfig& config)
     InputSystem::StaticInitialize(handle);
     DebugUI::StaticInitialize(handle, false, true);
     SimpleDraw::StaticInitialize(config.maxDrawLines);
+    TextureCache::StaticInitialize("../../Assets/Images");
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();

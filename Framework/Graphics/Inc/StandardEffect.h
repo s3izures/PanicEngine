@@ -25,7 +25,12 @@ namespace PanicEngine::Graphics
         void DebugUI();
 
     private:
-        ConstantBuffer mConstantBuffer;
+        struct TransformData
+        {
+            Math::Matrix4 wvp;
+        };
+        using TransformBuffer = TypedConstantBuffer<TransformData>;
+        TransformBuffer mTransformBuffer;
         VertexShader mVertexShader;
         PixelShader mPixelShader;
         Sampler mSampler;

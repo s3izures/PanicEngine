@@ -8,21 +8,26 @@ using namespace PanicEngine::Input;
 
 void GameState::Initialize()
 {
-    MeshPX mesh;
-    std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTexture.fx";
+    Mesh mesh;
+    std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
 
     mCamera.SetPosition({ 0.0f,0.0f,-5.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
 
     //Default is Skybox
-    mesh = MeshBuilder::CreateSpherePX(30,30,1.0f);
-    mPlanet.meshBuffer.Initialize(mesh);
-    mPlanet.diffuseTexture.Initialize(L"../../Assets/Images/planets/earth/earth.jpg");
-    mPlanet2.meshBuffer.Initialize(mesh);
-    mPlanet2.diffuseTexture.Initialize(L"../../Assets/Images/planets/earth/earth.jpg");
+    mesh = MeshBuilder::CreateSphere(30,30,1.0f);
+    
+    for (int i = 0; i < 9; i++)
+    {
+        PanicEngine::Graphics::RenderObject planet;
 
-    mPlanet.transform.position.x = -1.0f;
-    mPlanet2.transform.position.x = 1.0f;
+        planet.meshBuffer.Initialize(mesh);
+        planet.diffuseTextureId = TextureCache::Get()->LoadTexture("planets/earth/earth.jpg");
+
+        planet.transform.position.x = i;
+
+        mPlanets.push_back(planet);
+    }
 
     mStandardEffect.Initialize(shaderFile);
     mStandardEffect.SetCamera(mCamera);
@@ -31,8 +36,10 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mStandardEffect.Terminate();
-    mPlanet.Terminate();
-    mPlanet2.Terminate();
+    for (auto& planet : mPlanets)
+    {
+        planet.Terminate();
+    }
 }
 
 void GameState::Update(float deltaTime)
@@ -44,8 +51,10 @@ void GameState::Update(float deltaTime)
 void GameState::Render()
 {
     mStandardEffect.Begin();
-        mStandardEffect.Render(mPlanet);
-        mStandardEffect.Render(mPlanet2);
+        for (auto& planet : mPlanets)
+        {
+            mStandardEffect.Render(planet);
+        }
     mStandardEffect.End();
 }
 

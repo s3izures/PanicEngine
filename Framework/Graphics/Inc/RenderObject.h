@@ -1,6 +1,6 @@
 #pragma once
 #include "MeshBuffer.h"
-#include "Texture.h"
+#include "TextureCache.h"
 #include "Transform.h"
 
 namespace PanicEngine::Graphics 
@@ -12,6 +12,6 @@ namespace PanicEngine::Graphics
 
         Transform transform;
         MeshBuffer meshBuffer;
-        Texture diffuseTexture;
+        TextureId diffuseTextureId;
     };
 }

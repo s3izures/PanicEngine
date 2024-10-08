@@ -8,5 +8,4 @@ using namespace PanicEngine::Graphics;
 void RenderObject::Terminate()
 {
     meshBuffer.Terminate();
-    diffuseTexture.Terminate();
 }

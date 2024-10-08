@@ -9,8 +9,8 @@ using namespace PanicEngine::Graphics;
 
 void StandardEffect::Initialize(const std::filesystem::path& path)
 {
-    mConstantBuffer.Initialize(sizeof(Math::Matrix4));
-    mVertexShader.Initialize<VertexPX>(path);
+    mTransformBuffer.Initialize();
+    mVertexShader.Initialize<Vertex>(path);
     mPixelShader.Initialize(path);
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 }
@@ -20,7 +20,7 @@ void StandardEffect::Terminate()
     mSampler.Terminate();
     mPixelShader.Terminate();
     mVertexShader.Terminate();
-    mConstantBuffer.Terminate();
+    mTransformBuffer.Terminate();
 }
 
 void StandardEffect::Begin()
@@ -29,7 +29,7 @@ void StandardEffect::Begin()
     mPixelShader.Bind();
     mSampler.BindPS(0);
 
-    mConstantBuffer.BindVS(0);
+    mTransformBuffer.BindVS(0);
 }
 
 void StandardEffect::End()
@@ -40,15 +40,18 @@ void StandardEffect::End()
 
 void StandardEffect::Render(const RenderObject& renderObject)
 {
-    ASSERT(mCamera != nullptr, "StandardEffect: must have a camera!");
-    const Math::Matrix4 matWorld = renderObject.transform.GetMatrix4();
+    ASSERT(mCamera != nullptr, "StandardEffect: must have a camera");
+    const Math::Matrix4 mathWorld = renderObject.transform.GetMatrix4();
     const Math::Matrix4 matView = mCamera->GetViewMatrix();
     const Math::Matrix4 matProj = mCamera->GetProjectionMatrix();
-    const Math::Matrix4 matFinal = matWorld * matView * matProj;
-    const Math::Matrix4 wvp = Transpose(matFinal);
-    mConstantBuffer.Update(&wvp);
+    const Math::Matrix4 matFinal = mathWorld * matView * matProj;
 
-    renderObject.diffuseTexture.BindPS(0);
+    TransformData transformData;
+    transformData.wvp = Transpose(matFinal);
+    mTransformBuffer.Update(transformData);
+
+    TextureCache* tc = TextureCache::Get();
+    tc->BindPS(renderObject.diffuseTextureId, 0);
     renderObject.meshBuffer.Render();
 }
 

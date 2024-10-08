@@ -12,17 +12,9 @@ public:
 
 protected:
     void UpdateCamera(float deltaTime);
-    struct Vertex
-    {
-        PanicEngine::Math::Vector3 pos;
-        PanicEngine::Color color;
-    };
-
-    using Vertices = std::vector<Vertex>;
 
     PanicEngine::Graphics::Camera mCamera;
-    PanicEngine::Graphics::RenderObject mPlanet;
-    PanicEngine::Graphics::RenderObject mPlanet2;
+    std::vector<PanicEngine::Graphics::RenderObject> mPlanets;
 
     PanicEngine::Graphics::StandardEffect mStandardEffect;
 };
