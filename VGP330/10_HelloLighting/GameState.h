@@ -22,6 +22,7 @@ protected:
 
     PanicEngine::Graphics::Camera mCamera;
     PanicEngine::Graphics::RenderObject mPlanet;
+    PanicEngine::Graphics::RenderObject mPlanet2;
 
     PanicEngine::Graphics::ConstantBuffer mConstantBuffer;
     PanicEngine::Graphics::VertexShader mVertexShader;

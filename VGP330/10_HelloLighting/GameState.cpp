@@ -12,18 +12,25 @@ void GameState::Initialize()
     MeshPX mesh;
     std::filesystem::path shaderFile = L"../../Assets/Shaders/DoTexture.fx";
 
-    mCamera.SetPosition({ 0.0f,0.0f,-50.0f });
+    mCamera.SetPosition({ 0.0f,0.0f,-5.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
 
     //Default is Skybox
     mesh = MeshBuilder::CreateSpherePX(30,30,1.0f);
     mPlanet.meshBuffer.Initialize(mesh);
     mPlanet.diffuseTexture.Initialize(L"../../Assets/Images/planets/earth/earth.jpg");
+    mPlanet2.meshBuffer.Initialize(mesh);
+    mPlanet2.diffuseTexture.Initialize(L"../../Assets/Images/planets/earth/earth.jpg");
 
     mConstantBuffer.Initialize(sizeof(Matrix4));
     mVertexShader.Initialize<VertexPX>(shaderFile);
     mPixelShader.Initialize(shaderFile);
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+
+    mPlanet.transform.position.x = -1.0f;
+    mPlanet2.transform.position.x = 1.0f;
+
+    mPlanet2.transform.scale.y = 0.1f;
 }
 
 void GameState::Terminate()
@@ -33,6 +40,7 @@ void GameState::Terminate()
     mVertexShader.Terminate();
     mConstantBuffer.Terminate();
     mPlanet.Terminate();
+    mPlanet2.Terminate();
 }
 
 void GameState::Update(float deltaTime)
@@ -48,14 +56,25 @@ void GameState::Render()
     mSampler.BindPS(0);
 
     // constant buffer
-    Matrix4 matWorld = Matrix4::Identity;
+    Matrix4 matWorld = mPlanet.transform.GetMatrix4();
     Matrix4 matView = mCamera.GetViewMatrix();
     Matrix4 matProj = mCamera.GetProjectionMatrix();
     Matrix4 matFinal = matWorld * matView * matProj;
     Matrix4 wvp = Transpose(matFinal);
     mConstantBuffer.Update(&wvp);
     mConstantBuffer.BindVS(0);
+
     mPlanet.meshBuffer.Render();
+
+    matWorld = mPlanet2.transform.GetMatrix4();
+    matView = mCamera.GetViewMatrix();
+    matProj = mCamera.GetProjectionMatrix();
+    matFinal = matWorld * matView * matProj;
+    wvp = Transpose(matFinal);
+    mConstantBuffer.Update(&wvp);
+    mConstantBuffer.BindVS(0);
+
+    mPlanet2.meshBuffer.Render();
 }
 
 void GameState::UpdateCamera(float deltaTime)

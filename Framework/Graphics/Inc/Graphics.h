@@ -17,5 +17,6 @@
 #include "Sampler.h"
 #include "SimpleDraw.h"
 #include "Texture.h"
+#include "Transform.h"
 #include "VertexShader.h"
 #include "VertexTypes.h"
