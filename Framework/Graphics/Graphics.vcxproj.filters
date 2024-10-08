@@ -72,6 +72,9 @@
     <ClInclude Include="Inc\Transform.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\StandardEffect.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -117,6 +120,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\RenderObject.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StandardEffect.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

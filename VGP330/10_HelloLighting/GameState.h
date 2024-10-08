@@ -24,8 +24,5 @@ protected:
     PanicEngine::Graphics::RenderObject mPlanet;
     PanicEngine::Graphics::RenderObject mPlanet2;
 
-    PanicEngine::Graphics::ConstantBuffer mConstantBuffer;
-    PanicEngine::Graphics::VertexShader mVertexShader;
-    PanicEngine::Graphics::PixelShader mPixelShader;
-    PanicEngine::Graphics::Sampler mSampler;
+    PanicEngine::Graphics::StandardEffect mStandardEffect;
 };

@@ -6,7 +6,6 @@ using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
 
-
 void GameState::Initialize()
 {
     MeshPX mesh;
@@ -22,23 +21,16 @@ void GameState::Initialize()
     mPlanet2.meshBuffer.Initialize(mesh);
     mPlanet2.diffuseTexture.Initialize(L"../../Assets/Images/planets/earth/earth.jpg");
 
-    mConstantBuffer.Initialize(sizeof(Matrix4));
-    mVertexShader.Initialize<VertexPX>(shaderFile);
-    mPixelShader.Initialize(shaderFile);
-    mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
-
     mPlanet.transform.position.x = -1.0f;
     mPlanet2.transform.position.x = 1.0f;
 
-    mPlanet2.transform.scale.y = 0.1f;
+    mStandardEffect.Initialize(shaderFile);
+    mStandardEffect.SetCamera(mCamera);
 }
 
 void GameState::Terminate()
 {
-    mSampler.Terminate();
-    mPixelShader.Terminate();
-    mVertexShader.Terminate();
-    mConstantBuffer.Terminate();
+    mStandardEffect.Terminate();
     mPlanet.Terminate();
     mPlanet2.Terminate();
 }
@@ -46,35 +38,15 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
+    mStandardEffect.SetCamera(mCamera);
 }
 
 void GameState::Render()
 {
-    mVertexShader.Bind();
-    mPixelShader.Bind();
-    mPlanet.diffuseTexture.BindPS(0);
-    mSampler.BindPS(0);
-
-    // constant buffer
-    Matrix4 matWorld = mPlanet.transform.GetMatrix4();
-    Matrix4 matView = mCamera.GetViewMatrix();
-    Matrix4 matProj = mCamera.GetProjectionMatrix();
-    Matrix4 matFinal = matWorld * matView * matProj;
-    Matrix4 wvp = Transpose(matFinal);
-    mConstantBuffer.Update(&wvp);
-    mConstantBuffer.BindVS(0);
-
-    mPlanet.meshBuffer.Render();
-
-    matWorld = mPlanet2.transform.GetMatrix4();
-    matView = mCamera.GetViewMatrix();
-    matProj = mCamera.GetProjectionMatrix();
-    matFinal = matWorld * matView * matProj;
-    wvp = Transpose(matFinal);
-    mConstantBuffer.Update(&wvp);
-    mConstantBuffer.BindVS(0);
-
-    mPlanet2.meshBuffer.Render();
+    mStandardEffect.Begin();
+        mStandardEffect.Render(mPlanet);
+        mStandardEffect.Render(mPlanet2);
+    mStandardEffect.End();
 }
 
 void GameState::UpdateCamera(float deltaTime)
