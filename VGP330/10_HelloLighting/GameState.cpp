@@ -14,15 +14,20 @@ void GameState::Initialize()
     mCamera.SetPosition({ 0.0f,0.0f,-5.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
 
+    mDirectionalLight.direction = Normalize({ 1.0f, -1.0f, 1.0f });
+    mDirectionalLight.ambient = { 0.3f, 0.3f, 0.3f, 1.0f };
+    mDirectionalLight.diffuse = { 0.7f, 0.7f,0.7f,1.0f };
+    mDirectionalLight.specular = { 0.9f, 0.9f,0.9f,1.0f };
+
     //Default is Skybox
-    mesh = MeshBuilder::CreateSphere(30,30,1.0f);
-    
+    mesh = MeshBuilder::CreateSphere(30, 30, 1.0f);
+
     for (int i = 0; i < 9; i++)
     {
         PanicEngine::Graphics::RenderObject planet;
 
         planet.meshBuffer.Initialize(mesh);
-        planet.diffuseTextureId = TextureCache::Get()->LoadTexture("planets/earth/earth.jpg");
+        planet.diffuseMapId = TextureCache::Get()->LoadTexture("planets/earth/earth.jpg");
 
         planet.transform.position.x = i;
 
@@ -31,6 +36,7 @@ void GameState::Initialize()
 
     mStandardEffect.Initialize(shaderFile);
     mStandardEffect.SetCamera(mCamera);
+    mStandardEffect.SetDirectionalLight(mDirectionalLight);
 }
 
 void GameState::Terminate()
@@ -45,16 +51,15 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
-    mStandardEffect.SetCamera(mCamera);
 }
 
 void GameState::Render()
 {
     mStandardEffect.Begin();
-        for (auto& planet : mPlanets)
-        {
-            mStandardEffect.Render(planet);
-        }
+    for (auto& planet : mPlanets)
+    {
+        mStandardEffect.Render(planet);
+    }
     mStandardEffect.End();
 }
 
@@ -96,5 +101,25 @@ void GameState::UpdateCamera(float deltaTime)
 
 void GameState::DebugUI()
 {
-    
+    ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+    if (ImGui::CollapsingHeader("light", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        if (ImGui::DragFloat3("Direction", &mDirectionalLight.direction.x, 0.001f))
+        {
+            mDirectionalLight.direction = Normalize(mDirectionalLight.direction);
+        }
+
+        ImGui::ColorEdit4("Ambient##Light", &mDirectionalLight.ambient.r);
+        ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
+        ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
+    }
+    if (ImGui::CollapsingHeader("material", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::ColorEdit4("Ambient##Material", &mPlanets[0].material.ambient.r);
+        ImGui::ColorEdit4("Diffuse##Material", &mPlanets[0].material.diffuse.r);
+        ImGui::ColorEdit4("Specular##Material", &mPlanets[0].material.specular.r);
+        ImGui::ColorEdit4("Emissive##Material", &mPlanets[0].material.emissive.r);
+        ImGui::DragFloat("SpecPower", &mPlanets[0].material.power);
+    }
+    ImGui::End();
 }

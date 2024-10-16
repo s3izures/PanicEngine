@@ -7,6 +7,7 @@
 #include "Color.h"
 #include "ConstantBuffer.h"
 #include "DebugUI.h"
+#include "DirectionalLight.h"
 #include "GraphicsSystem.h"
 #include "MeshBuffer.h"
 #include "MeshBuilder.h"

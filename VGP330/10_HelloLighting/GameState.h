@@ -17,4 +17,5 @@ protected:
     std::vector<PanicEngine::Graphics::RenderObject> mPlanets;
 
     PanicEngine::Graphics::StandardEffect mStandardEffect;
+    PanicEngine::Graphics::DirectionalLight mDirectionalLight;
 };
