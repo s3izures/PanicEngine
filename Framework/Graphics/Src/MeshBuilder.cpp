@@ -495,7 +495,7 @@ Mesh MeshBuilder::CreateSphere(int slices, int rings, float radius)
 
             const Math::Vector3 pos = { x,y,z };
             const Math::Vector3 norm = Math::Normalize(pos);
-            const Math::Vector3 tang = Math::Normalize({ -z,0.0f,x });
+            const Math::Vector3 tang = abs(Math::Dot(norm, Math::Vector3::YAxis)) < 0.999f ? Math::Normalize({ -z,0.0f,x }) : Math::Vector3::ZAxis;
 
             mesh.vertices.push_back({ pos,norm,tang,{u,v} });
         }

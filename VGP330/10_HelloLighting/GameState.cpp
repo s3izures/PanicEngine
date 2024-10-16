@@ -20,14 +20,16 @@ void GameState::Initialize()
     mDirectionalLight.specular = { 0.9f, 0.9f,0.9f,1.0f };
 
     //Default is Skybox
-    mesh = MeshBuilder::CreateSphere(30, 30, 1.0f);
+    mesh = MeshBuilder::CreateSphere(100, 100, 1.0f);
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 1; i++)
     {
-        PanicEngine::Graphics::RenderObject planet;
-
+        RenderObject& planet = mPlanets.emplace_back();
         planet.meshBuffer.Initialize(mesh);
-        planet.diffuseMapId = TextureCache::Get()->LoadTexture("planets/earth/earth.jpg");
+        planet.diffuseMapId = TextureCache::Get()->LoadTexture("filthy-space-panels-bl/filthy-space-panels_albedo.png");
+        planet.normalMapId = TextureCache::Get()->LoadTexture("filthy-space-panels-bl/filthy-space-panels_normal-ogl.png");
+        planet.specMapId = TextureCache::Get()->LoadTexture("filthy-space-panels-bl/filthy-space-panels_metallic.png");
+        planet.bumpMapId = TextureCache::Get()->LoadTexture("filthy-space-panels-bl/filthy-space-panels_height.png");
 
         planet.transform.position.x = i;
 
@@ -121,5 +123,6 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Emissive##Material", &mPlanets[0].material.emissive.r);
         ImGui::DragFloat("SpecPower", &mPlanets[0].material.power);
     }
+    mStandardEffect.DebugUI();
     ImGui::End();
 }

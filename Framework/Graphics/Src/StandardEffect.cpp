@@ -58,9 +58,10 @@ void StandardEffect::Render(const RenderObject& renderObject)
 
     SettingsData settingsData;
     settingsData.useDiffuseMap = mSettingsData.useDiffuseMap > 0 && renderObject.diffuseMapId > 0;
-    settingsData.useDiffuseMap = mSettingsData.useNormalMap > 0 && renderObject.normalMapId > 0;
-    settingsData.useDiffuseMap = mSettingsData.useSpecMap > 0 && renderObject.specMapId > 0;
-    settingsData.useDiffuseMap = mSettingsData.useBumpMap > 0 && renderObject.bumpMapId > 0;
+    settingsData.useNormalMap = mSettingsData.useNormalMap > 0 && renderObject.normalMapId > 0;
+    settingsData.useSpecMap = mSettingsData.useSpecMap > 0 && renderObject.specMapId > 0;
+    settingsData.useBumpMap = mSettingsData.useBumpMap > 0 && renderObject.bumpMapId > 0;
+    settingsData.bumpWeight = mSettingsData.bumpWeight;
     mSettingsBuffer.Update(settingsData);
 
     const Math::Matrix4 matWorld = renderObject.transform.GetMatrix4();
@@ -79,6 +80,10 @@ void StandardEffect::Render(const RenderObject& renderObject)
 
     TextureCache* tc = TextureCache::Get();
     tc->BindPS(renderObject.diffuseMapId, 0);
+    tc->BindPS(renderObject.normalMapId, 1);
+    tc->BindPS(renderObject.specMapId, 2);
+    tc->BindVS(renderObject.bumpMapId, 3);
+
     renderObject.meshBuffer.Render();
 }
 
@@ -97,24 +102,29 @@ void StandardEffect::DebugUI()
     if (ImGui::CollapsingHeader("StandardEffect", ImGuiTreeNodeFlags_DefaultOpen))
     {
         bool useDiffuse = mSettingsData.useDiffuseMap > 0;
-        if (ImGui::Checkbox("useDiffuse", &useDiffuse))
+        if (ImGui::Checkbox("UseDiffuse", &useDiffuse))
         {
             mSettingsData.useDiffuseMap = (useDiffuse) ? 1 : 0;
         }
+
         bool useNormal = mSettingsData.useNormalMap > 0;
-        if (ImGui::Checkbox("useNormal", &useNormal))
+        if (ImGui::Checkbox("UseNormal", &useNormal))
         {
             mSettingsData.useNormalMap = (useNormal) ? 1 : 0;
         }
+
         bool useSpec = mSettingsData.useSpecMap > 0;
-        if (ImGui::Checkbox("useSpec", &useSpec))
+        if (ImGui::Checkbox("UseSpec", &useSpec))
         {
             mSettingsData.useSpecMap = (useSpec) ? 1 : 0;
         }
+
         bool useBump = mSettingsData.useBumpMap > 0;
-        if (ImGui::Checkbox("useBump", &useBump))
+        if (ImGui::Checkbox("UseBump", &useBump))
         {
             mSettingsData.useBumpMap = (useBump) ? 1 : 0;
         }
+
+        ImGui::DragFloat("BumpWeight", &mSettingsData.bumpWeight, 0.01f, 0.0f, 10000.0f);
     }
 }

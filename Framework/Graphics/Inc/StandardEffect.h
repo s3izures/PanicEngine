@@ -42,6 +42,8 @@ namespace PanicEngine::Graphics
             int useNormalMap = 1;
             int useSpecMap = 1;
             int useBumpMap = 1;
+            float bumpWeight = 0.1f;
+            float padding[3] = {0.0f};
         };
 
         using TransformBuffer = TypedConstantBuffer<TransformData>;
