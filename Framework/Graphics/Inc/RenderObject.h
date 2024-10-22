@@ -6,6 +6,8 @@
 
 namespace PanicEngine::Graphics 
 {
+    struct Model;
+
     class RenderObject
     {
     public:
@@ -19,5 +21,15 @@ namespace PanicEngine::Graphics
         TextureId normalMapId;
         TextureId specMapId;
         TextureId bumpMapId;
+    };
+
+    class RenderGroup
+    {
+    public:
+        void Initialize(const Model& model);
+        void Terminate();
+
+        Transform transform;
+        std::vector<RenderObject> renderObjects;
     };
 }

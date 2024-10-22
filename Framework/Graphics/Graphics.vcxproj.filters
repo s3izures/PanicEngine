@@ -84,6 +84,12 @@
     <ClInclude Include="Inc\Material.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Model.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ModelIO.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -135,6 +141,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\TextureCache.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ModelIO.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
