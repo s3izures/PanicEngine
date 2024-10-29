@@ -8,7 +8,8 @@ using namespace PanicEngine::Input;
 
 void GameState::Initialize()
 {
-    std::filesystem::path shaderFile = L"../../Assets/Shaders/CellShading.fx";
+    std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
+    std::filesystem::path renderShaderFile = L"../../Assets/Shaders/CellShading.fx";
 
     mCamera.SetPosition({ 0.0f,1.0f,-5.0f });
     mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
@@ -22,15 +23,21 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-    Model model;
-    ModelIO::LoadModel(L"../../Assets/Models/Prisoner/Prisoner.model", model);
-    ModelIO::LoadMaterial(L"../../Assets/Models/Prisoner/Prisoner.model", model);
-    mCharacters.Initialize(model);
+    mRenderTargetStandardEffect.Initialize(renderShaderFile);
+    mRenderTargetStandardEffect.SetCamera(mCamera);
+    mRenderTargetStandardEffect.SetDirectionalLight(mDirectionalLight);
+
+    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+
+    const uint32_t size = 512;
+    mRenderTarget.Initialize(size, size, Texture::Format::RGBA_U8);
 }
 
 void GameState::Terminate()
 {
+    mRenderTarget.Terminate();
     mCharacters.Terminate();
+    mRenderTargetStandardEffect.Terminate();
     mStandardEffect.Terminate();
 }
 
@@ -41,9 +48,22 @@ void GameState::Update(float deltaTime)
 
 void GameState::Render()
 {
+    mCamera.SetAspectRatio(1.0f);
+
+    mRenderTarget.BeginRender();
+        mRenderTargetStandardEffect.Begin();
+            mRenderTargetStandardEffect.Render(mCharacters);
+        mRenderTargetStandardEffect.End();
+    mRenderTarget.EndRender();
+
+    mCamera.SetAspectRatio(0.0f);
+
     mStandardEffect.Begin();
         mStandardEffect.Render(mCharacters);
     mStandardEffect.End();
+
+    SimpleDraw::AddGroundPlane(10.0f, Colors::Wheat);
+    SimpleDraw::Render(mCamera);
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -96,14 +116,15 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
         ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
     }
-    //if (ImGui::CollapsingHeader("material", ImGuiTreeNodeFlags_DefaultOpen))
-    //{
-    //    ImGui::ColorEdit4("Ambient##Material", &mPlanets[0].material.ambient.r);
-    //    ImGui::ColorEdit4("Diffuse##Material", &mPlanets[0].material.diffuse.r);
-    //    ImGui::ColorEdit4("Specular##Material", &mPlanets[0].material.specular.r);
-    //    ImGui::ColorEdit4("Emissive##Material", &mPlanets[0].material.emissive.r);
-    //    ImGui::DragFloat("SpecPower", &mPlanets[0].material.power);
-    //}
+    ImGui::Separator();
+    ImGui::Text("RenderTarget");
+    ImGui::Image(
+        mRenderTarget.GetRawData(),
+    { 200, 200 },
+    { 0,0 },
+    { 1,1 },
+    { 1,1,1,1 },
+    { 1,1,1,1 });
     mStandardEffect.DebugUI();
     ImGui::End();
 }

@@ -1,7 +1,5 @@
 #include "Precompiled.h"
 #include "RenderObject.h"
-#include "Model.h"
-#include "TextureCache.h"
 
 
 using namespace PanicEngine;
@@ -45,4 +43,12 @@ void RenderGroup::Initialize(const Model& model)
             renderObject.bumpMapId = TryLoadTexture(materialData.bumpMapName);
         }
     }
+}
+
+void RenderGroup::Initialize(const std::filesystem::path& modelFile)
+{
+    modelId = ModelCache::Get()->LoadModel(modelFile);
+    const Model* model = ModelCache::Get()->GetModel(modelId);
+    ASSERT(model != nullptr, "RenderGroup: model %s did not load", modelFile.u8string());
+    Initialize(*model);
 }

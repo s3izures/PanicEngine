@@ -26,6 +26,7 @@ void App::Run(const AppConfig& config)
     DebugUI::StaticInitialize(handle, false, true);
     SimpleDraw::StaticInitialize(config.maxDrawLines);
     TextureCache::StaticInitialize("../../Assets/Images");
+    ModelCache::StaticInitialize();
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
@@ -71,6 +72,8 @@ void App::Run(const AppConfig& config)
 
     }
     //End state
+    ModelCache::StaticTerminate();
+    TextureCache::StaticTerminate();
     SimpleDraw::StaticTerminate();
     mCurrentState->Terminate(); //FILO, First in Last Out
     DebugUI::StaticTerminate();

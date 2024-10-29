@@ -3,6 +3,7 @@
 #include "TextureCache.h"
 #include "Transform.h"
 #include "Material.h"
+#include "ModelCache.h"
 
 namespace PanicEngine::Graphics 
 {
@@ -27,8 +28,10 @@ namespace PanicEngine::Graphics
     {
     public:
         void Initialize(const Model& model);
+        void Initialize(const std::filesystem::path& modelFile);
         void Terminate();
 
+        ModelId modelId;
         Transform transform;
         std::vector<RenderObject> renderObjects;
     };

@@ -14,8 +14,12 @@ protected:
     void UpdateCamera(float deltaTime);
 
     PanicEngine::Graphics::Camera mCamera;
+    PanicEngine::Graphics::Camera mRenderTargetCamera;
     
     PanicEngine::Graphics::RenderGroup mCharacters;
     PanicEngine::Graphics::StandardEffect mStandardEffect;
+    PanicEngine::Graphics::StandardEffect mRenderTargetStandardEffect;
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;
+    PanicEngine::Graphics::RenderTarget mRenderTarget;
+
 };
