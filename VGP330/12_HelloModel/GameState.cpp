@@ -24,6 +24,7 @@ void GameState::Initialize()
 
     Model model;
     ModelIO::LoadModel(L"../../Assets/Models/Prisoner/Prisoner.model", model);
+    ModelIO::LoadMaterial(L"../../Assets/Models/Prisoner/Prisoner.model", model);
     mCharacters.Initialize(model);
 }
 
