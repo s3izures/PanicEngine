@@ -1,6 +1,12 @@
 #pragma once
 #include <PanicEngine/Inc/PanicEngine.h>
 
+enum class Charas
+{
+    Prisoner,
+    Amy
+};
+
 class GameState : public PanicEngine::AppState
 {
 public:
@@ -21,4 +27,6 @@ protected:
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;
     PanicEngine::Graphics::RenderTarget mRenderTarget;
 
+    Charas mCharas = Charas::Prisoner;
+    Charas mCharasBox = Charas::Amy;
 };

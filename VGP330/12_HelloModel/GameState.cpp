@@ -6,6 +6,12 @@ using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
 
+const char* gCharas[] =
+{
+    "Prisoner",
+    "Amy"
+};
+
 void GameState::Initialize()
 {
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
@@ -47,20 +53,22 @@ void GameState::Update(float deltaTime)
     UpdateCamera(deltaTime);
 }
 
+int currentRenderWorld = 0;
+int currentRenderBox = 0;
 void GameState::Render()
 {
     mCamera.SetAspectRatio(1.0f);
 
     mRenderTarget.BeginRender();
         mRenderTargetStandardEffect.Begin();
-            mRenderTargetStandardEffect.Render(mCharacters, 1);
+            mRenderTargetStandardEffect.Render(mCharacters, currentRenderWorld);
         mRenderTargetStandardEffect.End();
     mRenderTarget.EndRender();
 
     mCamera.SetAspectRatio(0.0f);
 
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters, 0);
+        mStandardEffect.Render(mCharacters, currentRenderBox);
     mStandardEffect.End();
 
     SimpleDraw::AddGroundPlane(10.0f, Colors::Wheat);
@@ -106,6 +114,19 @@ void GameState::UpdateCamera(float deltaTime)
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+    currentRenderWorld = static_cast<int>(mCharas);
+    currentRenderBox = static_cast<int>(mCharasBox);
+
+    if (ImGui::Combo("RenderTargetBox", &currentRenderWorld, gCharas, static_cast<int>(std::size(gCharas))))
+    {
+        mCharas = (Charas)currentRenderWorld;
+    }
+    if (ImGui::Combo("RenderTargetWorld", &currentRenderBox, gCharas, static_cast<int>(std::size(gCharas))))
+    {
+        mCharasBox = (Charas)currentRenderBox;
+    }
+
     if (ImGui::CollapsingHeader("light", ImGuiTreeNodeFlags_DefaultOpen))
     {
         if (ImGui::DragFloat3("Direction", &mDirectionalLight.direction.x, 0.001f))
