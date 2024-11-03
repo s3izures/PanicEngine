@@ -23,6 +23,7 @@ namespace PanicEngine::Graphics
 
         void Render(const RenderObject& renderObject);
         void Render(const RenderGroup& renderGroup);
+        void Render(const RenderGroup& renderGroup, int which);
 
         void SetCamera(const Camera& camera);
         void SetDirectionalLight(const DirectionalLight& directionalLight);

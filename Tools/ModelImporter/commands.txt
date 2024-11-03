@@ -1,1 +1,1 @@
--scale 0.01 ../../Assets/Models/Prisoner/Prisoner.fbx ../../Assets/Models/Prisoner/Prisoner.model
+-scale 0.01 ../../Assets/Models/Amy/Amy.fbx ../../Assets/Models/Amy/Amy.model

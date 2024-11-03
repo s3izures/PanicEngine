@@ -28,6 +28,7 @@ void GameState::Initialize()
     mRenderTargetStandardEffect.SetDirectionalLight(mDirectionalLight);
 
     mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     const uint32_t size = 512;
     mRenderTarget.Initialize(size, size, Texture::Format::RGBA_U8);
@@ -52,14 +53,14 @@ void GameState::Render()
 
     mRenderTarget.BeginRender();
         mRenderTargetStandardEffect.Begin();
-            mRenderTargetStandardEffect.Render(mCharacters);
+            mRenderTargetStandardEffect.Render(mCharacters, 1);
         mRenderTargetStandardEffect.End();
     mRenderTarget.EndRender();
 
     mCamera.SetAspectRatio(0.0f);
 
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters);
+        mStandardEffect.Render(mCharacters, 0);
     mStandardEffect.End();
 
     SimpleDraw::AddGroundPlane(10.0f, Colors::Wheat);

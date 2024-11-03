@@ -126,6 +126,11 @@ void StandardEffect::Render(const RenderGroup& renderGroup)
     }
 }
 
+void PanicEngine::Graphics::StandardEffect::Render(const RenderGroup& renderGroup, int which)
+{
+    Render(renderGroup.renderObjects[which]);
+}
+
 void StandardEffect::SetCamera(const Camera& camera)
 {
     mCamera = &camera;
