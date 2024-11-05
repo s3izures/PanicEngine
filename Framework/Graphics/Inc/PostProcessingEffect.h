@@ -20,8 +20,9 @@ namespace PanicEngine::Graphics
             Mirror,
             Blur,
             Combine2,
-            MotionBlur,
-            ChromaticAbberation
+            FocalBlur,
+            ChromaticAbberation,
+            Wave
         };
 
         void Initialize(const std::filesystem::path& filePath);
@@ -59,5 +60,7 @@ namespace PanicEngine::Graphics
         float mMirrorScaleY = -1.0f;
         float mBlurStrength = 5.0f;
         float mAberrationValue = 0.005f;
+        float mWaveLength = 0.05f;
+        float mNumWaves = 20.0f;
     };
 }

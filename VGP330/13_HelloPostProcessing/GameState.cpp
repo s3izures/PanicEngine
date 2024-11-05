@@ -31,6 +31,7 @@ void GameState::Initialize()
 
     mPostProcessEffect.Initialize(shaderFilePP);
     mPostProcessEffect.SetTexture(&mRenderTarget);
+    mPostProcessEffect.SetTexture(&mCombineTexture, 1);
 
     mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
     mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
@@ -42,6 +43,8 @@ void GameState::Initialize()
     mGround.meshBuffer.Initialize(groundMesh);
     mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
 
+    mCombineTexture.Initialize(L"../../Assets/Images/Terrain-Height-Maps/terrain_map-0.png");
+
     GraphicsSystem* gs = GraphicsSystem::Get();
     const uint32_t screenX = gs->GetBackBufferWidth();
     const uint32_t screenY = gs->GetBackBufferHeight();
@@ -51,6 +54,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mRenderTarget.Terminate();
+    mCombineTexture.Terminate();
     mGround.Terminate();
     mScreenQuad.Terminate();
     mCharacters.Terminate();
@@ -66,8 +70,6 @@ void GameState::Update(float deltaTime)
 int currentRenderWorld = 0;
 void GameState::Render()
 {
-    mCamera.SetAspectRatio(1.0f);
-
     mRenderTarget.BeginRender();
         mStandardEffect.Begin();
             mStandardEffect.Render(mCharacters, currentRenderWorld);
@@ -147,6 +149,10 @@ void GameState::DebugUI()
     { 1,1 },
     { 1,1,1,1 },
     { 1,1,1,1 });
+
+
     mStandardEffect.DebugUI();
+    mPostProcessEffect.DebugUI();
+
     ImGui::End();
 }

@@ -30,6 +30,7 @@ protected:
     PanicEngine::Graphics::RenderObject mScreenQuad;
 
     PanicEngine::Graphics::RenderTarget mRenderTarget;
+    PanicEngine::Graphics::Texture mCombineTexture;
 
     Charas mCharas = Charas::Prisoner;
 };
