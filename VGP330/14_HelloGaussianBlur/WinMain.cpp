@@ -6,7 +6,7 @@ using namespace PanicEngine;
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
     AppConfig config;
-    config.appName = L"Hello Gaussian Blue";
+    config.appName = L"Hello Gaussian Blur";
     config.winWidth = 800;
     config.winHeight = 800;
 
