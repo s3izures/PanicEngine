@@ -23,6 +23,7 @@
 #include "Sampler.h"
 #include "SimpleDraw.h"
 #include "StandardEffect.h"
+#include "Terrain.h"
 #include "Texture.h"
 #include "TextureCache.h"
 #include "Transform.h"
