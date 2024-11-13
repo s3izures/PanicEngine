@@ -74,12 +74,16 @@ void GameState::Update(float deltaTime)
 int currentRenderWorld = 0;
 void GameState::Render()
 {
+    mCamera.SetAspectRatio(0.0f);
+
     mRenderTarget.BeginRender();
         mStandardEffect.Begin();
             mStandardEffect.Render(mCharacters, currentRenderWorld);
             mStandardEffect.Render(mGround);
         mStandardEffect.End();
     mRenderTarget.EndRender();
+
+    mCamera.SetAspectRatio(1.0f);
 
     mBloomRenderTarget.BeginRender();
         mStandardEffect.Begin();
@@ -157,7 +161,7 @@ void GameState::DebugUI()
     ImGui::Separator();
     ImGui::Text("RenderTarget");
     ImGui::Image(
-        mGaussianBlurEffect.GetResultTexture().GetRawData(),
+        mRenderTarget.GetRawData(),
     { 200, 200 },
     { 0,0 },
     { 1,1 },
