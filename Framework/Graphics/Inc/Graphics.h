@@ -8,6 +8,7 @@
 #include "ConstantBuffer.h"
 #include "DebugUI.h"
 #include "DirectionalLight.h"
+#include "GaussianBlurEffect.h"
 #include "GraphicsSystem.h"
 #include "MeshBuffer.h"
 #include "MeshBuilder.h"
