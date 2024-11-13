@@ -8,7 +8,6 @@
 
 using namespace PanicEngine;
 using namespace PanicEngine::Graphics;
-
 void TerrainEffect::Initialize()
 {
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Terrain.fx";
@@ -37,31 +36,34 @@ void TerrainEffect::Begin()
 {
     mVertexShader.Bind();
     mPixelShader.Bind();
+
     mTransformBuffer.BindVS(0);
-    mLightBuffer.BindPS(1);
+
     mLightBuffer.BindVS(1);
+    mLightBuffer.BindPS(1);
 
     mMaterialBuffer.BindPS(2);
 
     mSettingsBuffer.BindVS(3);
     mSettingsBuffer.BindPS(3);
 
-    mSampler.BindPS(0);
     mSampler.BindVS(0);
+    mSampler.BindPS(0);
 }
 
 void TerrainEffect::End()
 {
+
 }
 
 void TerrainEffect::Render(const RenderObject& renderObject)
 {
     ASSERT(mCamera != nullptr, "StandardEffect: must have a camera");
-    mSettingsBuffer.Update(mSettingsData);
 
     const Math::Matrix4 matWorld = renderObject.transform.GetMatrix4();
     const Math::Matrix4 matView = mCamera->GetViewMatrix();
     const Math::Matrix4 matProj = mCamera->GetProjectionMatrix();
+
     const Math::Matrix4 matFinal = matWorld * matView * matProj;
 
     TransformData transformData;
@@ -70,14 +72,13 @@ void TerrainEffect::Render(const RenderObject& renderObject)
     transformData.viewPosition = mCamera->GetPosition();
     mTransformBuffer.Update(transformData);
 
+    mSettingsBuffer.Update(mSettingsData);
     mLightBuffer.Update(*mDirectionalLight);
     mMaterialBuffer.Update(renderObject.material);
 
     TextureCache* tc = TextureCache::Get();
     tc->BindPS(renderObject.diffuseMapId, 0);
     tc->BindPS(renderObject.normalMapId, 1);
-    tc->BindPS(renderObject.specMapId, 2);
-    tc->BindVS(renderObject.bumpMapId, 3);
 
     renderObject.meshBuffer.Render();
 }
@@ -92,6 +93,7 @@ void TerrainEffect::DebugUI()
             mSettingsData.useBlend = useBlend ? 1 : 0;
         }
         ImGui::DragFloat("BlendHeight", &mSettingsData.blendHeight, 0.1f, 0.0f, 20.0f);
+        ImGui::DragFloat("BlendThickness", &mSettingsData.blendThickness, 0.1f, 0.0f, 20.0f);
     }
 }
 

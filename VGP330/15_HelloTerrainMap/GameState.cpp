@@ -39,16 +39,16 @@ void GameState::Initialize()
     mTerrain.Initialize(L"../../Assets/Images/terrain/heightmap_512x512.raw", 20.0f, 10.0f);
 
     mGround.meshBuffer.Initialize(mTerrain.GetMesh());
-    mGround.diffuseMapId = TextureCache::Get()->LoadTexture("terrain/dirt_seamless");
-    mGround.normalMapId = TextureCache::Get()->LoadTexture("terrain/grass_2048");
+    mGround.diffuseMapId = TextureCache::Get()->LoadTexture("terrain/dirt_seamless.jpg");
+    mGround.normalMapId = TextureCache::Get()->LoadTexture("terrain/grass_2048.jpg");
 }
 
 void GameState::Terminate()
 {
     mGround.Terminate();
     mCharacters.Terminate();
-    mStandardEffect.Terminate();
     mTerrainEffect.Terminate();
+    mStandardEffect.Terminate();
 }
 
 void GameState::Update(float deltaTime)

@@ -17,11 +17,13 @@ namespace PanicEngine::Graphics
     public:
         void Initialize();
         void Terminate();
+
         void Begin();
         void End();
+
         void Render(const RenderObject& renderObject);
         void DebugUI();
-        
+
         void SetCamera(const Camera& camera);
         void SetDirectionalLight(const DirectionalLight& directionalLight);
 
@@ -38,7 +40,7 @@ namespace PanicEngine::Graphics
         {
             int useBlend = 0;
             float blendHeight = 0.0f;
-            float blendWidth = 0.0f;
+            float blendThickness = 0.0f;
             float padding = 0.0f;
         };
 
