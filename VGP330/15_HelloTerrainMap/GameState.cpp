@@ -29,13 +29,18 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
+    mTerrainEffect.Initialize();
+    mTerrainEffect.SetCamera(mCamera);
+    mTerrainEffect.SetDirectionalLight(mDirectionalLight);
+
     mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
     mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     mTerrain.Initialize(L"../../Assets/Images/terrain/heightmap_512x512.raw", 20.0f, 10.0f);
-   
+
     mGround.meshBuffer.Initialize(mTerrain.GetMesh());
-    mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
+    mGround.diffuseMapId = TextureCache::Get()->LoadTexture("terrain/dirt_seamless");
+    mGround.normalMapId = TextureCache::Get()->LoadTexture("terrain/grass_2048");
 }
 
 void GameState::Terminate()
@@ -43,6 +48,7 @@ void GameState::Terminate()
     mGround.Terminate();
     mCharacters.Terminate();
     mStandardEffect.Terminate();
+    mTerrainEffect.Terminate();
 }
 
 void GameState::Update(float deltaTime)
@@ -57,6 +63,10 @@ void GameState::Render()
         mStandardEffect.Render(mCharacters, currentRenderWorld);
         mStandardEffect.Render(mGround);
     mStandardEffect.End();
+
+    mTerrainEffect.Begin();
+        mTerrainEffect.Render(mGround);
+    mTerrainEffect.End();
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -125,5 +135,6 @@ void GameState::DebugUI()
     }
     ImGui::Separator();
     mStandardEffect.DebugUI();
+    mTerrainEffect.DebugUI();
     ImGui::End();
 }
