@@ -72,7 +72,7 @@ void GameState::Render()
 {
     mRenderTarget.BeginRender();
         mStandardEffect.Begin();
-            mStandardEffect.Render(mCharacters, currentRenderWorld);
+            mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
             mStandardEffect.Render(mGround);
         mStandardEffect.End();
     mRenderTarget.EndRender();

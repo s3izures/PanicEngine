@@ -28,41 +28,27 @@ void GameState::Initialize()
     mStandardEffect.Initialize(shaderFile);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+    mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+    mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
 
-    mGaussianBlurEffect.Initialize();
-    mGaussianBlurEffect.SetSourceTexture(mBloomRenderTarget);
-
-    mPostProcessEffect.Initialize(shaderFilePP);
-    mPostProcessEffect.SetTexture(&mRenderTarget);
-    mPostProcessEffect.SetTexture(&mGaussianBlurEffect.GetResultTexture(), 1);
-    mPostProcessEffect.SetMode(PostProcessEffect::Mode::Combine2);
+    mShadowEffect.Initialize();
+    mShadowEffect.SetDirectionalLight(mDirectionalLight);
 
     mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
     mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     MeshPX screenQuad = MeshBuilder::CreateScreenQuad();
-    mScreenQuad.meshBuffer.Initialize(screenQuad);
 
     Mesh groundMesh = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
     mGround.meshBuffer.Initialize(groundMesh);
     mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
-
-    GraphicsSystem* gs = GraphicsSystem::Get();
-    const uint32_t screenX = gs->GetBackBufferWidth();
-    const uint32_t screenY = gs->GetBackBufferHeight();
-    mRenderTarget.Initialize(screenX, screenY, Texture::Format::RGBA_U8);
-    mBloomRenderTarget.Initialize(screenX, screenY, Texture::Format::RGBA_U8);
 }
 
 void GameState::Terminate()
 {
-    mBloomRenderTarget.Terminate();
-    mRenderTarget.Terminate();
     mGround.Terminate();
-    mScreenQuad.Terminate();
     mCharacters.Terminate();
-    mPostProcessEffect.Terminate();
-    mGaussianBlurEffect.Terminate();
+    mShadowEffect.Terminate();
     mStandardEffect.Terminate();
 }
 
@@ -74,26 +60,15 @@ void GameState::Update(float deltaTime)
 int currentRenderWorld = 0;
 void GameState::Render()
 {
-    mRenderTarget.BeginRender();
-        mStandardEffect.Begin();
-            mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
-            mStandardEffect.Render(mGround);
-        mStandardEffect.End();
-    mRenderTarget.EndRender();
+    //Only items with shadows
+    mShadowEffect.Begin();
+        mShadowEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+    mShadowEffect.End();
 
-    mBloomRenderTarget.BeginRender();
-        mStandardEffect.Begin();
-            mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
-        mStandardEffect.End();
-    mBloomRenderTarget.EndRender();
-
-    mGaussianBlurEffect.Begin();
-        mGaussianBlurEffect.Render(mScreenQuad);
-    mGaussianBlurEffect.End();
-
-    mPostProcessEffect.Begin();
-        mPostProcessEffect.Render(mScreenQuad);
-    mPostProcessEffect.End();
+    mStandardEffect.Begin();
+        mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+        mStandardEffect.Render(mGround);
+    mStandardEffect.End();
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -155,17 +130,9 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
     }
     ImGui::Separator();
-    ImGui::Text("RenderTarget");
-    ImGui::Image(
-        mRenderTarget.GetRawData(),
-    { 200, 200 },
-    { 0,0 },
-    { 1,1 },
-    { 1,1,1,1 },
-    { 1,1,1,1 });
-
 
     mStandardEffect.DebugUI();
-    mGaussianBlurEffect.DebugUI();
+    mShadowEffect.DebugUI();
+
     ImGui::End();
 }

@@ -61,14 +61,14 @@ void GameState::Render()
 
     mRenderTarget.BeginRender();
         mRenderTargetStandardEffect.Begin();
-            mRenderTargetStandardEffect.Render(mCharacters, currentRenderWorld);
+            mRenderTargetStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
         mRenderTargetStandardEffect.End();
     mRenderTarget.EndRender();
 
     mCamera.SetAspectRatio(0.0f);
 
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters, currentRenderBox);
+        mStandardEffect.Render(mCharacters.renderObjects[currentRenderBox]);
     mStandardEffect.End();
 
     SimpleDraw::AddGroundPlane(10.0f, Colors::Wheat);
