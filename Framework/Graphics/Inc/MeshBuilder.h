@@ -25,5 +25,7 @@ namespace PanicEngine::Graphics
         static Mesh CreateSphere(int slices, int rings, float radius);
 
         static MeshPX CreateScreenQuad();
+
+        static MeshPX CreateSpriteQuad(float width, float height);
     };
 }

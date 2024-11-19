@@ -108,6 +108,9 @@
     <ClInclude Include="Inc\ShadowEffect.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\BillboardEffect.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -180,6 +183,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\ShadowEffect.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\BillboardEffect.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

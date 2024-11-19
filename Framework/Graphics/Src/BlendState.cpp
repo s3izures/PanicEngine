@@ -47,7 +47,7 @@ namespace
     }
 }
 
-void PanicEngine::Graphics::BlendState::ClearState()
+void BlendState::ClearState()
 {
     auto context = GraphicsSystem::Get()->GetContext();
     context->OMSetBlendState(nullptr, nullptr, UINT_MAX);
