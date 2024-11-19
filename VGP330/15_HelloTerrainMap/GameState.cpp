@@ -61,7 +61,6 @@ void GameState::Render()
 {
     mStandardEffect.Begin();
         mStandardEffect.Render(mCharacters, currentRenderWorld);
-        mStandardEffect.Render(mGround);
     mStandardEffect.End();
 
     mTerrainEffect.Begin();
