@@ -26,6 +26,7 @@ protected:
     PanicEngine::Graphics::ShadowEffect mShadowEffect;
 
     PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderObject mShape[2];
     PanicEngine::Graphics::RenderObject mGround;
 
     Charas mCharas = Charas::Prisoner;

@@ -42,10 +42,22 @@ void GameState::Initialize()
     Mesh groundMesh = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
     mGround.meshBuffer.Initialize(groundMesh);
     mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
+
+    MeshPX shape1 = MeshBuilder::CreateSpherePX(10, 10, 0.5f);
+    mShape[0].meshBuffer.Initialize(shape1);
+    mShape[0].transform.position.x = -1.0f;
+    mShape[0].transform.position.y = 0.8f;
+
+    MeshPX shape2 = MeshBuilder::CreateCubePX(0.5f);
+    mShape[1].meshBuffer.Initialize(shape2);
+    mShape[1].transform.position.x = 1.0f;
+    mShape[1].transform.position.y = 0.6f;
 }
 
 void GameState::Terminate()
 {
+    mShape[1].Terminate();
+    mShape[0].Terminate();
     mGround.Terminate();
     mCharacters.Terminate();
     mShadowEffect.Terminate();
@@ -63,10 +75,14 @@ void GameState::Render()
     //Only items with shadows
     mShadowEffect.Begin();
         mShadowEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+        mShadowEffect.Render(mShape[0]);
+        mShadowEffect.Render(mShape[1]);
     mShadowEffect.End();
 
     mStandardEffect.Begin();
         mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+        mStandardEffect.Render(mShape[0]);
+        mStandardEffect.Render(mShape[1]);
         mStandardEffect.Render(mGround);
     mStandardEffect.End();
 }
