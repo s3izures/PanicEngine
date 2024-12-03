@@ -32,3 +32,4 @@
 #include "Transform.h"
 #include "VertexShader.h"
 #include "VertexTypes.h"
+#include "VHSEffect.h"
