@@ -2,7 +2,7 @@
 #include "GaussianBlurEffect.h"
 
 #include "Camera.h"
-#include"GraphicsSystem.h"
+#include "GraphicsSystem.h"
 #include "RenderObject.h"
 #include "VertexTypes.h"
 
@@ -98,7 +98,7 @@ void GaussianBlurEffect::DebugUI()
 {
     if (ImGui::CollapsingHeader("GaussianBlur", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        ImGui::DragInt("BluRIterations", &mBlurIterations, 1, 1, 100);
+        ImGui::DragInt("BlurIterations", &mBlurIterations, 1, 1, 100);
         ImGui::DragFloat("BlurSaturation", &mBlurSaturation, 0.001f, 1.0f, 100.0f);
     }
 }

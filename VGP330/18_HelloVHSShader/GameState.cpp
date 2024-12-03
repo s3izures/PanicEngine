@@ -28,6 +28,9 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
+    mVHSEffect.Initialize();
+    mVHSEffect.SetSourceTexture(mRenderTarget);
+
     mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
     mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
@@ -50,6 +53,7 @@ void GameState::Terminate()
     mGround.Terminate();
     mScreenQuad.Terminate();
     mCharacters.Terminate();
+    mVHSEffect.Terminate();
     mStandardEffect.Terminate();
 }
 
@@ -67,6 +71,10 @@ void GameState::Render()
             mStandardEffect.Render(mGround);
         mStandardEffect.End();
     mRenderTarget.EndRender();
+
+    mVHSEffect.Begin();
+        mVHSEffect.Render(mScreenQuad);
+    mVHSEffect.End();
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -138,6 +146,7 @@ void GameState::DebugUI()
     { 1,1,1,1 });
 
     mStandardEffect.DebugUI();
+    mVHSEffect.DebugUI();
 
     ImGui::End();
 }

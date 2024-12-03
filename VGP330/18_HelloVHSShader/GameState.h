@@ -23,6 +23,7 @@ protected:
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;
     
     PanicEngine::Graphics::StandardEffect mStandardEffect;
+    PanicEngine::Graphics::VHSEffect mVHSEffect;
 
     PanicEngine::Graphics::RenderGroup mCharacters;
     PanicEngine::Graphics::RenderObject mGround;
