@@ -46,6 +46,8 @@ void VHSEffect::Begin()
 
     mSettingsBuffer.Update(data);
     mSettingsBuffer.BindPS(0);
+
+    // mStaticTextures[mStaticIndex]->BindPS(1);
 }
 
 void VHSEffect::End()
@@ -55,6 +57,15 @@ void VHSEffect::End()
     gs->ResetViewport();
 
     Texture::UnbindPS(0);
+}
+
+void VHSEffect::Update(float deltaTime)
+{
+    // mNextStaticUpdate -= deltaTime;
+    // if(mNextStatUpdate <= 0)
+    //      mStaticIndex = rand() % number of textures
+    //      mNextStaticUpdate = rand() / rand_max * 0.5f;
+
 }
 
 void VHSEffect::Render(const RenderObject& renderObject)

@@ -11,6 +11,7 @@ cbuffer SettingsBuffer : register(b0)
 }
 
 Texture2D textureMap0 : register(t0);
+Texture2D staticMap : register(t1);
 
 SamplerState textureSampler : register(s0);
 
@@ -55,6 +56,18 @@ float4 PS(VS_OUTPUT input) : SV_Target
     //Make noise according to speed
     //Make Function to generate pseudo-random value
     //chromaticRes.rgb *= lerp(chromaticRes.rgb, noise, float3(noiseIntensity));
+    
+    //Noise v2
+    float4 color0 = textureMap0.Sample(textureSampler, input.texCoord);
+    float4 color1 = staticMap.Sample(textureSampler, input.texCoord);
+    if(color1.r > 0.0)
+    {
+        finalColor = (color0 + color1) * 0.5f;
+    }
+    else
+    {
+        finalColor = color0;
+    }
 
     return finalColor;
 }

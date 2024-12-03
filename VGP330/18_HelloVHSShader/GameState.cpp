@@ -39,7 +39,7 @@ void GameState::Initialize()
 
     Mesh groundMesh = MeshBuilder::CreateGroundPlane(20, 20, 1.0f);
     mGround.meshBuffer.Initialize(groundMesh);
-    mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
+    mGround.diffuseMapId = TextureCache::Get()->LoadTexture("mountain/mountain_texture.jpg");
 
     GraphicsSystem* gs = GraphicsSystem::Get();
     const uint32_t screenX = gs->GetBackBufferWidth();

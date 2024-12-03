@@ -17,6 +17,7 @@ namespace PanicEngine::Graphics
 
         void Begin();
         void End();
+        void Update(float deltaTime);
 
         void Render(const RenderObject& renderObject);
         void SetSourceTexture(const Texture& texture);
@@ -41,11 +42,13 @@ namespace PanicEngine::Graphics
         Sampler mSampler;
 
         const Texture* mSourceTexture = nullptr;
-
+        // list of textures for static (at least 2)
         float mAberrationValue = 0.005f;
         float mScanlineIntensity = 5.0f;
         float mScanlineDesnity = 800.0f;
         float mNoiseIntensity = 0.05f;
         float mNoiseSpeed = 20.0f;
+        // int mStaticIndex = 0;
+        // float mNextStaticUpdate = 0.0f;
     };
 }
