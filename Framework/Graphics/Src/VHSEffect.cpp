@@ -40,7 +40,7 @@ void VHSEffect::Begin()
 
     data.abberationIntensity = mAberrationValue;
     data.scanlineIntensity = mScanlineIntensity;
-    data.scanlineThickness = mScanlineThickness;
+    data.scanlineDensity = mScanlineDesnity;
     data.noiseIntensity = mNoiseIntensity;
     data.noiseSpeed = mNoiseSpeed;
 
@@ -73,7 +73,7 @@ void VHSEffect::DebugUI()
     {
         ImGui::DragFloat("AbberationValue", &mAberrationValue, 0.001f, -0.1f, 0.1f);
         ImGui::DragFloat("ScanlineIntensity", &mScanlineIntensity, 0.01f, 0.0f, 10.0f);
-        ImGui::DragFloat("ScanlineThickness", &mScanlineThickness, 1.0f, 0.0f, 1000.0f);
+        ImGui::DragFloat("ScanlineDensity", &mScanlineDesnity, 1.0f, 0.0f, 1000.0f);
         ImGui::DragFloat("NoiseIntensity", &mNoiseIntensity, 0.001f, -0.1f, 0.1f); //DOESNT WORK YET
         ImGui::DragFloat("NoiseSpeed", &mNoiseSpeed, 0.001f, -0.1f, 0.1f);  //DOESNT WORK YET
     }
