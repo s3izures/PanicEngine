@@ -47,7 +47,7 @@ namespace PanicEngine::Graphics
         const Texture* mStaticTextures[4] = { nullptr };
 
         float mAberrationValue = 0.005f;
-        float mScanlineIntensity = 5.0f;
+        float mScanlineIntensity = 0.5f;
         float mScanlineDesnity = 800.0f;
         float mNoiseIntensity = 0.4f;
         float mNoiseSpeed = 0.123f;
