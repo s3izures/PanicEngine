@@ -49,7 +49,7 @@ namespace PanicEngine::Graphics
         float mAberrationValue = 0.005f;
         float mScanlineIntensity = 5.0f;
         float mScanlineDesnity = 800.0f;
-        float mNoiseIntensity = 0.5f;
+        float mNoiseIntensity = 0.4f;
         float mNoiseSpeed = 0.123f;
         int mStaticIndex = 0;
         float mNextStaticUpdate = 0.0f;
