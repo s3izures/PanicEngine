@@ -21,6 +21,7 @@ namespace PanicEngine::Graphics
 
         void Render(const RenderObject& renderObject);
         void SetSourceTexture(const Texture& texture);
+        void SetStaticTexture(const Texture& texture, int index);
         void DebugUI();
 
     private:
@@ -30,8 +31,6 @@ namespace PanicEngine::Graphics
             float scanlineIntensity = 0.0f;
             float scanlineDensity = 0.0f;
             float noiseIntensity = 0.0f;
-            float noiseSpeed = 0.0f;
-            float padding[3] = { 0.0f };
         };
 
         using SettingsBuffer = TypedConstantBuffer<SettingsData>;
@@ -43,12 +42,14 @@ namespace PanicEngine::Graphics
 
         const Texture* mSourceTexture = nullptr;
         // list of textures for static (at least 2)
+        const Texture* mStaticTextures[4] = { nullptr };
+
         float mAberrationValue = 0.005f;
         float mScanlineIntensity = 5.0f;
         float mScanlineDesnity = 800.0f;
-        float mNoiseIntensity = 0.05f;
-        float mNoiseSpeed = 20.0f;
-        // int mStaticIndex = 0;
-        // float mNextStaticUpdate = 0.0f;
+        float mNoiseIntensity = 0.5f;
+        float mNoiseSpeed = 0.123f;
+        int mStaticIndex = 0;
+        float mNextStaticUpdate = 0.0f;
     };
 }

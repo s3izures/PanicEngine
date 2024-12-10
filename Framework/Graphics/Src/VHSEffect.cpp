@@ -42,12 +42,11 @@ void VHSEffect::Begin()
     data.scanlineIntensity = mScanlineIntensity;
     data.scanlineDensity = mScanlineDesnity;
     data.noiseIntensity = mNoiseIntensity;
-    data.noiseSpeed = mNoiseSpeed;
 
     mSettingsBuffer.Update(data);
     mSettingsBuffer.BindPS(0);
 
-    // mStaticTextures[mStaticIndex]->BindPS(1);
+    mStaticTextures[mStaticIndex]->BindPS(1);
 }
 
 void VHSEffect::End()
@@ -57,15 +56,17 @@ void VHSEffect::End()
     gs->ResetViewport();
 
     Texture::UnbindPS(0);
+    Texture::UnbindPS(1);
 }
 
 void VHSEffect::Update(float deltaTime)
 {
-    // mNextStaticUpdate -= deltaTime;
-    // if(mNextStatUpdate <= 0)
-    //      mStaticIndex = rand() % number of textures
-    //      mNextStaticUpdate = rand() / rand_max * 0.5f;
-
+    mNextStaticUpdate += deltaTime;
+    if (mNextStaticUpdate >= mNoiseSpeed)
+    {
+        mStaticIndex = rand() % 4;
+        mNextStaticUpdate = 0;
+    }
 }
 
 void VHSEffect::Render(const RenderObject& renderObject)
@@ -78,6 +79,11 @@ void VHSEffect::SetSourceTexture(const Texture& texture)
     mSourceTexture = &texture;
 }
 
+void VHSEffect::SetStaticTexture(const Texture& texture, int index)
+{
+    mStaticTextures[index] = &texture;
+}
+
 void VHSEffect::DebugUI()
 {
     if (ImGui::CollapsingHeader("VHSEffect", ImGuiTreeNodeFlags_DefaultOpen))
@@ -85,7 +91,7 @@ void VHSEffect::DebugUI()
         ImGui::DragFloat("AbberationValue", &mAberrationValue, 0.001f, -0.1f, 0.1f);
         ImGui::DragFloat("ScanlineIntensity", &mScanlineIntensity, 0.01f, 0.0f, 10.0f);
         ImGui::DragFloat("ScanlineDensity", &mScanlineDesnity, 1.0f, 0.0f, 1000.0f);
-        ImGui::DragFloat("NoiseIntensity", &mNoiseIntensity, 0.001f, -0.1f, 0.1f); //DOESNT WORK YET
-        ImGui::DragFloat("NoiseSpeed", &mNoiseSpeed, 0.001f, -0.1f, 0.1f);  //DOESNT WORK YET
+        ImGui::DragFloat("NoiseBrightness", &mNoiseIntensity, 0.001f, 0.0f, 10.0f);
+        ImGui::DragFloat("NoiseSpeed", &mNoiseSpeed, 0.0001f, 0.0f, 5.0f);
     }
 }

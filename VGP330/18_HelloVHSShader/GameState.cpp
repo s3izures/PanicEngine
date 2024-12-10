@@ -28,8 +28,17 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
+    mStaticTextures[0].Initialize(L"../../Assets/Images/noise/noiseTexture.png");
+    mStaticTextures[1].Initialize(L"../../Assets/Images/noise/noiseTexture1.png");
+    mStaticTextures[2].Initialize(L"../../Assets/Images/noise/noiseTexture2.png");
+    mStaticTextures[3].Initialize(L"../../Assets/Images/noise/noiseTexture3.png");
+
     mVHSEffect.Initialize();
     mVHSEffect.SetSourceTexture(mRenderTarget);
+    for (int i = 0; i < 4; i++)
+    {
+        mVHSEffect.SetStaticTexture(mStaticTextures[i], i);
+    }
 
     mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
     mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
@@ -53,6 +62,10 @@ void GameState::Terminate()
     mGround.Terminate();
     mScreenQuad.Terminate();
     mCharacters.Terminate();
+    for (int i = 0; i < 4; i++)
+    {
+        mStaticTextures[i].Terminate();
+    }
     mVHSEffect.Terminate();
     mStandardEffect.Terminate();
 }
@@ -60,6 +73,7 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
+    mVHSEffect.Update(deltaTime);
 }
 
 int currentRenderWorld = 0;

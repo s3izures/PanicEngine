@@ -24,6 +24,7 @@ protected:
     
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::VHSEffect mVHSEffect;
+    PanicEngine::Graphics::Texture mStaticTextures[4];
 
     PanicEngine::Graphics::RenderGroup mCharacters;
     PanicEngine::Graphics::RenderObject mGround;

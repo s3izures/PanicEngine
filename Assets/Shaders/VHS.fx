@@ -7,7 +7,6 @@ cbuffer SettingsBuffer : register(b0)
     float scanlineIntensity;
     float scanlineDensity;
     float noiseIntensity;
-    float noiseSpeed;
 }
 
 Texture2D textureMap0 : register(t0);
@@ -38,7 +37,7 @@ VS_OUTPUT VS(VS_INPUT input)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
     float4 finalColor;
-    
+
     //Chromatic Abberation
     float2 distortion = float2(abberationIntensity, -abberationIntensity);
     float4 redChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.x * input.texCoord);
@@ -49,24 +48,17 @@ float4 PS(VS_OUTPUT input) : SV_Target
     //Scanlines
     float scanline = sin(input.texCoord.y * scanlineDensity) * 0.5 + 0.5;
     finalColor.rgb *= lerp(1.0, scanline, scanlineIntensity);
-    //HOW DO I MAKE SCANLINES MOVE
-    
-    //Noise
-    //float time = 0.02; //NEED A TIME FUNCTION
-    //Make noise according to speed
-    //Make Function to generate pseudo-random value
-    //chromaticRes.rgb *= lerp(chromaticRes.rgb, noise, float3(noiseIntensity));
     
     //Noise v2
     float4 color0 = textureMap0.Sample(textureSampler, input.texCoord);
     float4 color1 = staticMap.Sample(textureSampler, input.texCoord);
     if(color1.r > 0.0)
     {
-        finalColor = (color0 + color1) * 0.5f;
+        finalColor.rgb *= (color0 + color1) / noiseIntensity;
     }
     else
     {
-        finalColor = color0;
+        finalColor.rgb *= color0;
     }
 
     return finalColor;
