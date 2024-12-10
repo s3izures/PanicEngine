@@ -92,8 +92,8 @@ void VHSEffect::DebugUI()
         ImGui::DragFloat("AbberationValue", &mAberrationValue, 0.001f, -0.1f, 0.1f);
         ImGui::DragFloat("ScanlineIntensity", &mScanlineIntensity, 0.01f, 0.0f, 10.0f);
         ImGui::DragFloat("ScanlineDensity", &mScanlineDesnity, 1.0f, 0.0f, 1000.0f);
-        ImGui::DragFloat("NoiseBrightness", &mNoiseIntensity, 0.001f, 0.0f, 10.0f);
+        ImGui::DragFloat("NoiseIntensity", &mNoiseIntensity, 0.001f, 0.0f, 10.0f);
         ImGui::DragFloat("NoiseSpeed", &mNoiseSpeed, 0.0001f, 0.0f, 5.0f);
-        ImGui::DragFloat("DistortionIntensity", &mDistortionIntensity, 0.001f, 0.0f, 5.0f);
+        ImGui::DragFloat("DistortionIntensity", &mDistortionIntensity, 0.001f, 0.0f, 10.0f);
     }
 }

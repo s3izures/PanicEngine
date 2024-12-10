@@ -64,7 +64,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
     float4 color1 = staticMap.Sample(textureSampler, input.texCoord);
     if(color1.r > 0.0)
     {
-        finalColor.rgb *= (color0 + color1) / noiseIntensity;
+        finalColor.rgb *= (color0 + color1) / noiseIntensity; //Divide for the bright burn look
     }
     else
     {
