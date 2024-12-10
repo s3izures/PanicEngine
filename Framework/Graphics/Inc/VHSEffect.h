@@ -53,6 +53,6 @@ namespace PanicEngine::Graphics
         float mNoiseSpeed = 0.123f;
         int mStaticIndex = 0;
         float mNextStaticUpdate = 0.0f;
-        float mDistortionIntensity = 5.0f;
+        float mDistortionIntensity = 0.5f;
     };
 }

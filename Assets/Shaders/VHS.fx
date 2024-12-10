@@ -49,7 +49,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
     bool isEdge = (input.texCoord.x < 0.0f || input.texCoord.x > 1.0f || input.texCoord.y < 0.0f || input.texCoord.y > 1.0f);
 
     //Chromatic Abberation
-        float2 distortion = float2(abberationIntensity, -abberationIntensity);
+    float2 distortion = float2(abberationIntensity, -abberationIntensity);
     float4 redChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.x * input.texCoord);
     float4 greenChannel = textureMap0.Sample(textureSampler, input.texCoord);
     float4 blueChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.y * input.texCoord);
