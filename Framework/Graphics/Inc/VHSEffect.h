@@ -31,6 +31,8 @@ namespace PanicEngine::Graphics
             float scanlineIntensity = 0.0f;
             float scanlineDensity = 0.0f;
             float noiseIntensity = 0.0f;
+            float distortionIntensity = 0.0f;
+            float padding[3] = { 0.0f };
         };
 
         using SettingsBuffer = TypedConstantBuffer<SettingsData>;
@@ -51,5 +53,6 @@ namespace PanicEngine::Graphics
         float mNoiseSpeed = 0.123f;
         int mStaticIndex = 0;
         float mNextStaticUpdate = 0.0f;
+        float mDistortionIntensity = 5.0f;
     };
 }

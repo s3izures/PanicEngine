@@ -7,6 +7,7 @@ cbuffer SettingsBuffer : register(b0)
     float scanlineIntensity;
     float scanlineDensity;
     float noiseIntensity;
+    float distortionIntensity;
 }
 
 Texture2D textureMap0 : register(t0);
@@ -37,9 +38,18 @@ VS_OUTPUT VS(VS_INPUT input)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
     float4 finalColor;
+    
+    //Curve
+    float2 center = float2(0.5f, 0.5f);
+    float2 uvDistort = input.texCoord - center;
+    float yDistort = input.texCoord.y - center.y;
+    uvDistort *= 1.0 + distortionIntensity * (uvDistort.x * uvDistort.x + uvDistort.y * uvDistort.y);
+    input.texCoord = uvDistort + center;
+    
+    bool isEdge = (input.texCoord.x < 0.0f || input.texCoord.x > 1.0f || input.texCoord.y < 0.0f || input.texCoord.y > 1.0f);
 
     //Chromatic Abberation
-    float2 distortion = float2(abberationIntensity, -abberationIntensity);
+        float2 distortion = float2(abberationIntensity, -abberationIntensity);
     float4 redChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.x * input.texCoord);
     float4 greenChannel = textureMap0.Sample(textureSampler, input.texCoord);
     float4 blueChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.y * input.texCoord);
@@ -59,6 +69,12 @@ float4 PS(VS_OUTPUT input) : SV_Target
     else
     {
         finalColor.rgb *= color0;
+    }
+    
+        
+    if (isEdge)
+    {
+        finalColor *= float4(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     return finalColor;

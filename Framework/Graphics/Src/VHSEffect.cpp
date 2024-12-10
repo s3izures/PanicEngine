@@ -42,6 +42,7 @@ void VHSEffect::Begin()
     data.scanlineIntensity = mScanlineIntensity;
     data.scanlineDensity = mScanlineDesnity;
     data.noiseIntensity = mNoiseIntensity;
+    data.distortionIntensity = mDistortionIntensity;
 
     mSettingsBuffer.Update(data);
     mSettingsBuffer.BindPS(0);
@@ -93,5 +94,6 @@ void VHSEffect::DebugUI()
         ImGui::DragFloat("ScanlineDensity", &mScanlineDesnity, 1.0f, 0.0f, 1000.0f);
         ImGui::DragFloat("NoiseBrightness", &mNoiseIntensity, 0.001f, 0.0f, 10.0f);
         ImGui::DragFloat("NoiseSpeed", &mNoiseSpeed, 0.0001f, 0.0f, 5.0f);
+        ImGui::DragFloat("DistortionIntensity", &mDistortionIntensity, 0.001f, 0.0f, 5.0f);
     }
 }
