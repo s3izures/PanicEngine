@@ -42,7 +42,6 @@ float4 PS(VS_OUTPUT input) : SV_Target
     //Curve
     float2 center = float2(0.5f, 0.5f);
     float2 uvDistort = input.texCoord - center;
-    float yDistort = input.texCoord.y - center.y;
     uvDistort *= 1.0 + distortionIntensity * (uvDistort.x * uvDistort.x + uvDistort.y * uvDistort.y);
     input.texCoord = uvDistort + center;
     
