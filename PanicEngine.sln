@@ -81,6 +81,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "17_HelloBillboard", "VGP330
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "18_HelloVHSShader", "VGP330\18_HelloVHSShader\18_HelloVHSShader.vcxproj", "{C9F908FA-465E-4CBD-9E2F-687F2FE3E70D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VGP334", "VGP334", "{844CAE98-59C6-4807-90DD-00F91BC8C54C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
