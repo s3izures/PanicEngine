@@ -135,6 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\Animation.h" />
+    <ClInclude Include="Inc\AnimationBuilder.h" />
     <ClInclude Include="Inc\BillboardEffect.h" />
     <ClInclude Include="Inc\BlendState.h" />
     <ClInclude Include="Inc\Camera.h" />
@@ -146,6 +148,7 @@
     <ClInclude Include="Inc\GaussianBlurEffect.h" />
     <ClInclude Include="Inc\Graphics.h" />
     <ClInclude Include="Inc\GraphicsSystem.h" />
+    <ClInclude Include="Inc\Keyframe.h" />
     <ClInclude Include="Inc\Material.h" />
     <ClInclude Include="Inc\MeshBuilder.h" />
     <ClInclude Include="Inc\MeshTypes.h" />
@@ -172,6 +175,8 @@
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Animation.cpp" />
+    <ClCompile Include="Src\AnimationBuilder.cpp" />
     <ClCompile Include="Src\BillboardEffect.cpp" />
     <ClCompile Include="Src\BlendState.cpp" />
     <ClCompile Include="Src\Camera.cpp" />

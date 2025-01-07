@@ -2,6 +2,8 @@
 
 #include "Common.h"
 
+#include "Animation.h"
+#include "AnimationBuilder.h"
 #include "BillboardEffect.h"
 #include "BlendState.h"
 #include "Camera.h"
@@ -11,6 +13,7 @@
 #include "DirectionalLight.h"
 #include "GaussianBlurEffect.h"
 #include "GraphicsSystem.h"
+#include "Keyframe.h"
 #include "MeshBuffer.h"
 #include "MeshBuilder.h"
 #include "MeshTypes.h"
