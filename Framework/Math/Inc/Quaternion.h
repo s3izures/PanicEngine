@@ -44,7 +44,7 @@ namespace PanicEngine::Math
         static float Magnitude(const Quaternion& q);
         static Quaternion Normalize(const Quaternion& q);
 
-        static Quaternion CreateFromAxisAngle(const Vector3& asic, float angle) noexcept;
+        static Quaternion CreateFromAxisAngle(const Vector3& axis, float angle) noexcept;
         static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll) noexcept;
         static Quaternion CreateFromRotationMatrix(const Matrix4& m) noexcept;
 

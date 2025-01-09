@@ -1,3 +1,4 @@
+#include "Precompiled.h"
 #include "AnimationBuilder.h"
 
 using namespace PanicEngine;
@@ -6,7 +7,7 @@ using namespace PanicEngine::Graphics;
 namespace
 {
 	template<class T>
-	inline void Pushkey(KeyFrames<T>& keyframes, const T& value, float t)
+	inline void PushKey(Keyframes<T>& keyframes, const T& value, float t)
 	{
 		ASSERT(keyframes.empty() || keyframes.back().time <= t, "AnimationBuilder: cannot add keyframe back in time");
 		keyframes.emplace_back(value, t);
@@ -36,6 +37,9 @@ AnimationBuilder& AnimationBuilder::AddScaleKey(const Math::Vector3& scale, floa
 
 Animation AnimationBuilder::Build()
 {
-	ASSERT(!mWorkingCopy.mPositionKeys.empty() || !mWorkingCopy.mRotationKeys.empty() || !mWorkingCopy.mScaleKeys.empty(), "AnimationBuilder: no animation keys are present.");
+	ASSERT(!mWorkingCopy.mPositionKeys.empty()
+		|| !mWorkingCopy.mRotationKeys.empty()
+		|| !mWorkingCopy.mScaleKeys.empty(),
+		"AnimationBuilder: no animation keys are present.");
 	return std::move(mWorkingCopy);
 }
