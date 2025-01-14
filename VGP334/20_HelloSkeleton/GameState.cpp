@@ -44,7 +44,16 @@ void GameState::Update(float deltaTime)
 void GameState::Render()
 {
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters);
+        if (mShowSkeleton)
+        {
+            AnimationUtil::BoneTransforms boneTransforms;
+            AnimationUtil::ComputeBoneTransforms(mCharacters.modelId, boneTransforms);
+            AnimationUtil::DrawSkeleton(mCharacters.modelId, boneTransforms);
+        }
+        else
+        {
+            mStandardEffect.Render(mCharacters);
+        }
         mStandardEffect.Render(mGround);
     mStandardEffect.End();
 }
@@ -102,5 +111,11 @@ void GameState::DebugUI()
     }
 
     mStandardEffect.DebugUI();
+
+    ImGui::Separator();
+
+    ImGui::Checkbox("ShowSkeleton", &mShowSkeleton);
+    SimpleDraw::Render(mCamera);
+
     ImGui::End();
 }

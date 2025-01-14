@@ -19,4 +19,6 @@ protected:
     PanicEngine::Graphics::Camera mCamera;
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;
+
+    bool mShowSkeleton = false;
 };
