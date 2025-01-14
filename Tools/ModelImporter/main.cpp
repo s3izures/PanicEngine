@@ -404,5 +404,8 @@ int main(int argc, char* argv[])
 	printf("Saving Material...\n");
 	ModelIO::SaveMaterial(args.outputFileName, model);
 
+	printf("Saving Skeleton...\n");
+	ModelIO::SaveSkeleton(args.outputFileName, model);
+
 	return 0;
 }
