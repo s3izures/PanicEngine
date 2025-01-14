@@ -139,6 +139,7 @@
     <ClInclude Include="Inc\AnimationBuilder.h" />
     <ClInclude Include="Inc\BillboardEffect.h" />
     <ClInclude Include="Inc\BlendState.h" />
+    <ClInclude Include="Inc\Bone.h" />
     <ClInclude Include="Inc\Camera.h" />
     <ClInclude Include="Inc\Color.h" />
     <ClInclude Include="Inc\Common.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Inc\Sampler.h" />
     <ClInclude Include="Inc\ShadowEffect.h" />
     <ClInclude Include="Inc\SimpleDraw.h" />
+    <ClInclude Include="Inc\Skeleton.h" />
     <ClInclude Include="Inc\StandardEffect.h" />
     <ClInclude Include="Inc\Terrain.h" />
     <ClInclude Include="Inc\TerrainEffect.h" />

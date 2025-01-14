@@ -138,6 +138,9 @@
     <ProjectReference Include="..\..\Engine\PanicEngine\PanicEngine.vcxproj">
       <Project>{61f155da-7452-41d3-8a67-1806b226df7a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Core\Core.vcxproj">
+      <Project>{7a442769-c6a3-413a-8ea8-70d7e66136e3}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
