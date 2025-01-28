@@ -47,6 +47,13 @@ ModelId ModelCache::LoadModel(const std::filesystem::path& filePath)
     return modelId;
 }
 
+void ModelCache::AddAnimation(ModelId& id, const std::filesystem::path& filePath)
+{
+    auto model = mInventory.find(id);
+    ASSERT(model != mInventory.end(), "ModelCache: need to load the model first");
+    ModelIO::LoadAnimations(filePath, *model->second);
+}
+
 const Model* ModelCache::GetModel(ModelId id)
 {
     auto model = mInventory.find(id);
