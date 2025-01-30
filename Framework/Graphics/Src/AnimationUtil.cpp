@@ -8,10 +8,18 @@ using namespace PanicEngine::Graphics;
 
 namespace
 {
-	void ComputeBoneTransformsRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms)
+	void ComputeBoneTransformsRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms, const Animator* animator)
 	{
 		if (bone != nullptr)
 		{
+			if (animator != nullptr)
+			{
+				boneTransforms[bone->index] = animator->GetToParentTransform(bone);
+			}
+			else
+			{
+				boneTransforms[bone->index] = bone->toParentTransform;
+			}
 			boneTransforms[bone->index] = bone->toParentTransform;
 			if (bone->parent != nullptr)
 			{
@@ -19,19 +27,19 @@ namespace
 			}
 			for (const Bone* child : bone->children)
 			{
-				ComputeBoneTransformsRecursive(child, boneTransforms);
+				ComputeBoneTransformsRecursive(child, boneTransforms, animator);
 			}
 		}
 	}
 }
 
-void AnimationUtil::ComputeBoneTransforms(ModelId modelId, BoneTransforms& boneTransforms)
+void AnimationUtil::ComputeBoneTransforms(ModelId modelId, BoneTransforms& boneTransforms, const Animator* animator)
 {
 	const Model* model = ModelCache::Get()->GetModel(modelId);
 	if (model->skeleton != nullptr)
 	{
 		boneTransforms.resize(model->skeleton->bones.size(), Math::Matrix4::Identity);
-		ComputeBoneTransformsRecursive(model->skeleton->root, boneTransforms);
+		ComputeBoneTransformsRecursive(model->skeleton->root, boneTransforms, animator);
 	}
 }
 
