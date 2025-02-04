@@ -28,7 +28,7 @@ void PhysicsWorld::StaticTerminate()
 
 PhysicsWorld* PhysicsWorld::Get()
 {
-	ASSERT(sPhysicsWorld != nullptr, "PhysicsWorld: must be intialized");
+	ASSERT(sPhysicsWorld == nullptr, "PhysicsWorld: must be intialized");
 	return sPhysicsWorld.get();
 }
 
@@ -45,7 +45,7 @@ void PhysicsWorld::Initialize(const Settings& settings)
 	mInterface = new btDbvtBroadphase();
 	mSolver = new btSequentialImpulseConstraintSolver();
 	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
-	mDynamicsWorld->setGravity(ToVector3(settings.gravity));
+	mDynamicsWorld->setGravity(TobtVector3(settings.gravity));
 }
 
 void PhysicsWorld::Terminate()

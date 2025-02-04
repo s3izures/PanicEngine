@@ -151,7 +151,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
         dot = -dot;
         q1Scale = -1.0f;
     }
-    if (dot > 0.999999999f)
+    if (dot > 0.9999f)
     {
         return Normalize(Lerp(q0, q1, t));
     }

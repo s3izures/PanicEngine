@@ -23,8 +23,8 @@ void GameState::Initialize()
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
     Mesh ball = MeshBuilder::CreateSphere(60, 60, 0.5f);
-    mObj.meshBuffer.Initialize(ball);
-    mObj.diffuseMapId = TextureCache::Get()->LoadTexture("misc/basketball.jpg");
+    mBall.meshBuffer.Initialize(ball);
+    mBall.diffuseMapId = TextureCache::Get()->LoadTexture("misc/basketball.jpg");
 
     Mesh ground = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
     mGround.meshBuffer.Initialize(ground);
@@ -128,7 +128,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mGround.Terminate();
-    mObj.Terminate();
+    mBall.Terminate();
     mStandardEffect.Terminate();
 }
 
@@ -148,11 +148,11 @@ void GameState::Update(float deltaTime)
 
 void GameState::Render()
 {
-    mObj.transform = mAnimation.GetTransform(mAnimationTime);
+    mBall.transform = mAnimation.GetTransform(mAnimationTime);
 
     mStandardEffect.Begin();
     mStandardEffect.Render(mGround);
-    mStandardEffect.Render(mObj);
+    mStandardEffect.Render(mBall);
     mStandardEffect.End();
 }
 

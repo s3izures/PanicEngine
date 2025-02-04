@@ -6,6 +6,7 @@ using namespace PanicEngine;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Input;
+using namespace PanicEngine::Physics;
 
 void App::Run(const AppConfig& config)
 {
@@ -27,6 +28,9 @@ void App::Run(const AppConfig& config)
     SimpleDraw::StaticInitialize(config.maxDrawLines);
     TextureCache::StaticInitialize("../../Assets/Images");
     ModelCache::StaticInitialize();
+
+    PhysicsWorld::Settings settings;
+    PhysicsWorld::StaticInitialize(settings);
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
@@ -58,6 +62,7 @@ void App::Run(const AppConfig& config)
 #endif
         {
             mCurrentState->Update(deltaTime);
+            PhysicsWorld::Get()->Update(deltaTime);
         }
 
 
@@ -72,6 +77,7 @@ void App::Run(const AppConfig& config)
 
     }
     //End state
+    PhysicsWorld::StaticTerminate();
     ModelCache::StaticTerminate();
     TextureCache::StaticTerminate();
     SimpleDraw::StaticTerminate();

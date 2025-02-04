@@ -15,12 +15,15 @@ protected:
 
     PanicEngine::Graphics::Camera mCamera;
 
+    PanicEngine::Graphics::RenderObject mBall;
+    PanicEngine::Physics::CollisionShape mBallShape;
+    PanicEngine::Physics::RigidBody mBallRB;
+
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;
-    PanicEngine::Graphics::RenderObject mBall;
-    PanicEngine::Graphics::RenderObject mGround;
 
-    //animation
-    PanicEngine::Graphics::Animation mAnimation;
-    float mAnimationTime = 0.0f;
+    PanicEngine::Graphics::RenderObject mGround;
+    PanicEngine::Physics::CollisionShape mGroundShape;
+    PanicEngine::Physics::RigidBody mGroundRB;
+
 };
