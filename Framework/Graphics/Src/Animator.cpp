@@ -28,7 +28,7 @@ void Animator::Update(float deltaTime)
 
 	const Model* model = ModelCache::Get()->GetModel(mModelId);
 	const AnimationClip& animClip = model->animationClips[mClipIndex];
-	mAnimationTick *= animClip.ticksPerSecond * deltaTime;
+	mAnimationTick += animClip.ticksPerSecond * deltaTime;
 	if (mAnimationTick > animClip.tickDuration)
 	{
 		if (mIsLoop)

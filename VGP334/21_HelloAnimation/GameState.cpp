@@ -22,8 +22,12 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model", &mCharAnim);
     ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/Defeated.animset");
+    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/Reaction.animset");
+    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/Praying.animset");
+    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/JumpPushUp.animset");
+    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/TwistDance.animset");
     mCharAnim.Initialize(mCharacters.modelId);
 
     Mesh ground = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);

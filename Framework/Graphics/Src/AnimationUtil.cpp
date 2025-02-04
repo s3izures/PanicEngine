@@ -20,7 +20,6 @@ namespace
 			{
 				boneTransforms[bone->index] = bone->toParentTransform;
 			}
-			boneTransforms[bone->index] = bone->toParentTransform;
 			if (bone->parent != nullptr)
 			{
 				boneTransforms[bone->index] = boneTransforms[bone->index] * boneTransforms[bone->parentIndex];
@@ -57,6 +56,18 @@ void AnimationUtil::DrawSkeleton(ModelId modelId, const BoneTransforms& boneTran
 				SimpleDraw::AddLine(bonePos, boneParentPos, Colors::Lime);
 				SimpleDraw::AddSphere(10, 10, 0.02f, bonePos, Colors::Red);
 			}
+		}
+	}
+}
+
+void AnimationUtil::ApplyBoneOffset(ModelId modelId, BoneTransforms& boneTransforms)
+{
+	const Model* model = ModelCache::Get()->GetModel(modelId);
+	if (model->skeleton != nullptr)
+	{
+		for (auto& bone : model->skeleton->bones)
+		{
+			boneTransforms[bone->index] = bone->offsetTransform * boneTransforms[bone->index];
 		}
 	}
 }

@@ -8,4 +8,5 @@ namespace PanicEngine::Graphics::AnimationUtil
 
 	void ComputeBoneTransforms(ModelId modelId, BoneTransforms& boneTransforms, const Animator* animator = nullptr);
 	void DrawSkeleton(ModelId modelId, const BoneTransforms& boneTransforms);
+	void ApplyBoneOffset(ModelId modelId, BoneTransforms& boneTransforms);
 }

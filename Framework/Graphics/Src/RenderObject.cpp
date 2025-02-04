@@ -18,7 +18,7 @@ void RenderGroup::Terminate()
     }
 }
 
-void RenderGroup::Initialize(const Model& model)
+void RenderGroup::Initialize(const Model& model, const Animator* anim)
 {
     auto TryLoadTexture = [](const auto& textureName)->TextureId
         {
@@ -28,6 +28,9 @@ void RenderGroup::Initialize(const Model& model)
             }
             return TextureCache::Get()->LoadTexture(textureName, false);
         };
+
+    animator = anim;
+    skeleton = model.skeleton.get();
 
     for (const Model::MeshData& meshData : model.meshData)
     {
@@ -43,12 +46,13 @@ void RenderGroup::Initialize(const Model& model)
             renderObject.bumpMapId = TryLoadTexture(materialData.bumpMapName);
         }
     }
+    
 }
 
-void RenderGroup::Initialize(const std::filesystem::path& modelFile)
+void RenderGroup::Initialize(const std::filesystem::path& modelFile, const Animator* anim)
 {
     modelId = ModelCache::Get()->LoadModel(modelFile);
     const Model* model = ModelCache::Get()->GetModel(modelId);
     ASSERT(model != nullptr, "RenderGroup: model %s did not load", modelFile.u8string());
-    Initialize(*model);
+    Initialize(*model, anim);
 }
