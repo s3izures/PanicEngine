@@ -5,6 +5,7 @@ using namespace PanicEngine::Math;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
+using namespace PanicEngine::Physics;
 
 void GameState::Initialize()
 {
@@ -34,10 +35,49 @@ void GameState::Initialize()
     mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
     mGroundShape.InitializeHull({ 5.0f, 0.5f, 5.0f }, { 0.0f, -0.5f, 0.0f });
     mGroundRB.Initialize(mGround.transform, mGroundShape);
+
+    Mesh boxShape = MeshBuilder::CreateCube(1.0f);
+    TextureId boxTex = TextureCache::Get()->LoadTexture("sprites/yellow.jpg");
+
+    float yOffset = 4;
+    float xOffset = 0.0f;
+    int rowCount = 1;
+    int boxIndex = 0;
+    mBoxes.resize(10);
+    while (boxIndex < 10)
+    {
+        xOffset = -((static_cast<float>(rowCount) - 1.0f) * 0.5f);
+        for (int r = 0; r < rowCount; ++r)
+        {
+            BoxData& newBox = mBoxes[boxIndex];
+            newBox.box.meshBuffer.Initialize(boxShape);
+            newBox.box.diffuseMapId = boxTex;
+            newBox.box.transform.position.y = yOffset;
+            newBox.box.transform.position.x = xOffset;
+            newBox.box.transform.position.z = 4.0f;
+            newBox.boxShape.InitializeBox({ 0.5f,0.5f,0.5f });
+            
+            xOffset += 1.0f;
+            ++boxIndex;
+        }
+        yOffset -= 1.0f;
+        rowCount += 1;
+    }
+
+    for (BoxData& box : mBoxes)
+    {
+        box.boxRB.Initialize(box.box.transform, box.boxShape, 1.0f);
+    }
 }
 
 void GameState::Terminate()
 {
+    for (BoxData& box : mBoxes)
+    {
+        box.boxRB.Terminate();
+        box.boxShape.Terminate();
+    }
+
     mGroundRB.Terminate();
     mGroundShape.Terminate();
     mGround.Terminate();
@@ -53,6 +93,14 @@ void GameState::Update(float deltaTime)
     if (InputSystem::Get()->IsKeyPressed(KeyCode::SPACE))
     {
         mBallRB.SetVelocity({ 0.0f, 5.0f, 0.2f });
+
+    }
+
+    if (InputSystem::Get()->IsMousePressed(MouseButton::LBUTTON))
+    {
+        Math::Vector3 spawnPos = mCamera.GetPosition() + mCamera.GetDirection() * 0.5f;
+        mBallRB.SetPosition(spawnPos);
+        mBallRB.SetVelocity(mCamera.GetDirection() * 20.0f);
     }
 }
 
@@ -61,6 +109,10 @@ void GameState::Render()
     mStandardEffect.Begin();
         mStandardEffect.Render(mGround);
         mStandardEffect.Render(mBall);
+        for (BoxData& box : mBoxes)
+        {
+            mStandardEffect.Render(box.box);
+        }
     mStandardEffect.End();
 }
 
@@ -117,5 +169,8 @@ void GameState::DebugUI()
     }
 
     mStandardEffect.DebugUI();
+    PhysicsWorld::Get()->DebugUI();
     ImGui::End();
+
+    SimpleDraw::Render(mCamera);
 }

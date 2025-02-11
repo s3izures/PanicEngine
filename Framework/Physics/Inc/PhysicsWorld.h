@@ -1,4 +1,5 @@
 #pragma once
+#include "PhysicsDebugDraw.h"
 
 namespace PanicEngine::Physics
 {
@@ -44,5 +45,8 @@ namespace PanicEngine::Physics
 
 		using PhysicsObjects = std::vector<PhysicsObject*>;
 		PhysicsObjects mPhysicsObjects;
+
+		PhysicsDebugDraw mPhysicsDebugDraw;
+		bool mDebugDraw = false;
 	};
 }

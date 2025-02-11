@@ -26,4 +26,13 @@ protected:
     PanicEngine::Physics::CollisionShape mGroundShape;
     PanicEngine::Physics::RigidBody mGroundRB;
 
+    struct BoxData
+    {
+        PanicEngine::Graphics::RenderObject box;
+        PanicEngine::Physics::CollisionShape boxShape;
+        PanicEngine::Physics::RigidBody boxRB;
+    };
+    using Boxes = std::vector<BoxData>;
+    Boxes mBoxes;
+
 };

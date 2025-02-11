@@ -28,7 +28,7 @@ void PhysicsWorld::StaticTerminate()
 
 PhysicsWorld* PhysicsWorld::Get()
 {
-	ASSERT(sPhysicsWorld == nullptr, "PhysicsWorld: must be intialized");
+	ASSERT(sPhysicsWorld != nullptr, "PhysicsWorld: must be intialized");
 	return sPhysicsWorld.get();
 }
 
@@ -46,6 +46,7 @@ void PhysicsWorld::Initialize(const Settings& settings)
 	mSolver = new btSequentialImpulseConstraintSolver();
 	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
 	mDynamicsWorld->setGravity(TobtVector3(settings.gravity));
+	mDynamicsWorld->setDebugDrawer(&mPhysicsDebugDraw);
 }
 
 void PhysicsWorld::Terminate()
@@ -70,7 +71,31 @@ void PhysicsWorld::DebugUI()
 {
 	if (ImGui::CollapsingHeader("Physics", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		if (ImGui::DragFloat3("Gravity", &mSettings.gravity.x, 0.1f))
+		{
+			mDynamicsWorld->setGravity(TobtVector3(mSettings.gravity));
+		}
+		ImGui::Checkbox("DebugDraw", &mDebugDraw);
+		if (mDebugDraw)
+		{
+			ImGui::Indent();
 
+			int debugMode = mPhysicsDebugDraw.getDebugMode();
+			bool isEnabled = (debugMode & btIDebugDraw::DBG_DrawWireframe);
+			if (ImGui::Checkbox("DrawWireFrame", &isEnabled))
+			{
+				debugMode = (isEnabled) ? debugMode | btIDebugDraw::DBG_DrawWireframe : debugMode & ~btIDebugDraw::DBG_DrawWireframe;
+			}
+			isEnabled = (debugMode & btIDebugDraw::DBG_DrawAabb);
+			if (ImGui::Checkbox("DrawAABB", &isEnabled))
+			{
+				debugMode = (isEnabled) ? debugMode | btIDebugDraw::DBG_DrawAabb : debugMode & ~btIDebugDraw::DBG_DrawAabb;
+			}
+
+			mPhysicsDebugDraw.setDebugMode(debugMode);
+			mDynamicsWorld->debugDrawWorld();
+			ImGui::Unindent();
+		}
 	}
 }
 
@@ -90,7 +115,7 @@ void PhysicsWorld::Register(PhysicsObject* physicsObject)
 void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
 {
 	auto iter = std::find(mPhysicsObjects.begin(), mPhysicsObjects.end(), physicsObject);
-	if (iter == mPhysicsObjects.end())
+	if (iter != mPhysicsObjects.end())
 	{
 		mPhysicsObjects.push_back(physicsObject);
 		if (physicsObject->GetRigidBody())

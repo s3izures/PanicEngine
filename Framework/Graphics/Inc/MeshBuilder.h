@@ -11,6 +11,7 @@ namespace PanicEngine::Graphics
 
         static MeshPC CreateCubePC(float size);
         static MeshPX CreateCubePX(float size);
+        static Mesh CreateCube(float size);
 
         static MeshPC CreateRectPC(float height, float width, float length);
 

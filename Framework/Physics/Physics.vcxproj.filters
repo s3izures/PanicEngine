@@ -30,6 +30,9 @@
     <ClInclude Include="Inc\Rigidbody.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\PhysicsDebugDraw.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -42,6 +45,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Rigidbody.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PhysicsDebugDraw.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

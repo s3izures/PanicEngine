@@ -76,12 +76,12 @@ void App::Run(const AppConfig& config)
 
 
     }
+    mCurrentState->Terminate(); //FILO, First in Last Out
     //End state
     PhysicsWorld::StaticTerminate();
     ModelCache::StaticTerminate();
     TextureCache::StaticTerminate();
     SimpleDraw::StaticTerminate();
-    mCurrentState->Terminate(); //FILO, First in Last Out
     DebugUI::StaticTerminate();
     InputSystem::StaticTerminate();
     GraphicsSystem::StaticTerminate();
