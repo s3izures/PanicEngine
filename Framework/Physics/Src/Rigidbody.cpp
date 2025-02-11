@@ -19,6 +19,7 @@ void RigidBody::Initialize(PanicEngine::Graphics::Transform& graphicsTransform, 
 
 	mMotionState = new btDefaultMotionState(ConvertTobtTransform(graphicsTransform));
 	mRigidBody = new btRigidBody(mMass, mMotionState, shape.mCollisionShape);
+	mRigidBody->setRestitution(0.5f);
 	PhysicsWorld::Get()->Register(this);
 }
 

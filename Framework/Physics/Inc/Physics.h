@@ -7,3 +7,4 @@
 #include "PhysicsWorld.h"
 #include "PhysicsDebugDraw.h"
 #include "Rigidbody.h"
+#include "SoftBody.h"
