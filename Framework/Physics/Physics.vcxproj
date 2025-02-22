@@ -137,6 +137,8 @@
   <ItemGroup>
     <ClInclude Include="Inc\CollisionShape.h" />
     <ClInclude Include="Inc\Common.h" />
+    <ClInclude Include="Inc\Particle.h" />
+    <ClInclude Include="Inc\ParticleSystem.h" />
     <ClInclude Include="Inc\Physics.h" />
     <ClInclude Include="Inc\PhysicsDebugDraw.h" />
     <ClInclude Include="Inc\PhysicsObject.h" />
@@ -147,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\CollisionShape.cpp" />
+    <ClCompile Include="Src\Particle.cpp" />
+    <ClCompile Include="Src\ParticleSystem.cpp" />
     <ClCompile Include="Src\PhysicsDebugDraw.cpp" />
     <ClCompile Include="Src\PhysicsWorld.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">

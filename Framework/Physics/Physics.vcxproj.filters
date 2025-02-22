@@ -36,6 +36,12 @@
     <ClInclude Include="Inc\SoftBody.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Particle.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ParticleSystem.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -54,6 +60,12 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\SoftBody.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Particle.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ParticleSystem.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,29 +3,32 @@
 
 namespace PanicEngine::Physics
 {
-	class CollisionShape;
+    class CollisionShape;
 
-	class RigidBody final : public PhysicsObject
-	{
-	public:
-		RigidBody() = default;
-		~RigidBody() override;
+    class RigidBody final : public PhysicsObject
+    {
+    public:
+        RigidBody() = default;
+        ~RigidBody() override;
 
-		void Initialize(PanicEngine::Graphics::Transform& graphicsTransform, const CollisionShape& shape, float mass = 0.0f);
-		void Terminate();
+        void Initialize(PanicEngine::Graphics::Transform& graphicsTransform, const CollisionShape& shape, float mass = 0.0f, bool addToWorld = true);
+        void Terminate();
 
-		void SetPosition(const PanicEngine::Math::Vector3& position);
-		void SetVelocity(const PanicEngine::Math::Vector3& velocity);
+        void SetPosition(const PanicEngine::Math::Vector3& position);
+        void SetVelocity(const PanicEngine::Math::Vector3& velocity);
 
-		bool IsDynamic() const;
+        void Activate();
+        void Deactivate();
 
-	private:
-		void SyncWithGraphics() override;
-		btRigidBody* GetRigidBody() override;
-		btDefaultMotionState* mMotionState = nullptr;
-		float mMass = 0.0f;
+        bool IsDynamic() const;
 
-		PanicEngine::Graphics::Transform* mGraphicsTransform = nullptr;
-		btRigidBody* mRigidBody = nullptr;
-	};
+    private:
+        void SyncWithGraphics() override;
+        btRigidBody* GetRigidBody() override;
+        btDefaultMotionState* mMotionState = nullptr;
+        float mMass = 0.0f;
+
+        PanicEngine::Graphics::Transform* mGraphicsTransform = nullptr;
+        btRigidBody* mRigidBody = nullptr;
+    };
 }

@@ -11,4 +11,5 @@
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Quaternion.h"
+#include "Range.h"
 #include "Matrix4.h"
