@@ -23,7 +23,7 @@ namespace PanicEngine::Physics
 
         bool IsActive() const;
         const Graphics::Transform& GetTransform() const;
-        const Color& GetColor() const;
+        Color GetColor() const;
         const Math::Vector3& GetPosition() const;
 
     private:

@@ -24,6 +24,7 @@
 #include "Model.h"
 #include "ModelCache.h"
 #include "ModelIO.h"
+#include "ParticleSystemEffect.h"
 #include "PixelShader.h"
 #include "PostProcessingEffect.h"
 #include "RenderObject.h"

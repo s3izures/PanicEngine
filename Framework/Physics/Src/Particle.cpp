@@ -56,7 +56,7 @@ const Graphics::Transform& Particle::GetTransform() const
     return mTransform;
 }
 
-const Color& Particle::GetColor() const
+Color Particle::GetColor() const
 {
     float t = 1.0f - Math::Clamp(mLifeTime / mInfo.lifeTime, 0.0f, 0.1f);
     return Math::Lerp(mInfo.startColor, mInfo.endColor, t);
