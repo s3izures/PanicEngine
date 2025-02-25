@@ -8,6 +8,7 @@ using namespace PanicEngine::Core;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Input;
 using namespace PanicEngine::Physics;
+using namespace PanicEngine::Audio;
 
 void App::Run(const AppConfig& config)
 {
@@ -35,8 +36,12 @@ void App::Run(const AppConfig& config)
 
     EventManager::StaticInitialize();
 
+    AudioSystem::StaticInitialize();
+    SoundEffectManager::StaticInitialize("../../Assets/Sounds");
+
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
+
 
     InputSystem* input = InputSystem::Get();
     mRunning = true;
@@ -50,6 +55,8 @@ void App::Run(const AppConfig& config)
             Quit();
             break;
         }
+
+        AudioSystem::Get()->Update();
 
         if (mNextState != nullptr)
         {
@@ -77,10 +84,13 @@ void App::Run(const AppConfig& config)
             DebugUI::EndRender();
         gs->EndRender();
 
-
     }
+
+
     mCurrentState->Terminate(); //FILO, First in Last Out
     //End state
+    SoundEffectManager::StaticTerminate();
+    AudioSystem::StaticTerminate();
     EventManager::StaticTerminate();
     PhysicsWorld::StaticTerminate();
     ModelCache::StaticTerminate();

@@ -5,6 +5,7 @@ using namespace PanicEngine::Math;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
+using namespace PanicEngine::Audio;
 
 void GameState::Initialize()
 {
@@ -128,6 +129,9 @@ void GameState::Initialize()
 
     EventManager* em = EventManager::Get();
     mSpacePressedEventId = em->AddListener(EventType::SpacePressed, std::bind(&GameState::OnSpacePressedEvent, this, std::placeholders::_1));
+
+    mGunEventId = SoundEffectManager::Get()->Load("photongun1.wav");
+    mExplosionEventId = SoundEffectManager::Get()->Load("explosion.wav");
 }
 
 void GameState::Terminate()
@@ -163,11 +167,13 @@ void GameState::Update(float deltaTime)
 void GameState::OnMoveEvent()
 {
     offset.x += 0.5f;
+    SoundEffectManager::Get()->Play(mExplosionEventId);
 }
 
 void GameState::OnSpacePressedEvent(const PanicEngine::Event& e)
 {
     LOG("HEY THE SPACE WAS PRESSED STOP PRESSING IT YOU LITTLE SHIT");
+    SoundEffectManager::Get()->Play(mGunEventId);
 }
 
 void GameState::Render()

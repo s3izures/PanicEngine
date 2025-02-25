@@ -24,6 +24,8 @@ protected:
 
     PanicEngine::Math::Vector3 offset = { 0.0f,0.0f,0.0f };
     PanicEngine::ListenerId mSpacePressedEventId = 0;
+    PanicEngine::Audio::SoundId mGunEventId = 0;
+    PanicEngine::Audio::SoundId mExplosionEventId = 0;
 
     //animation
     PanicEngine::Graphics::Animation mAnimation;
