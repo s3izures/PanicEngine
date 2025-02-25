@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "App.h"
 #include "AppState.h"
+#include "EventManager.h"
 
 using namespace PanicEngine;
 using namespace PanicEngine::Core;
@@ -31,6 +32,8 @@ void App::Run(const AppConfig& config)
 
     PhysicsWorld::Settings settings;
     PhysicsWorld::StaticInitialize(settings);
+
+    EventManager::StaticInitialize();
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
@@ -78,6 +81,7 @@ void App::Run(const AppConfig& config)
     }
     mCurrentState->Terminate(); //FILO, First in Last Out
     //End state
+    EventManager::StaticTerminate();
     PhysicsWorld::StaticTerminate();
     ModelCache::StaticTerminate();
     TextureCache::StaticTerminate();

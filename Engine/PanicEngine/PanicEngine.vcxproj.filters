@@ -24,6 +24,12 @@
     <ClInclude Include="Inc\AppState.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Event.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\EventManager.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -33,6 +39,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\PanicEngine.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EventManager.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
