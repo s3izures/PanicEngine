@@ -135,10 +135,10 @@ void ParticleSystem::SpawnSingleParticle()
     Math::Vector3 r = (isUp) ? Math::Vector3::XAxis : Math::Normalize(Math::Cross(Math::Vector3::YAxis, mInfo.spawnDirection));
     Math::Vector3 u = (isUp) ? Math::Vector3::ZAxis : Math::Normalize(Math::Cross(mInfo.spawnDirection, r));
     
-    float rotAngle = mInfo.spawnAngle.GetRandom() + Math::Constants::DegToRad;
+    float rotAngle = mInfo.spawnAngle.GetRandom() * Math::Constants::DegToRad;
     Math::Matrix4 matRotRight = Math::Matrix4::RotationAxis(r, rotAngle);
     
-    rotAngle = mInfo.spawnAngle.GetRandom() + Math::Constants::DegToRad;
+    rotAngle = mInfo.spawnAngle.GetRandom() * Math::Constants::DegToRad;
     Math::Matrix4 matRotUp = Math::Matrix4::RotationAxis(u, rotAngle);
     Math::Matrix4 matRotation = matRotRight * matRotUp;
     Math::Vector3 spawnDirection = Math::TransformCoord(mInfo.spawnDirection, matRotation);
