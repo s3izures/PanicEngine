@@ -11,8 +11,8 @@ void GameState::Initialize()
 {
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
 
-    mCamera.SetPosition({ 0.0f,1.0f,-5.0f });
-    mCamera.SetLookAt({ 0.0f,0.0f,0.0f });
+    mCamera.SetPosition({ 0.0f,5.0f,-10.0f });
+    mCamera.SetLookAt({ 0.0f,5.0f,0.0f });
 
     mDirectionalLight.direction = Normalize({ 1.0f, -1.0f, 1.0f });
     mDirectionalLight.ambient = { 0.3f, 0.3f, 0.3f, 1.0f };
@@ -32,8 +32,6 @@ void GameState::Initialize()
     mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
 
     mAnimationTime = 0.0f;
-
-    //animations
     mAnimation = AnimationBuilder()
 
         //bwomp
@@ -125,13 +123,16 @@ void GameState::Initialize()
         .AddRotationKey(Quaternion::Identity, 8.0f)
 
         .AddEventKey(std::bind(&GameState::OnMoveEvent, this), 8.0f)
+        .AddEventKey(std::bind(&GameState::OnAriseEvent, this), 8.1f)
         .Build();
 
     EventManager* em = EventManager::Get();
+    mShiftPressedEventId = em->AddListener(EventType::ShiftPressed, std::bind(&GameState::OnShiftPressedEvent, this, std::placeholders::_1));
     mSpacePressedEventId = em->AddListener(EventType::SpacePressed, std::bind(&GameState::OnSpacePressedEvent, this, std::placeholders::_1));
 
     mGunEventId = SoundEffectManager::Get()->Load("photongun1.wav");
     mExplosionEventId = SoundEffectManager::Get()->Load("explosion.wav");
+    mSwoopSFXEventId = SoundEffectManager::Get()->Load("megamanx_blast.wav");
 }
 
 void GameState::Terminate()
@@ -146,7 +147,7 @@ void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
 
-    if (mAnimation.GetDuration() > 0.0f)
+    if (mAnimation.GetDuration() > 0.0f && playAnim)
     {
         float prevTime = mAnimationTime;
         mAnimationTime += deltaTime;
@@ -162,6 +163,12 @@ void GameState::Update(float deltaTime)
         SpacePressedEvent spe;
         EventManager::Broadcast(spe);
     }
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::RSHIFT))
+    {
+        ShiftPressedEvent spev;
+        EventManager::Broadcast(spev);
+    }
 }
 
 void GameState::OnMoveEvent()
@@ -170,9 +177,24 @@ void GameState::OnMoveEvent()
     SoundEffectManager::Get()->Play(mExplosionEventId);
 }
 
+void GameState::OnAriseEvent()
+{
+    offset.y += 1.0f;
+    scaleAdd.z += 3.0f;
+}
+
+void GameState::OnShiftPressedEvent(const PanicEngine::Event& e)
+{
+    LOG("RSHIFT PRESSED, TOGGLING ANIMATION");
+    playAnim = !playAnim;
+    SoundEffectManager::Get()->Play(mSwoopSFXEventId);
+}
+
 void GameState::OnSpacePressedEvent(const PanicEngine::Event& e)
 {
-    LOG("HEY THE SPACE WAS PRESSED STOP PRESSING IT YOU LITTLE SHIT");
+    LOG("SPACE PRESSED, MAKING IT CHUNKIER");
+    scaleAdd.x += 0.1f;
+    scaleAdd.y += 0.5f;
     SoundEffectManager::Get()->Play(mGunEventId);
 }
 
@@ -180,6 +202,7 @@ void GameState::Render()
 {
     mBall.transform = mAnimation.GetTransform(mAnimationTime);
     mBall.transform.position += offset;
+    mBall.transform.scale += scaleAdd;
 
     mStandardEffect.Begin();
         mStandardEffect.Render(mGround);
@@ -190,7 +213,7 @@ void GameState::Render()
 void GameState::UpdateCamera(float deltaTime)
 {
     auto input = InputSystem::Get();
-    const float moveSpeed = (input->IsKeyDown(KeyCode::LSHIFT) ? 10.0f : 1.0f) * deltaTime;
+    const float moveSpeed = (input->IsKeyDown(KeyCode::LCONTROL) ? 10.0f : 1.0f) * deltaTime;
     const float turnSpeed = 0.1f * deltaTime;
     if (input->IsKeyDown(KeyCode::W))
     {

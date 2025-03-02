@@ -6,6 +6,7 @@ namespace PanicEngine
     {
         None,
         SpacePressed,
+        ShiftPressed,
     };
 
     class Event
@@ -25,7 +26,11 @@ namespace PanicEngine
     {
     public:
         SpacePressedEvent() : Event(EventType::SpacePressed) {}
+    };
 
-
+    class ShiftPressedEvent : public Event
+    {
+    public:
+        ShiftPressedEvent() : Event(EventType::ShiftPressed) {}
     };
 }
