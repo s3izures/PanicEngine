@@ -34,8 +34,8 @@ void GameState::Initialize()
     mShadowEffect.Initialize();
     mShadowEffect.SetDirectionalLight(mDirectionalLight);
 
-    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     MeshPX screenQuad = MeshBuilder::CreateScreenQuad();
 
@@ -53,7 +53,7 @@ void GameState::Terminate()
 {
     mShape[1].Terminate();
     mGround.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     mShadowEffect.Terminate();
     mStandardEffect.Terminate();
 }
@@ -68,12 +68,12 @@ void GameState::Render()
 {
     //Only items with shadows
     mShadowEffect.Begin();
-        mShadowEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+        mShadowEffect.Render(mCharacter1.renderObjects[currentRenderWorld]);
         mShadowEffect.Render(mShape[1]);
     mShadowEffect.End();
 
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+        mStandardEffect.Render(mCharacter1.renderObjects[currentRenderWorld]);
         mStandardEffect.Render(mShape[1]);
         mStandardEffect.Render(mGround);
     mStandardEffect.End();

@@ -21,6 +21,6 @@ protected:
     PanicEngine::Graphics::RenderObject mGround;
 
     //animation
-    PanicEngine::Graphics::Animation mAnimation;
+    PanicEngine::Graphics::Animation mAnimationChar1;
     float mAnimationTime = 0.0f;
 };

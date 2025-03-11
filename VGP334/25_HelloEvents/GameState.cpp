@@ -32,7 +32,7 @@ void GameState::Initialize()
     mGround.diffuseMapId = TextureCache::Get()->LoadTexture("misc/concrete.jpg");
 
     mAnimationTime = 0.0f;
-    mAnimation = AnimationBuilder()
+    mAnimationChar1 = AnimationBuilder()
 
         //bwomp
         .AddPositionKey({ 0.0f, 0.5f, 0.0f }, 0.0f)
@@ -147,14 +147,14 @@ void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
 
-    if (mAnimation.GetDuration() > 0.0f && playAnim)
+    if (mAnimationChar1.GetDuration() > 0.0f && playAnim)
     {
         float prevTime = mAnimationTime;
         mAnimationTime += deltaTime;
-        mAnimation.PlayEvents(prevTime, mAnimationTime);
-        while (mAnimationTime > mAnimation.GetDuration())
+        mAnimationChar1.PlayEvents(prevTime, mAnimationTime);
+        while (mAnimationTime > mAnimationChar1.GetDuration())
         {
-            mAnimationTime -= mAnimation.GetDuration();
+            mAnimationTime -= mAnimationChar1.GetDuration();
         }
     }
 
@@ -200,7 +200,7 @@ void GameState::OnSpacePressedEvent(const PanicEngine::Event& e)
 
 void GameState::Render()
 {
-    mBall.transform = mAnimation.GetTransform(mAnimationTime);
+    mBall.transform = mAnimationChar1.GetTransform(mAnimationTime);
     mBall.transform.position += offset;
     mBall.transform.scale += scaleAdd;
 

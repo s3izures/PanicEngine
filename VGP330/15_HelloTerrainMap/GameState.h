@@ -25,7 +25,7 @@ protected:
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::TerrainEffect mTerrainEffect;
 
-    PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderGroup mCharacter1;
     PanicEngine::Graphics::RenderObject mGround;
 
     PanicEngine::Graphics::Terrain mTerrain;

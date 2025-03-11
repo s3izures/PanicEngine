@@ -33,8 +33,8 @@ void GameState::Initialize()
     mPostProcessEffect.SetTexture(&mRenderTarget);
     mPostProcessEffect.SetTexture(&mCombineTexture, 1);
 
-    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     MeshPX screenQuad = MeshBuilder::CreateScreenQuad();
     mScreenQuad.meshBuffer.Initialize(screenQuad);
@@ -57,7 +57,7 @@ void GameState::Terminate()
     mCombineTexture.Terminate();
     mGround.Terminate();
     mScreenQuad.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     mPostProcessEffect.Terminate();
     mStandardEffect.Terminate();
 }
@@ -72,7 +72,7 @@ void GameState::Render()
 {
     mRenderTarget.BeginRender();
         mStandardEffect.Begin();
-            mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+            mStandardEffect.Render(mCharacter1.renderObjects[currentRenderWorld]);
             mStandardEffect.Render(mGround);
         mStandardEffect.End();
     mRenderTarget.EndRender();

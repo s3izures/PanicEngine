@@ -22,13 +22,13 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model", &mCharAnim);
-    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/Defeated.animset");
-    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/Reaction.animset");
-    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/Praying.animset");
-    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/JumpPushUp.animset");
-    ModelCache::Get()->AddAnimation(mCharacters.modelId, L"../../Assets/Models/Amy/TwistDance.animset");
-    mCharAnim.Initialize(mCharacters.modelId);
+    mCharacter1.Initialize(L"../../Assets/Models/Amy/Amy.model", &mCharAnim);
+    ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/Defeated.animset");
+    ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/Reaction.animset");
+    ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/Praying.animset");
+    ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/JumpPushUp.animset");
+    ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/TwistDance.animset");
+    mCharAnim.Initialize(mCharacter1.modelId);
 
     Mesh ground = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
     mGround.meshBuffer.Initialize(ground);
@@ -38,7 +38,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mGround.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     mStandardEffect.Terminate();
 }
 
@@ -55,12 +55,12 @@ void GameState::Render()
         if (mShowSkeleton)
         {
             AnimationUtil::BoneTransforms boneTransforms;
-            AnimationUtil::ComputeBoneTransforms(mCharacters.modelId, boneTransforms, &mCharAnim);
-            AnimationUtil::DrawSkeleton(mCharacters.modelId, boneTransforms);
+            AnimationUtil::ComputeBoneTransforms(mCharacter1.modelId, boneTransforms, &mCharAnim);
+            AnimationUtil::DrawSkeleton(mCharacter1.modelId, boneTransforms);
         }
         else
         {
-            mStandardEffect.Render(mCharacters);
+            mStandardEffect.Render(mCharacter1);
         }
         mStandardEffect.Render(mGround);
     mStandardEffect.End();

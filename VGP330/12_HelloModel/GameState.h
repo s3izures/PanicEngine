@@ -21,7 +21,7 @@ protected:
 
     PanicEngine::Graphics::Camera mCamera;
     
-    PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderGroup mCharacter1;
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::StandardEffect mRenderTargetStandardEffect;
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;

@@ -33,7 +33,7 @@ void GameState::Initialize()
     mAnimationTime = 0.0f;
 
     //animations
-    mAnimation = AnimationBuilder()
+    mAnimationChar1 = AnimationBuilder()
 
         //bwomp
         .AddPositionKey({ 0.0f, 0.5f, 0.0f }, 0.0f)
@@ -136,19 +136,19 @@ void GameState::Update(float deltaTime)
 {
     UpdateCamera(deltaTime);
 
-    if (mAnimation.GetDuration() > 0.0f)
+    if (mAnimationChar1.GetDuration() > 0.0f)
     {
         mAnimationTime += deltaTime;
-        while (mAnimationTime > mAnimation.GetDuration())
+        while (mAnimationTime > mAnimationChar1.GetDuration())
         {
-            mAnimationTime -= mAnimation.GetDuration();
+            mAnimationTime -= mAnimationChar1.GetDuration();
         }
     }
 }
 
 void GameState::Render()
 {
-    mBall.transform = mAnimation.GetTransform(mAnimationTime);
+    mBall.transform = mAnimationChar1.GetTransform(mAnimationTime);
 
     mStandardEffect.Begin();
     mStandardEffect.Render(mGround);

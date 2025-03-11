@@ -25,7 +25,7 @@ protected:
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::ShadowEffect mShadowEffect;
 
-    PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderGroup mCharacter1;
     PanicEngine::Graphics::RenderObject mShape[2];
     PanicEngine::Graphics::RenderObject mGround;
 

@@ -33,8 +33,8 @@ void GameState::Initialize()
     mTerrainEffect.SetCamera(mCamera);
     mTerrainEffect.SetDirectionalLight(mDirectionalLight);
 
-    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     mTerrain.Initialize(L"../../Assets/Images/terrain/heightmap_512x512.raw", 20.0f, 10.0f);
 
@@ -46,7 +46,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mGround.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     mTerrainEffect.Terminate();
     mStandardEffect.Terminate();
 }
@@ -60,7 +60,7 @@ int currentRenderWorld = 0;
 void GameState::Render()
 {
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters, currentRenderWorld);
+        mStandardEffect.Render(mCharacter1, currentRenderWorld);
     mStandardEffect.End();
 
     mTerrainEffect.Begin();

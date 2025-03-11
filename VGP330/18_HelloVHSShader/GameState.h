@@ -26,7 +26,7 @@ protected:
     PanicEngine::Graphics::VHSEffect mVHSEffect;
     PanicEngine::Graphics::Texture mStaticTextures[4];
 
-    PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderGroup mCharacter1;
     PanicEngine::Graphics::RenderObject mGround;
     PanicEngine::Graphics::RenderObject mScreenQuad;
 

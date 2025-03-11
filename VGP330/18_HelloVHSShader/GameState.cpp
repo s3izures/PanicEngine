@@ -40,8 +40,8 @@ void GameState::Initialize()
         mVHSEffect.SetStaticTexture(mStaticTextures[i], i);
     }
 
-    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     MeshPX screenQuad = MeshBuilder::CreateScreenQuad();
     mScreenQuad.meshBuffer.Initialize(screenQuad);
@@ -61,7 +61,7 @@ void GameState::Terminate()
     mRenderTarget.Terminate();
     mGround.Terminate();
     mScreenQuad.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     for (int i = 0; i < 4; i++)
     {
         mStaticTextures[i].Terminate();
@@ -81,7 +81,7 @@ void GameState::Render()
 {
     mRenderTarget.BeginRender();
         mStandardEffect.Begin();
-            mStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+            mStandardEffect.Render(mCharacter1.renderObjects[currentRenderWorld]);
             mStandardEffect.Render(mGround);
         mStandardEffect.End();
     mRenderTarget.EndRender();

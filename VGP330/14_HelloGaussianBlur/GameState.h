@@ -26,7 +26,7 @@ protected:
     PanicEngine::Graphics::GaussianBlurEffect mGaussianBlurEffect;
     PanicEngine::Graphics::PostProcessEffect mPostProcessEffect;
 
-    PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderGroup mCharacter1;
     PanicEngine::Graphics::RenderObject mGround;
     PanicEngine::Graphics::RenderObject mScreenQuad;
 

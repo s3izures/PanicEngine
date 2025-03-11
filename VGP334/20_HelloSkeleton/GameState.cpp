@@ -22,7 +22,7 @@ void GameState::Initialize()
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Amy/Amy.model");
 
     Mesh ground = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
     mGround.meshBuffer.Initialize(ground);
@@ -32,7 +32,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mGround.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     mStandardEffect.Terminate();
 }
 
@@ -47,12 +47,12 @@ void GameState::Render()
         if (mShowSkeleton)
         {
             AnimationUtil::BoneTransforms boneTransforms;
-            AnimationUtil::ComputeBoneTransforms(mCharacters.modelId, boneTransforms);
-            AnimationUtil::DrawSkeleton(mCharacters.modelId, boneTransforms);
+            AnimationUtil::ComputeBoneTransforms(mCharacter1.modelId, boneTransforms);
+            AnimationUtil::DrawSkeleton(mCharacter1.modelId, boneTransforms);
         }
         else
         {
-            mStandardEffect.Render(mCharacters);
+            mStandardEffect.Render(mCharacter1);
         }
         mStandardEffect.Render(mGround);
     mStandardEffect.End();

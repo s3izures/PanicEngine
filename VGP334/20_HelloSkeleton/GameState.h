@@ -13,7 +13,7 @@ public:
 protected:
     void UpdateCamera(float deltaTime);
 
-    PanicEngine::Graphics::RenderGroup mCharacters;
+    PanicEngine::Graphics::RenderGroup mCharacter1;
     PanicEngine::Graphics::RenderObject mGround;
 
     PanicEngine::Graphics::Camera mCamera;

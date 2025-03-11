@@ -33,8 +33,8 @@ void GameState::Initialize()
     mRenderTargetStandardEffect.SetCamera(mCamera);
     mRenderTargetStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-    mCharacters.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
-    mCharacters.Initialize(L"../../Assets/Models/Amy/Amy.model");
+    mCharacter1.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model");
+    mCharacter1.Initialize(L"../../Assets/Models/SmokedFish/SmokedFish.model");
 
     const uint32_t size = 512;
     mRenderTarget.Initialize(size, size, Texture::Format::RGBA_U8);
@@ -43,7 +43,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mRenderTarget.Terminate();
-    mCharacters.Terminate();
+    mCharacter1.Terminate();
     mRenderTargetStandardEffect.Terminate();
     mStandardEffect.Terminate();
 }
@@ -61,14 +61,14 @@ void GameState::Render()
 
     mRenderTarget.BeginRender();
         mRenderTargetStandardEffect.Begin();
-            mRenderTargetStandardEffect.Render(mCharacters.renderObjects[currentRenderWorld]);
+            mRenderTargetStandardEffect.Render(mCharacter1.renderObjects[currentRenderWorld]);
         mRenderTargetStandardEffect.End();
     mRenderTarget.EndRender();
 
     mCamera.SetAspectRatio(0.0f);
 
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacters.renderObjects[currentRenderBox]);
+        mStandardEffect.Render(mCharacter1.renderObjects[currentRenderBox]);
     mStandardEffect.End();
 
     SimpleDraw::AddGroundPlane(10.0f, Colors::Wheat);
