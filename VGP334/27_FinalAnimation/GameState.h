@@ -14,14 +14,19 @@ protected:
     void UpdateCamera(float deltaTime);
 
     PanicEngine::Graphics::RenderGroup mCharacter1;
+    PanicEngine::Graphics::RenderGroup mCharacter2;
     PanicEngine::Graphics::RenderGroup mFish;
     PanicEngine::Graphics::RenderObject mGround;
     PanicEngine::Graphics::RenderObject mSky;
     PanicEngine::Graphics::Animator mCharAnim;
+    PanicEngine::Graphics::Animator mCharAnim2;
 
     PanicEngine::Graphics::Camera mCamera;
     PanicEngine::Graphics::StandardEffect mStandardEffect;
     PanicEngine::Graphics::DirectionalLight mDirectionalLight;
+
+    PanicEngine::Graphics::ParticleSystemEffect mParticleSystemEffect;
+    PanicEngine::Physics::ParticleSystem mParticleSystem;
 
     void OnSpacePressedEvent(const PanicEngine::Event& e);
     PanicEngine::ListenerId mSpacePressedEventId = 0;
@@ -33,6 +38,7 @@ protected:
 
     //animation
     PanicEngine::Graphics::Animation mAnimationChar1;
+    PanicEngine::Graphics::Animation mAnimationChar2;
     PanicEngine::Graphics::Animation mAnimationFish;
     float mAnimationTime = 0.0f;
 };

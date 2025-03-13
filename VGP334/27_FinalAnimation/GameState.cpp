@@ -5,12 +5,15 @@ using namespace PanicEngine::Math;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
+using namespace PanicEngine::Physics;
 using namespace PanicEngine::Audio;
 
 PanicEngine::Math::Vector3 Char1Pos;
 bool fishSpin = false;
-bool followChar = false;
+int followChar = 0;
 bool renderChar1 = true;
+bool renderChar2 = true;
+bool activeParticles = false;
 
 void GameState::Initialize()
 {
@@ -39,8 +42,32 @@ void GameState::Initialize()
     ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/HipHopDancing.animset"); //4
     ModelCache::Get()->AddAnimation(mCharacter1.modelId, L"../../Assets/Models/Amy/TwistDance.animset"); //5
     mCharAnim.Initialize(mCharacter1.modelId);
+    
+    //Prisoner
+    mCharacter2.Initialize(L"../../Assets/Models/Prisoner/Prisoner.model", &mCharAnim2);
+    ModelCache::Get()->AddAnimation(mCharacter2.modelId, L"../../Assets/Models/Prisoner/RobotDance.animset"); //1
+    mCharAnim2.Initialize(mCharacter2.modelId);
 
-    mCharAnim.Initialize(mCharacter1.modelId);
+    //Particles
+    mParticleSystemEffect.Initialize();
+    mParticleSystemEffect.SetCamera(mCamera);
+
+    ParticleSystemInfo info;
+    info.textureId = TextureCache::Get()->LoadTexture("sprites/explosion.png");
+    int maxParticles = 100;
+    info.particlesPerEmit = { 1, 4 };
+    info.delay = 1.0f;
+    info.lifeTime = FLT_MAX;
+    info.timeBetweenEmit = { 0.1f, 0.2f };
+    info.spawnAngle = { -30.0f, 30.0f };
+    info.spawnSpeed = { 6.0f, 7.0f };
+    info.spawnLifeTime = { 0.5f, 2.0f };
+    info.spawnDirection = Math::Vector3::YAxis;
+    info.startScale = { Math::Vector3::Zero, Math::Vector3::Zero };
+    info.endScale = { Math::Vector3::One, Math::Vector3::One };
+    info.startColor = { Colors::White, Colors::White };
+    info.endColor = { Colors::White, Colors::White };
+    mParticleSystem.Initialize(info);
 
     Mesh sphere = MeshBuilder::CreateSkysphere(100, 100, 1000.0f);
     mSky.meshBuffer.Initialize(sphere);
@@ -56,19 +83,22 @@ void GameState::Initialize()
     mHateId = SoundEffectManager::Get()->Load("HATE.wav");
 
     mAnimationTime = 0.0f;
-    SoundEffectManager::Get()->Play(mHateId);
     mAnimationChar1 = AnimationBuilder()
         .AddScaleKey({ 1.0f,1.0f,1.0f }, 0.0f)
+        .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::XAxis, -85.0f * Math::Constants::DegToRad), 0.1f)
         .AddEventKey([&]()
             {
                 renderChar1 = true;
                 mCamera.SetPosition({ 0.000000, 5.823244, -29.886192 });
                 mCharAnim.PlayAnimation(3, false);
+                followChar = 1;
             }, 0.1f) //RESET
+        .AddEventKey([&]() {activeParticles = false;}, 0.1f)
         .AddEventKey([&]()
             {
-                followChar = true;
+                followChar = 0;
             }, 9.0f)
+        .AddEventKey([&]() {activeParticles = true;}, 10.0f)
         .AddPositionKey({ -50.0f,0.0f,0.0f }, 10.0f)
         .AddEventKey([&]()
             {
@@ -80,12 +110,12 @@ void GameState::Initialize()
                 mCharAnim.PlayAnimation(5, false);
             }, 11.0f)
         .AddPositionKey({ 0.0f, 0.0f,0.0f }, 12.0f)
+        .AddEventKey([&]() {activeParticles = false;}, 13.0f)
         .AddEventKey([&]()
             {
                 mCharAnim.PlayAnimation(4, true);
             }, 13.0f)
         .AddPositionKey({ 0.0f,-0.1f,0.0f }, 20.0f)
-        .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::XAxis, -85.0f * Math::Constants::DegToRad), 20.0f)
         .AddEventKey([&]()
             {
                 mCharAnim.PlayAnimation(1, false);
@@ -94,7 +124,7 @@ void GameState::Initialize()
         .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::ZAxis, 100000000.0f * Math::Constants::DegToRad), 25.0f)
         .AddEventKey([&]()
             {
-                followChar = true;
+                mCharAnim.PlayAnimation(4, true);
             }, 25.0f)
         .AddScaleKey({ 1.0f,1.0f,1.0f }, 30.0f)
         .AddPositionKey({ 0.0f,5.0f,0.0f }, 35.0f)
@@ -104,21 +134,19 @@ void GameState::Initialize()
         .AddEventKey([&]()
             {
                 mCamera.SetPosition({ 0.000000, 5.823244, -29.886192 });
-                mCharAnim.PlayAnimation(-1, false);
-                followChar = false;
+                followChar = 1;
                 renderChar1 = false;
             }, 45.0f)
         .AddEventKey([&]()
             {
                 mCamera.SetPosition({ 0.000000, 5.823244, -29.886192 });
                 mCharAnim.PlayAnimation(-1, false);
-                followChar = false;
-                SoundEffectManager::Get()->Stop(mHateId);
-            }, 55.0f) //RESET
+            }, 57.0f) //RESET
         .Build();
 
     mAnimationFish = AnimationBuilder()
         .AddPositionKey({ 0.0f, 0.0f,0.0f }, 0.0f)
+        .AddEventKey([&]() {SoundEffectManager::Get()->Play(mHateId);}, 0.1f)
         .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::XAxis, 180.0f * Math::Constants::DegToRad), 0.0f)
         .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::ZAxis, 180.0f * Math::Constants::DegToRad), 1.0f)
         .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::XAxis, 360.0f * Math::Constants::DegToRad), 2.0f)
@@ -135,7 +163,12 @@ void GameState::Initialize()
         .AddPositionKey({ 0.0f, 10.0f,0.0f }, 45.0f)
         .AddRotationKey(PanicEngine::Math::Quaternion::CreateFromAxisAngle(Vector3::XAxis, 0.0f * Math::Constants::DegToRad), 45.0f)
         .AddPositionKey({-10.0f, 3.0f, 0.0f}, 50.0f)
-        .AddPositionKey({0.0f, 3.0f, -50.0f}, 55.0f)
+        .AddPositionKey({0.0f, 3.0f, -50.0f}, 57.0f)
+        .Build();
+
+    mAnimationChar2 = AnimationBuilder()
+        .AddEventKey([&]() {mCharAnim2.PlayAnimation(1, true);}, 0.1f)
+        .AddEventKey([&]() {mCamera.SetPosition({ -2.0f, 3.732380f, -2.305765f }); followChar = 2;}, 54.0f)
         .Build();
 
 }
@@ -145,6 +178,9 @@ void GameState::Terminate()
     EventManager::Get()->RemoveListener(EventType::SpacePressed, mSpacePressedEventId);
     mGround.Terminate();
     mSky.Terminate();
+    mParticleSystem.Terminate();
+    mParticleSystemEffect.Terminate();
+    mCharacter2.Terminate();
     mCharacter1.Terminate();
     mFish.Terminate();
     mStandardEffect.Terminate();
@@ -152,14 +188,19 @@ void GameState::Terminate()
 
 void GameState::Update(float deltaTime)
 {
+    mParticleSystem.Update(deltaTime);
+    mParticleSystem.SetPosition(mCharacter1.transform.position);
+
     //UpdateCamera(deltaTime);
     mCharAnim.Update(deltaTime);
+    mCharAnim2.Update(deltaTime);
 
-    if (mAnimationChar1.GetDuration() > 0.0f && mAnimationFish.GetDuration() > 0.0f)
+    if (mAnimationChar1.GetDuration() > 0.0f && mAnimationFish.GetDuration() > 0.0f && mAnimationChar2.GetDuration() > 0.0f)
     {
         float prevTime = mAnimationTime;
         mAnimationTime += deltaTime;
         mAnimationChar1.PlayEvents(prevTime, mAnimationTime);
+        mAnimationChar2.PlayEvents(prevTime, mAnimationTime);
         mAnimationFish.PlayEvents(prevTime, mAnimationTime);
         while (mAnimationTime > mAnimationChar1.GetDuration() && mAnimationTime > mAnimationFish.GetDuration())
         {
@@ -173,13 +214,17 @@ void GameState::Update(float deltaTime)
         EventManager::Broadcast(spe);
     }
 
-    if (followChar)
+    if (followChar == 0)
     {
         mCamera.SetLookAt(mCharacter1.transform.position);
     }
-    else
+    else if (followChar == 1)
     {
         mCamera.SetLookAt(mFish.transform.position);
+    }
+    else if (followChar == 2)
+    {
+        mCamera.SetLookAt(mCharacter2.transform.position);
     }
 }
 
@@ -194,23 +239,36 @@ void GameState::Render()
     mCharacter1.transform = mAnimationChar1.GetTransform(mAnimationTime);
 
     mStandardEffect.Begin();
-    if (mShowSkeleton)
-    {
-        AnimationUtil::BoneTransforms boneTransforms;
-        AnimationUtil::ComputeBoneTransforms(mCharacter1.modelId, boneTransforms, &mCharAnim);
-        AnimationUtil::DrawSkeleton(mCharacter1.modelId, boneTransforms);
-    }
-    else
-    {
-        mStandardEffect.Render(mFish);
-        if (renderChar1)
+        if (mShowSkeleton)
         {
-            mStandardEffect.Render(mCharacter1);
+            AnimationUtil::BoneTransforms boneTransforms;
+            AnimationUtil::ComputeBoneTransforms(mCharacter1.modelId, boneTransforms, &mCharAnim);
+            AnimationUtil::DrawSkeleton(mCharacter1.modelId, boneTransforms);
+            AnimationUtil::ComputeBoneTransforms(mCharacter2.modelId, boneTransforms, &mCharAnim);
+            AnimationUtil::DrawSkeleton(mCharacter2.modelId, boneTransforms);
         }
-    }
-    mStandardEffect.Render(mGround);
-    mStandardEffect.Render(mSky);
+        else
+        {
+            mStandardEffect.Render(mFish);
+            if (renderChar1)
+            {
+                mStandardEffect.Render(mCharacter1);
+            }
+            if (renderChar2)
+            {
+                mStandardEffect.Render(mCharacter2);
+            }
+        }
+        mStandardEffect.Render(mGround);
+        mStandardEffect.Render(mSky);
     mStandardEffect.End();
+
+    mParticleSystemEffect.Begin();
+        if (activeParticles)
+        {
+            mParticleSystem.Render(mParticleSystemEffect);
+        }
+    mParticleSystemEffect.End();
 }
 
 void GameState::UpdateCamera(float deltaTime)
@@ -265,16 +323,22 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
     }
 
-    mStandardEffect.DebugUI();
+    mParticleSystem.DebugUI();
+    mParticleSystemEffect.DebugUI();
+    PhysicsWorld::Get()->DebugUI();
+
+    //mStandardEffect.DebugUI();
 
     ImGui::Separator();
 
-    ImGui::Checkbox("ShowSkeleton", &mShowSkeleton);
+    ImGui::Text(std::to_string(mAnimationTime).c_str());
+
+    //ImGui::Checkbox("ShowSkeleton", &mShowSkeleton);
     /*int maxAnimations = mCharAnim.GetAnimationCount();
     if (ImGui::DragInt("AnimIndex", &mAnimationIndex, 1, -1, maxAnimations - 1))
     {
         mCharAnim.PlayAnimation(mAnimationIndex, true);
     }*/
-    SimpleDraw::Render(mCamera);
+    //SimpleDraw::Render(mCamera);
     ImGui::End();
 }
