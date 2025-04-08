@@ -10,6 +10,18 @@ public:
     Student() 
     {
         mId = ++sUniqueId;
+        mName = "N/a";
+    }
+
+    Student(const std::string& name)
+        : mName(name), mId(++sUniqueId)
+    {
+
+    }
+
+    void Log()
+    {
+        LOG("Name: %s | Id: %d", mName.c_str(), mId);
     }
 
     void SetName(const std::string& name)
@@ -31,6 +43,7 @@ int WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     for (uint32_t i = 0; i < 100; ++i)
     {
         Student* newStudent = studentPool.New();
+        newStudent->Log();
         students.push_back(newStudent);
     }
 
@@ -45,7 +58,8 @@ int WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     //test Addition
     for (uint32_t i = 0;i < 55;++i)
     {
-        Student* student = studentPool.New();
+        Student* student = studentPool.New("Lalalalala");
+        student->Log();
         students.push_back(student);
     }
 
