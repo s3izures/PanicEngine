@@ -30,6 +30,12 @@
     <ClInclude Include="Inc\WindowMessageHandler.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\BlockAllocator.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\TypedAllocator.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -42,6 +48,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\WindowMessageHandler.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\BlockAllocator.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
