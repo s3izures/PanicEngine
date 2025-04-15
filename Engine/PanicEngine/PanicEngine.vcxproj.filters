@@ -7,6 +7,12 @@
     <Filter Include="Src">
       <UniqueIdentifier>{6d60742d-babc-4559-bc18-59aabb995a78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Components">
+      <UniqueIdentifier>{e6f7249f-d2bc-4ec1-b256-47e443beb37f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Components">
+      <UniqueIdentifier>{f9725ac4-2b72-4e0b-90f5-f200ebf0be35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\Common.h">
@@ -30,6 +36,18 @@
     <ClInclude Include="Inc\EventManager.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Component.h">
+      <Filter>Inc\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GameObject.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\TypeIds.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\TransformComponent.h">
+      <Filter>Inc\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -43,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="Src\EventManager.cpp">
       <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TransformComponent.cpp">
+      <Filter>Src\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
