@@ -3,8 +3,8 @@
 
 namespace PanicEngine
 {
-
     class GameObject;
+
     class Component
     {
     public:
@@ -16,12 +16,12 @@ namespace PanicEngine
         Component& operator=(const Component&) = delete;
         Component& operator=(const Component&&) = delete;
 
+        virtual uint32_t GetTypeId() const = 0;
+
         virtual void Initialize() {}
         virtual void Terminate() {}
         virtual void Update(float deltaTime) {}
         virtual void DebugUI() {}
-
-        virtual uint32_t GetTypeId() const = 0;
 
         GameObject& GetOwner() { return *mOwner; }
         const GameObject& GetOwner() const { return *mOwner; }

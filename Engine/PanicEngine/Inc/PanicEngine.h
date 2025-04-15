@@ -7,12 +7,18 @@
 #include "EventManager.h"
 
 //Game Object
+#include "GameWorld.h"
 #include "GameObject.h"
 #include "TypeIds.h"
 
 //Components
 #include "Component.h"
+#include "CameraComponent.h"
+#include "FPSCameraComponent.h"
 #include "TransformComponent.h"
+
+//Services
+#include "Service.h"
 
 namespace PanicEngine
 {

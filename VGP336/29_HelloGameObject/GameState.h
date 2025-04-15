@@ -11,9 +11,6 @@ public:
     void DebugUI();
 
 protected:
-    void UpdateCamera(float deltaTime);
-
-    PanicEngine::GameObject mGameObject;
-    PanicEngine::Graphics::Camera mCamera;
-
+    PanicEngine::GameWorld mGameWorld;
+    const PanicEngine::CameraComponent* mCameraComponent = nullptr;
 };

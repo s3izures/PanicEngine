@@ -4,11 +4,18 @@ namespace PanicEngine
 {
     enum class ComponentId
     {
-        Invalid,    //Default value, not valid
+        Invalid,    //----- Default value, not valid
+        Transform,  //Transform component for location
+        Camera,     //Contains camera for view
+        FPSCamera,  //FPS camera
+        Count       //----- Last value, chain ids in custom components
+    };
 
-        Transform,
-
-        Count       //Last value, chain ids in custom components
+    enum class ServiceId
+    {
+        Invalid,    //----- Default value, not valid
+        Camera,     //Camera manager
+        Count       //----- Last value, chain ids in custom components
     };
 }
 

@@ -13,6 +13,12 @@
     <Filter Include="Src\Components">
       <UniqueIdentifier>{f9725ac4-2b72-4e0b-90f5-f200ebf0be35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Services">
+      <UniqueIdentifier>{d8cd9843-d620-4d64-84bf-1e5ef59d3dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Services">
+      <UniqueIdentifier>{67431baf-3192-4a70-9d03-1cb626e62c43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\Common.h">
@@ -48,6 +54,18 @@
     <ClInclude Include="Inc\TransformComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\CameraComponent.h">
+      <Filter>Inc\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\FPSCameraComponent.h">
+      <Filter>Inc\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Service.h">
+      <Filter>Inc\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GameWorld.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -67,6 +85,15 @@
     </ClCompile>
     <ClCompile Include="Src\TransformComponent.cpp">
       <Filter>Src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CameraComponent.cpp">
+      <Filter>Src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FPSCameraComponent.cpp">
+      <Filter>Src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameWorld.cpp">
+      <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

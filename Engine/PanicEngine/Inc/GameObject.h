@@ -49,7 +49,7 @@ namespace PanicEngine
         template<class ComponentType>
         const ComponentType* GetComponent() const
         {
-            static_cast(std::is_base_of_v<Component, ComponentType>, "GameObject: ComponentType must be of type Component");
+            static_assert(std::is_base_of_v<Component, ComponentType>, "GameObject: ComponentType must be of type Component");
 
             for (auto& component : mComponents)
             {
@@ -63,7 +63,7 @@ namespace PanicEngine
         }
 
         template<class ComponentType>
-        ComponentType* GetComponenet()
+        ComponentType* GetComponent()
         {
             const GameObject* thisConst = static_cast <const GameObject*>(this);
             return const_cast<ComponentType*>(thisConst->GetComponent<ComponentType>());

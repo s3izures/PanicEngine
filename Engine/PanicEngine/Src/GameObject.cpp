@@ -50,7 +50,7 @@ void GameObject::DebugUI()
 
 void GameObject::SetName(std::string& name)
 {
-    mName = std::move(name)
+    mName = std::move(name);
 }
 
 const std::string& GameObject::GetName() const

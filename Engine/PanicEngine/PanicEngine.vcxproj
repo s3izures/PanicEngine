@@ -141,20 +141,27 @@
   <ItemGroup>
     <ClInclude Include="Inc\App.h" />
     <ClInclude Include="Inc\AppState.h" />
+    <ClInclude Include="Inc\CameraComponent.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Component.h" />
     <ClInclude Include="Inc\Event.h" />
     <ClInclude Include="Inc\EventManager.h" />
+    <ClInclude Include="Inc\FPSCameraComponent.h" />
     <ClInclude Include="Inc\GameObject.h" />
+    <ClInclude Include="Inc\GameWorld.h" />
     <ClInclude Include="Inc\PanicEngine.h" />
+    <ClInclude Include="Inc\Service.h" />
     <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeIds.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\App.cpp" />
+    <ClCompile Include="Src\CameraComponent.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
+    <ClCompile Include="Src\FPSCameraComponent.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
+    <ClCompile Include="Src\GameWorld.cpp" />
     <ClCompile Include="Src\PanicEngine.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
