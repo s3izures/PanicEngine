@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "GameObjectHandle.h"
 
 namespace PanicEngine
 {
@@ -19,6 +20,7 @@ namespace PanicEngine
 
         GameWorld& GetWorld();
         GameWorld& GetWorld() const;
+        const GameObjectHandle& GetHandle();
 
         template<class ComponentType>
         ComponentType* AddComponent()
@@ -79,6 +81,7 @@ namespace PanicEngine
         bool mInitialized = false;
         uint32_t mUniqueId = 0;
         GameWorld* mWorld = nullptr;
+        GameObjectHandle mHandle;
 
         using Components = std::vector<std::unique_ptr<Component>>;
         Components mComponents;

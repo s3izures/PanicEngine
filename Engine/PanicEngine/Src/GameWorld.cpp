@@ -4,7 +4,7 @@
 
 using namespace PanicEngine;
 
-void GameWorld::Initialize()
+void GameWorld::Initialize(uint32_t capacity)
 {
     ASSERT(!mInitialized, "GameWorld: already initialized");
     for (auto& service : mServices)
@@ -12,17 +12,24 @@ void GameWorld::Initialize()
         service->Initialize();
     }
 
+    mGameObjectSlots.resize(capacity);
+    mFreeSlots.resize(capacity);
+    std::iota(mFreeSlots.begin(), mFreeSlots.end(), 0);
+
     mInitialized = true;
 }
 
 void GameWorld::Terminate()
 {
-    for (auto& go : mGameObjects)
+    for (Slot& slot : mGameObjectSlots)
     {
-        go->Terminate();
-        go.reset();
+        if (slot.gameObject != nullptr)
+        {
+            slot.gameObject->Terminate();
+            slot.gameObject.reset();
+        }
     }
-    mGameObjects.clear();
+    mGameObjectSlots.clear();
 
     for (auto& service : mServices)
     {
@@ -34,15 +41,20 @@ void GameWorld::Terminate()
 
 void GameWorld::Update(float deltaTime)
 {
-    for (auto& go : mGameObjects)
+    for (Slot& slot : mGameObjectSlots)
     {
-        go->Update(deltaTime);
+        if (slot.gameObject != nullptr)
+        {
+            slot.gameObject->Update(deltaTime);
+        }
     }
 
     for (auto& service : mServices)
     {
         service->Update(deltaTime);
     }
+
+    ProcessDestroyList();
 }
 
 void GameWorld::Render()
@@ -55,9 +67,12 @@ void GameWorld::Render()
 
 void GameWorld::DebugUI()
 {
-    for (auto& go : mGameObjects)
+    for (Slot& slot : mGameObjectSlots)
     {
-        go->DebugUI();
+        if (slot.gameObject != nullptr)
+        {
+            slot.gameObject->DebugUI();
+        }
     }
 
     for (auto& service : mServices)
@@ -69,12 +84,64 @@ void GameWorld::DebugUI()
 GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem::path& templatePath)
 {
     ASSERT(mInitialized, "GameWorld: is not initialized");
-    auto& newGO = mGameObjects.emplace_back(std::make_unique<GameObject>());
+    if (mFreeSlots.empty())
+    {
+        ASSERT(false, "GameWorld: no free slots available");
+        return nullptr;
+    }
+    const uint32_t freeSlot = mFreeSlots.back();
+    mFreeSlots.pop_back();
+
+    Slot& slot = mGameObjectSlots[freeSlot];
+    auto& newGO = slot.gameObject;
+    newGO = std::make_unique<GameObject>();
     newGO->SetName(name);
     newGO->mWorld = this;
+    newGO->mHandle.mIndex = freeSlot;
+    newGO->mHandle.mGeneration = slot.generation;
     if (!templatePath.empty())
     {
         GameObjectFactory::Make(templatePath, *newGO, *this);
     }
     return newGO.get();
+}
+
+void GameWorld::DestroyGameObject(const GameObjectHandle& handle)
+{
+    if (!IsValid(handle))
+    {
+        return;
+    }
+
+    Slot& slot = mGameObjectSlots[handle.mIndex];
+    slot.generation++;
+    mToBeDestroyed.push_back(handle.mIndex);
+}
+
+bool GameWorld::IsValid(const GameObjectHandle& handle)
+{
+    if (handle.mIndex < 0 || handle.mIndex >= mGameObjectSlots.size())
+    {
+        return false;
+    }
+    if (mGameObjectSlots[handle.mIndex].generation != handle.mGeneration)
+    {
+        return false;
+    }
+    return true;
+}
+
+void GameWorld::ProcessDestroyList()
+{
+    for (uint32_t index : mToBeDestroyed)
+    {
+        Slot& slot = mGameObjectSlots[index];
+        GameObject* gameObject = slot.gameObject.get();
+        ASSERT(!IsValid(gameObject->GetHandle()), "GameWorld: object is still alive!");
+
+        gameObject->Terminate();
+        slot.gameObject.reset();
+        mFreeSlots.push_back(index);
+    }
+    mToBeDestroyed.clear();
 }

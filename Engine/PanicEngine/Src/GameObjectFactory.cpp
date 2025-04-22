@@ -8,6 +8,7 @@
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
 #include "TransformComponent.h"
+#include "MeshComponent.h"
 
 using namespace PanicEngine;
 
@@ -28,6 +29,10 @@ namespace
         else if (componentName == "TransformComponent")
         {
             newComponent = gameObject.AddComponent<TransformComponent>();
+        }
+        else if (componentName == "MeshComponent")
+        {
+            newComponent = gameObject.AddComponent<MeshComponent>();
         }
         else
         {

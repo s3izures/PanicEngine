@@ -8,6 +8,7 @@ namespace PanicEngine
         Transform,  //Transform component for location
         Camera,     //Contains camera for view
         FPSCamera,  //FPS camera
+        Mesh,       //Adds mesh shape
         Count       //----- Last value, chain ids in custom components
     };
 
@@ -15,6 +16,7 @@ namespace PanicEngine
     {
         Invalid,    //----- Default value, not valid
         Camera,     //Camera manager
+        Render,     //Render object in world
         Count       //----- Last value, chain ids in custom components
     };
 }
