@@ -19,7 +19,7 @@
 #include "FPSCameraComponent.h"
 #include "MeshComponent.h"
 #include "RenderObjectComponent.h" //no type id
-#include "TransformComponent.h
+#include "TransformComponent.h"
 
 //Services
 #include "Service.h"

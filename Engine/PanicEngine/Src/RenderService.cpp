@@ -22,7 +22,6 @@ void RenderService::Initialize()
 
     std::filesystem::path shaderFile = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFile);
-    mStandardEffect.SetCamera(mCameraService->GetMain());
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
     mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
     mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());

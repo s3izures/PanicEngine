@@ -1,3 +1,23 @@
 {
+    "Components": {
+        "TransformComponent": {
+            "Position": [ 0.0, 0.0, 0.0 ],
+            "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
+            "Scale": [ 1.0, 1.0, 1.0 ]
+        },
+        "MeshComponent": {
+            "Shape": {
+                "Type": "Sphere",
+                "Slices": 30,
+                "Rings": 30,
+                "Radius": 1.0
+            },
+            "Material": {
 
+            },
+            "Textures": {
+                "DiffuseMap": "../../Assets/Images/planets/earth/earth.jpg"
+            }
+        }
+    }
 }

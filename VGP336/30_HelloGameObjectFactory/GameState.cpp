@@ -12,14 +12,14 @@ void GameState::Initialize()
     mGameWorld.AddService<RenderService>();
     mGameWorld.Initialize();
 
-    GameObject* transformGO = mGameWorld.CreateGameObject("Transform", L"../../Assets/templates/transform_obj.json");
-    transformGO->Initialize();
-
-    GameObject* cameraGO = mGameWorld.CreateGameObject("Camera", L"../../Assets/templates/fps_camera.json");
-    cameraGO->Initialize();
+    //GameObject* transformGO = mGameWorld.CreateGameObject("Transform", L"../../Assets/templates/transform_obj.json");
+    //transformGO->Initialize();
 
     GameObject* meshGO = mGameWorld.CreateGameObject("Mesh", L"../../Assets/templates/mesh_obj.json");
     meshGO->Initialize();
+
+    GameObject* cameraGO = mGameWorld.CreateGameObject("Camera", L"../../Assets/templates/fps_camera.json");
+    cameraGO->Initialize();
 }
 
 void GameState::Terminate()

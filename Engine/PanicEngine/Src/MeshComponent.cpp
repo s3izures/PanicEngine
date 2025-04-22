@@ -96,7 +96,7 @@ void MeshComponent::Deserialize(const rapidjson::Value& value)
     }
     if (value.HasMember("Textures"))
     {
-        const auto& textureData = value["Texture"].GetObj();
+        const auto& textureData = value["Textures"].GetObj();
         if (textureData.HasMember("DiffuseMap"))
         {
             matData.diffuseMapName = textureData["DiffuseMap"].GetString();
@@ -107,7 +107,7 @@ void MeshComponent::Deserialize(const rapidjson::Value& value)
         }
         if (textureData.HasMember("SpecularMap"))
         {
-            matData.specularMapName = textureData["SpecularMap"].GetString();
+            matData.specMapName = textureData["SpecularMap"].GetString();
         }
         if (textureData.HasMember("BumpMap"))
         {
