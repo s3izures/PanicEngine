@@ -62,3 +62,13 @@ uint32_t GameObject::getUniqueId() const
 {
     return mUniqueId;
 }
+
+GameWorld& GameObject::GetWorld()
+{
+    return *mWorld;
+}
+
+GameWorld& GameObject::GetWorld() const
+{
+    return *mWorld;
+}

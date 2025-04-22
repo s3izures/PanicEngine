@@ -14,7 +14,7 @@ namespace PanicEngine
         void Render();
         void DebugUI();
 
-        GameObject* CreateGameObject(std::string name);
+        GameObject* CreateGameObject(std::string name, const std::filesystem::path& templatePath = "");
 
         template<class ServiceType>
         ServiceType* AddService()
@@ -32,7 +32,7 @@ namespace PanicEngine
         {
             for (auto& service : mServices)
             {
-                if (service->GetTypeId() == ServiceType::StaticgetTypeId())
+                if (service->GetTypeId() == ServiceType::StaticGetTypeId())
                 {
                     return static_cast<ServiceType*>(service.get());
                 }

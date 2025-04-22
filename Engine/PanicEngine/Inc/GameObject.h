@@ -3,6 +3,7 @@
 
 namespace PanicEngine
 {
+    class GameWorld;
     class GameObject final
     {
     public:
@@ -15,6 +16,9 @@ namespace PanicEngine
         void SetName(std::string& name);
         const std::string& GetName() const;
         uint32_t getUniqueId() const;
+
+        GameWorld& GetWorld();
+        GameWorld& GetWorld() const;
 
         template<class ComponentType>
         ComponentType* AddComponent()
@@ -70,9 +74,11 @@ namespace PanicEngine
         }
 
     private:
+        friend class GameWorld;
         std::string mName = "EMPTY";
         bool mInitialized = false;
         uint32_t mUniqueId = 0;
+        GameWorld* mWorld = nullptr;
 
         using Components = std::vector<std::unique_ptr<Component>>;
         Components mComponents;

@@ -1,0 +1,9 @@
+{
+    "Components": {
+        "TransformComponent": {
+            "Position": [ 1.0, 1.0, 1.0 ],
+            "Rotation": [ 0.001, 0.0, 0.003, 1.0 ],
+            "Scale":  [ 1.0, 1.0, 1.0 ]
+        }
+    }
+}

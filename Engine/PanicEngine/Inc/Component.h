@@ -23,6 +23,9 @@ namespace PanicEngine
         virtual void Update(float deltaTime) {}
         virtual void DebugUI() {}
 
+        virtual void Serialize(rapidjson::Document& doc, rapidjson::Value& value) {} //Saving
+        virtual void Deserialize( const rapidjson::Value& value) {} //Loading
+
         GameObject& GetOwner() { return *mOwner; }
         const GameObject& GetOwner() const { return *mOwner; }
 

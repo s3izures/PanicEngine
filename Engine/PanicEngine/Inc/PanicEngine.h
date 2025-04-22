@@ -9,6 +9,7 @@
 //Game Object
 #include "GameWorld.h"
 #include "GameObject.h"
+#include "GameObjectFactory.h"
 #include "TypeIds.h"
 
 //Components
@@ -19,6 +20,7 @@
 
 //Services
 #include "Service.h"
+#include "CameraService.h"
 
 namespace PanicEngine
 {

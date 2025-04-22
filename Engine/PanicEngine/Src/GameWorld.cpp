@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "GameWorld.h"
+#include "GameObjectFactory.h"
 
 using namespace PanicEngine;
 
@@ -65,10 +66,15 @@ void GameWorld::DebugUI()
     }
 }
 
-GameObject* GameWorld::CreateGameObject(std::string name)
+GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem::path& templatePath)
 {
     ASSERT(mInitialized, "GameWorld: is not initialized");
     auto& newGO = mGameObjects.emplace_back(std::make_unique<GameObject>());
     newGO->SetName(name);
+    newGO->mWorld = this;
+    if (!templatePath.empty())
+    {
+        GameObjectFactory::Make(templatePath, *newGO, *this);
+    }
     return newGO.get();
 }

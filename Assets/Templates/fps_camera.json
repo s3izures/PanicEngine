@@ -1,0 +1,13 @@
+{
+    "Components": {
+        "CameraComponent": {
+            "Position": [ 0.0, 0.0, -5.0 ],
+            "LookAt": [ 0.0, 0.0, 0.0 ]
+        },
+        "FPSCameraComponent": {
+            "MoveSpeed": 1.0,
+            "ShiftSpeed": 10.0,
+            "TurnSpeed":  0.01
+        }
+    }
+}
