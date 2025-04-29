@@ -17,6 +17,8 @@ namespace PanicEngine
         GameObject* CreateGameObject(std::string name, const std::filesystem::path& templatePath = "");
         void DestroyGameObject(const GameObjectHandle& handle);
 
+        void LoadLevel(const std::filesystem::path levelFile);
+
         template<class ServiceType>
         ServiceType* AddService()
         {
@@ -65,6 +67,8 @@ namespace PanicEngine
 
         using Services = std::vector<std::unique_ptr<Service>>;
         Services mServices;
+
+        std::filesystem::path mLevelFileName;
 
         bool mInitialized = false;
     };

@@ -6,7 +6,7 @@ using namespace PanicEngine;
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
     AppConfig config;
-    config.appName = L"Hello Game World";
+    config.appName = L"Hello Game Object Factory";
     config.winWidth = 800;
     config.winHeight = 800;
 

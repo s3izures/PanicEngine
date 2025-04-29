@@ -9,6 +9,8 @@ namespace PanicEngine
         Camera,     //Contains camera for view
         FPSCamera,  //FPS camera
         Mesh,       //Adds mesh shape
+        Model,      //Adds model to game object
+        Animator,   //Adds animation controller
         Count       //----- Last value, chain ids in custom components
     };
 
