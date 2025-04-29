@@ -16,8 +16,6 @@ namespace PanicEngine
         Graphics::ModelId GetModelId() const override;
         const Graphics::Model& GetModel() const override;
 
-        const std::vector<const Component*> GetStuff(const rapidjson::Value& v)const;
-
     private:
         std::string mFileName;
         Graphics::ModelId mModelId;

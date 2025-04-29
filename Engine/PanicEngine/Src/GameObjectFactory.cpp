@@ -10,6 +10,7 @@
 #include "FPSCameraComponent.h"
 #include "TransformComponent.h"
 #include "MeshComponent.h"
+#include "ModelComponent.h"
 
 using namespace PanicEngine;
 
@@ -38,6 +39,10 @@ namespace
         else if (componentName == "AnimatorComponent")
         {
             newComponent = gameObject.AddComponent<AnimatorComponent>();
+        }
+        else if (componentName == "ModelComponent")
+        {
+            newComponent = gameObject.AddComponent<ModelComponent>();
         }
         else
         {
@@ -70,6 +75,10 @@ namespace
         else if (componentName == "AnimatorComponent")
         {
             component = gameObject.GetComponent<AnimatorComponent>();
+        }
+        else if (componentName == "ModelComponent")
+        {
+            component = gameObject.GetComponent<ModelComponent>();
         }
         else
         {
