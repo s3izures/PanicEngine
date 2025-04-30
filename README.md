@@ -1,12 +1,5 @@
 # Panic Engine
-WHAT
-
-## What's probably inside
-- Engine
-  - chat only with engine and not with other APIs
-- Core: debug log
-- Graphics
-- (opt) AI
+A custom game engine.
 
 ## Every library has
 - **Inc** - where all headers go
