@@ -72,7 +72,9 @@ void App::Run(const AppConfig& config)
 #endif
         {
             mCurrentState->Update(deltaTime);
+#ifndef USE_PHYSICS_SERVICE
             PhysicsWorld::Get()->Update(deltaTime);
+#endif
         }
 
 

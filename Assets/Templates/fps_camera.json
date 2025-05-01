@@ -7,7 +7,7 @@
         "FPSCameraComponent": {
             "MoveSpeed": 1.0,
             "ShiftSpeed": 10.0,
-            "TurnSpeed":  0.01
+            "TurnSpeed":  1.0
         }
     }
 }

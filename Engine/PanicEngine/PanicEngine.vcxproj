@@ -156,8 +156,10 @@
     <ClInclude Include="Inc\MeshComponent.h" />
     <ClInclude Include="Inc\ModelComponent.h" />
     <ClInclude Include="Inc\PanicEngine.h" />
+    <ClInclude Include="Inc\PhysicsService.h" />
     <ClInclude Include="Inc\RenderObjectComponent.h" />
     <ClInclude Include="Inc\RenderService.h" />
+    <ClInclude Include="Inc\RigidBodyComponent.h" />
     <ClInclude Include="Inc\Service.h" />
     <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeIds.h" />
@@ -176,11 +178,13 @@
     <ClCompile Include="Src\MeshComponent.cpp" />
     <ClCompile Include="Src\ModelComponent.cpp" />
     <ClCompile Include="Src\PanicEngine.cpp" />
+    <ClCompile Include="Src\PhysicsService.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Src\RenderObjectComponent.cpp" />
     <ClCompile Include="Src\RenderService.cpp" />
+    <ClCompile Include="Src\RigidBodyComponent.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

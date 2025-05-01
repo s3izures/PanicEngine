@@ -6,23 +6,20 @@
         },
         "RenderService": {
             "Direction": [ 0.0, -1.0, 1.0 ],
-            "Ambient":  [0.5, 0.5, 0.5, 1.0],
-            "Diffuse":  [0.7, 0.7, 0.7, 1.0],
-            "Specular":  [0.9, 0.9, 0.9, 1.0]
+            "Ambient": [ 0.5, 0.5, 0.5, 1.0 ],
+            "Diffuse": [ 0.7, 0.7, 0.7, 1.0 ],
+            "Specular": [ 0.9, 0.9, 0.9, 1.0 ]
+        },
+        "PhysicsService": {
+
         }
     },
     "GameObjects": {
         "Camera": {
             "Template": "../../Assets/Templates/fps_camera.json"
         },
-        "Object0": {
-            "Template": "../../Assets/Templates/mesh_obj.json",
-            "Components": {
-                "TransformComponent": {
-                    "Position": [ 0.0, 0.0, 0.0 ],
-                    "Scale": [ 1.5, 1.5, 1.5 ]
-                }
-            }
+        "Character": {
+            "Template": "../../Assets/Templates/model_01.json"
         },
         "Object1": {
             "Template": "../../Assets/Templates/mesh_obj.json",
@@ -40,9 +37,8 @@
                 }
             }
         },
-
-        "Object3": {
-            "Template": "../../Assets/Templates/Models/model_01.json"
+        "Ground": {
+            "Template": "../../Assets/Templates/ground_obj.json"
         }
     }
 }

@@ -1,0 +1,31 @@
+{
+    "Components": {
+        "TransformComponent": {
+            "Position": [ 0.0, 0.0, 0.0 ],
+            "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
+            "Scale": [ 1.0, 1.0, 1.0 ]
+        },
+        "MeshComponent": {
+            "Shape": {
+                "Type": "Plane",
+                "Rows": 30,
+                "Columns": 30,
+                "Spacing": 1.0
+            },
+            "Material": {
+
+            },
+            "Textures": {
+                "DiffuseMap": "../../Assets/Images/mountain/mountain_texture.jpg"
+            }
+        },
+        "RigidBodyComponent": {
+            "Mass": 0.0,
+            "ColliderData": {
+                "Shape": "Hull",
+                "HalfExtents": [ 15.0, 1.0, 15.0 ],
+                "Origin": [ 0.0, -1.0, 0.0 ]
+            }
+        }
+    }
+}

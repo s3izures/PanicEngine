@@ -11,6 +11,7 @@
 #include "TransformComponent.h"
 #include "MeshComponent.h"
 #include "ModelComponent.h"
+#include "RigidBodyComponent.h"
 
 using namespace PanicEngine;
 
@@ -43,6 +44,10 @@ namespace
         else if (componentName == "ModelComponent")
         {
             newComponent = gameObject.AddComponent<ModelComponent>();
+        }
+        else if (componentName == "RigidBodyComponent")
+        {
+            newComponent = gameObject.AddComponent<RigidBodyComponent>();
         }
         else
         {
@@ -79,6 +84,10 @@ namespace
         else if (componentName == "ModelComponent")
         {
             component = gameObject.GetComponent<ModelComponent>();
+        }
+        else if (componentName == "RigidBodyComponent")
+        {
+            component = gameObject.GetComponent<RigidBodyComponent>();
         }
         else
         {

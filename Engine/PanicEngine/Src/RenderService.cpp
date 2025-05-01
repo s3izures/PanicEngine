@@ -2,15 +2,13 @@
 #include "RenderService.h"
 
 #include "CameraService.h"
-#include "AnimatorComponent.h"
 #include "RenderObjectComponent.h"
 #include "TransformComponent.h"
+#include "AnimatorComponent.h"
 
 #include "GameWorld.h"
 
 using namespace PanicEngine;
-using namespace PanicEngine::Math;
-using namespace PanicEngine::Graphics;
 
 void RenderService::Initialize()
 {
@@ -107,7 +105,7 @@ void RenderService::Register(const RenderObjectComponent* renderObjectComponent)
         Entry& entry = mRenderEntries.emplace_back();
         entry.renderComponent = renderObjectComponent;
         entry.transformComponent = renderObjectComponent->GetOwner().GetComponent<TransformComponent>();
-        entry.renderGroup.Initialize(renderObjectComponent->GetModel());
+        entry.renderGroup.Initialize(renderObjectComponent->GetModel(), animator);
         entry.renderGroup.modelId = renderObjectComponent->GetModelId();
     }
 }

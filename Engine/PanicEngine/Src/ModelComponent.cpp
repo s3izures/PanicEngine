@@ -17,6 +17,7 @@ void ModelComponent::Initialize()
     }
 
     ASSERT(mc->GetModel(mModelId) != nullptr, "ModelComponent: model is not null %s", mFileName.c_str());
+    RenderObjectComponent::Initialize();
 }
 
 void ModelComponent::Terminate()
@@ -51,4 +52,3 @@ const Graphics::Model& ModelComponent::GetModel() const
 {
     return *Graphics::ModelCache::Get()->GetModel(mModelId);
 }
-

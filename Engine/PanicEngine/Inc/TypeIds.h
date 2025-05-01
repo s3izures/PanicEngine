@@ -11,6 +11,7 @@ namespace PanicEngine
         Mesh,       //Adds mesh shape
         Model,      //Adds model to game object
         Animator,   //Adds animation controller
+        RigidBody,  //Adds physics body shape
         Count       //----- Last value, chain ids in custom components
     };
 
@@ -19,6 +20,7 @@ namespace PanicEngine
         Invalid,    //----- Default value, not valid
         Camera,     //Camera manager
         Render,     //Render object in world
+        Physics,    //manages physics in world
         Count       //----- Last value, chain ids in custom components
     };
 }

@@ -22,11 +22,13 @@
 #include "ModelComponent.h"
 #include "RenderObjectComponent.h" //no type id
 #include "TransformComponent.h"
+#include "RigidBodyComponent.h"
 
 //Services
 #include "Service.h"
 #include "CameraService.h"
 #include "RenderService.h"
+#include "PhysicsService.h"
 
 namespace PanicEngine
 {
