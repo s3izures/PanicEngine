@@ -21,8 +21,9 @@
 #include "MeshComponent.h"
 #include "ModelComponent.h"
 #include "RenderObjectComponent.h" //no type id
-#include "TransformComponent.h"
 #include "RigidBodyComponent.h"
+#include "SoundEffectComponent.h"
+#include "TransformComponent.h"
 
 //Services
 #include "Service.h"

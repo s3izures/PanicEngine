@@ -8,10 +8,11 @@
 #include "AnimatorComponent.h"
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
-#include "TransformComponent.h"
 #include "MeshComponent.h"
 #include "ModelComponent.h"
 #include "RigidBodyComponent.h"
+#include "SoundEffectComponent.h"
+#include "TransformComponent.h"
 
 using namespace PanicEngine;
 
@@ -48,6 +49,10 @@ namespace
         else if (componentName == "RigidBodyComponent")
         {
             newComponent = gameObject.AddComponent<RigidBodyComponent>();
+        }
+        else if (componentName == "SoundEffectComponent")
+        {
+            newComponent = gameObject.AddComponent< SoundEffectComponent>();
         }
         else
         {
@@ -88,6 +93,10 @@ namespace
         else if (componentName == "RigidBodyComponent")
         {
             component = gameObject.GetComponent<RigidBodyComponent>();
+        }
+        else if (componentName == "SoundEffectComponent")
+        {
+            component = gameObject.GetComponent<SoundEffectComponent>();
         }
         else
         {

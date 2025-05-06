@@ -12,6 +12,8 @@ namespace PanicEngine
         Model,      //Adds model to game object
         Animator,   //Adds animation controller
         RigidBody,  //Adds physics body shape
+        SoundEffect,//Adds sound effect
+        SoundBank,  //Adds sound effect group
         Count       //----- Last value, chain ids in custom components
     };
 
