@@ -8,6 +8,16 @@
 
 using namespace PanicEngine;
 
+namespace
+{
+    CustomService TryAddService;
+}
+
+void GameWorld::SetCustomService(CustomService customService)
+{
+    TryAddService = customService;
+}
+
 void GameWorld::Initialize(uint32_t capacity)
 {
     ASSERT(!mInitialized, "GameWorld: already initialized");
@@ -156,6 +166,7 @@ void GameWorld::LoadLevel(const std::filesystem::path levelFile)
         }
         else
         {
+            newService = TryAddService(serviceName, *this); //attempt to add custom service (name, gameworld), if return value, success
             ASSERT(newService != nullptr, "GameWorld: invalid service name %s", serviceName.c_str());
         }
 

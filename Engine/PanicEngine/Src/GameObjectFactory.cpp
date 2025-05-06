@@ -19,6 +19,9 @@ using namespace PanicEngine;
 
 namespace
 {
+    CustomComponentCB TryMake;
+    CustomComponentCB TryGet;
+
     Component* AddComponent(const std::string& componentName, GameObject& gameObject)
     {
         Component* newComponent = nullptr;
@@ -61,7 +64,8 @@ namespace
         }
         else
         {
-            ASSERT(false, "GameObjectFactory: component [%s] is not valid", componentName.c_str());
+            newComponent = TryMake(componentName, gameObject);
+            ASSERT(newComponent != nullptr, "GameObjectFactory: component [%s] is not valid", componentName.c_str());
         }
 
         return newComponent;
@@ -109,11 +113,22 @@ namespace
         }
         else
         {
-            ASSERT(false, "GameObjectFactory: component [%s] is not valid", componentName.c_str());
+            component = TryGet(componentName, gameObject);
+            ASSERT(component != nullptr, "GameObjectFactory: component [%s] is not valid", componentName.c_str());
         }
 
         return component;
     }
+}
+
+void GameObjectFactory::SetCustomMake(CustomComponentCB cb)
+{
+    TryMake = cb; //cb = callback
+}
+
+void GameObjectFactory::SetCustomGet(CustomComponentCB cb)
+{
+    TryGet = cb;
 }
 
 void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObject& gameObject, GameWorld& world)

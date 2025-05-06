@@ -12,6 +12,9 @@
         },
         "PhysicsService": {
 
+        },
+        "CustomDebugDrawService": {
+
         }
     },
     "GameObjects": {
