@@ -82,7 +82,7 @@ void SoundEffectManager::Play(SoundId id, bool loop)
     if (iter != mSoundEffects.end())
     {
         iter->second->instance->Stop();
-        iter->second->instance->Play();
+        iter->second->instance->Play(loop);
     }
 }
 

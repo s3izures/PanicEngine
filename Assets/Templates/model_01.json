@@ -7,7 +7,9 @@
         },
         "ModelComponent": {
             "FileName": "../../Assets/Models/Prisoner/Prisoner.model",
-            "Animations": [ "../../Assets/Models/Prisoner/RobotDance.animset" ]
+            "Animations": [
+                "../../Assets/Models/Prisoner/RobotDance.animset"
+            ]
         },
         "AnimatorComponent": {
 
@@ -22,7 +24,7 @@
         },
         "SoundEffectComponent": {
             "FileName": "../../Assets/Sounds/photongun1.wav",
-            "Looping": false
+            "Looping": true
         }
     }
 }

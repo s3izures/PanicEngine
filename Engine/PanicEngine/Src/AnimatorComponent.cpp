@@ -32,6 +32,7 @@ void AnimatorComponent::DebugUI()
         for (uint32_t i = 0; i < animCount;++i)
         {
             std::string buttonName = buttonTag + std::to_string(i);
+            ImGui::SameLine();
             if (ImGui::Button(buttonName.c_str()))
             {
                 Play(i, true);
