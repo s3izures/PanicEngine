@@ -18,6 +18,26 @@
             "Textures": {
                 "DiffuseMap": "../../Assets/Images/planets/earth/earth.jpg"
             }
+        },
+        "SoundBankComponent": {
+            "SoundEffects": {
+                "Blast": {
+                    "FileName": "../../Assets/Sounds/megamanx_blast.wav",
+                    "Looping": false
+                },
+                "Title": {
+                    "FileName": "megamanx_title.wav",
+                    "Looping": false
+                },
+                "Eagle": {
+                    "FileName": "megamanx_storm_eagle.wav",
+                    "Looping": false
+                },
+                "Mandrill": {
+                    "FileName": "megamanx_spark_mandrill.wav",
+                    "Looping": false
+                }
+            }
         }
     }
 }

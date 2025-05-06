@@ -99,6 +99,9 @@
     <ClInclude Include="Inc\SoundEffectComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\SoundBankComponent.h">
+      <Filter>Inc\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -156,6 +159,9 @@
       <Filter>Src\Components</Filter>
     </ClCompile>
     <ClCompile Include="Src\SoundEffectComponent.cpp">
+      <Filter>Src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SoundBankComponent.cpp">
       <Filter>Src\Components</Filter>
     </ClCompile>
   </ItemGroup>

@@ -22,6 +22,7 @@
 #include "ModelComponent.h"
 #include "RenderObjectComponent.h" //no type id
 #include "RigidBodyComponent.h"
+#include "SoundBankComponent.h"
 #include "SoundEffectComponent.h"
 #include "TransformComponent.h"
 

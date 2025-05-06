@@ -23,7 +23,7 @@
             }
         },
         "SoundEffectComponent": {
-            "FileName": "../../Assets/Sounds/photongun1.wav",
+            "FileName": "photongun1.wav",
             "Looping": true
         }
     }

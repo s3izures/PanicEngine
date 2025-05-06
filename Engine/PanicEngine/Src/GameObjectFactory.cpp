@@ -11,6 +11,7 @@
 #include "MeshComponent.h"
 #include "ModelComponent.h"
 #include "RigidBodyComponent.h"
+#include "SoundBankComponent.h"
 #include "SoundEffectComponent.h"
 #include "TransformComponent.h"
 
@@ -52,7 +53,11 @@ namespace
         }
         else if (componentName == "SoundEffectComponent")
         {
-            newComponent = gameObject.AddComponent< SoundEffectComponent>();
+            newComponent = gameObject.AddComponent<SoundEffectComponent>();
+        }
+        else if (componentName == "SoundBankComponent")
+        {
+            newComponent = gameObject.AddComponent<SoundBankComponent>();
         }
         else
         {
@@ -97,6 +102,10 @@ namespace
         else if (componentName == "SoundEffectComponent")
         {
             component = gameObject.GetComponent<SoundEffectComponent>();
+        }
+        else if (componentName == "SoundBankComponent")
+        {
+            component = gameObject.GetComponent<SoundBankComponent>();
         }
         else
         {
