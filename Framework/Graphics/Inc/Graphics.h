@@ -39,6 +39,7 @@
 #include "Texture.h"
 #include "TextureCache.h"
 #include "Transform.h"
+#include "UIFont.h"
 #include "VertexShader.h"
 #include "VertexTypes.h"
 #include "VHSEffect.h"

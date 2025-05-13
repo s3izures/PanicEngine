@@ -39,6 +39,8 @@ void App::Run(const AppConfig& config)
     AudioSystem::StaticInitialize();
     SoundEffectManager::StaticInitialize("../../Assets/Sounds");
 
+    UIFont::StaticInitialize(UIFont::FontType::Consolas);
+
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
 
@@ -91,10 +93,11 @@ void App::Run(const AppConfig& config)
 
     mCurrentState->Terminate(); //FILO, First in Last Out
     //End state
+    PhysicsWorld::StaticTerminate();
+    UIFont::StaticTerminate();
     SoundEffectManager::StaticTerminate();
     AudioSystem::StaticTerminate();
     EventManager::StaticTerminate();
-    PhysicsWorld::StaticTerminate();
     ModelCache::StaticTerminate();
     TextureCache::StaticTerminate();
     SimpleDraw::StaticTerminate();

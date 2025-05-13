@@ -27,8 +27,8 @@
             "Looping": true
         },
         "CustomDebugDrawComponent": {
-            "Position": [ 0.0, 1.0, 0.0 ],
-            "Color": [ 1.0, 1.0, 0.8, 1.0 ],
+            "Transform": [ 0.0, 1.0, 0.0 ],
+            "Color": [ 1.0, 1.0, 0.0, 1.0 ],
             "Slices": 30,
             "Rings": 30,
             "Radius": 1.0
