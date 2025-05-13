@@ -81,7 +81,7 @@ void UIFont::Terminate()
     SafeRelease(mFontFactory);
 }
 
-void UIFont::DrawString(const wchar_t* str, const Math::Vector3& position, const Color& color, float size)
+void UIFont::DrawString(const wchar_t* str, const Math::Vector2& position, const Color& color, float size)
 {
     int len = (int)wcslen(str);
     auto context = GraphicsSystem::Get()->GetContext();

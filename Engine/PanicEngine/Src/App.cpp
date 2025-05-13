@@ -40,6 +40,7 @@ void App::Run(const AppConfig& config)
     SoundEffectManager::StaticInitialize("../../Assets/Sounds");
 
     UIFont::StaticInitialize(UIFont::FontType::Consolas);
+    UISpriteRenderer::StaticInitialize();
 
     ASSERT(mCurrentState != nullptr, "App: no current state available");
     mCurrentState->Initialize();
@@ -94,6 +95,7 @@ void App::Run(const AppConfig& config)
     mCurrentState->Terminate(); //FILO, First in Last Out
     //End state
     PhysicsWorld::StaticTerminate();
+    UISpriteRenderer::StaticTerminate();
     UIFont::StaticTerminate();
     SoundEffectManager::StaticTerminate();
     AudioSystem::StaticTerminate();

@@ -14,6 +14,9 @@ namespace PanicEngine
         RigidBody,  //Adds physics body shape
         SoundEffect,//Adds sound effect
         SoundBank,  //Adds sound effect group
+        UIText,     //Adds text to UI
+        UISprite,   //Adds a sprite to UI
+        UIButton,   //Adds a button to UI
         Count       //----- Last value, chain ids in custom components
     };
 
@@ -23,6 +26,7 @@ namespace PanicEngine
         Camera,     //Camera manager
         Render,     //Render object in world
         Physics,    //manages physics in world
+        UIRender,   //remnders UI
         Count       //----- Last value, chain ids in custom components
     };
 }

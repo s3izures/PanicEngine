@@ -14,6 +14,7 @@
 #include "SoundBankComponent.h"
 #include "SoundEffectComponent.h"
 #include "TransformComponent.h"
+#include "UITextComponent.h"
 
 using namespace PanicEngine;
 
@@ -61,6 +62,10 @@ namespace
         else if (componentName == "SoundBankComponent")
         {
             newComponent = gameObject.AddComponent<SoundBankComponent>();
+        }
+        else if (componentName == "UITextComponent")
+        {
+            newComponent = gameObject.AddComponent<UITextComponent>();
         }
         else
         {
@@ -110,6 +115,10 @@ namespace
         else if (componentName == "SoundBankComponent")
         {
             component = gameObject.GetComponent<SoundBankComponent>();
+        }
+        else if (componentName == "UITextComponent")
+        {
+            component = gameObject.GetComponent<UITextComponent>();
         }
         else
         {
