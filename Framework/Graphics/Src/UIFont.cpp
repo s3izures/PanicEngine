@@ -39,14 +39,14 @@ namespace
     std::unique_ptr<UIFont> sUIFont;
 }
 
-void Graphics::UIFont::StaticInitialize(FontType font)
+void UIFont::StaticInitialize(FontType font)
 {
     ASSERT(sUIFont == nullptr, "UIFont: is already initiaalized");
     sUIFont = std::make_unique<UIFont>();
     sUIFont->Initialize(font);
 }
 
-void Graphics::UIFont::StaticTerminate()
+void UIFont::StaticTerminate()
 {
     if (sUIFont != nullptr)
     {
@@ -55,18 +55,18 @@ void Graphics::UIFont::StaticTerminate()
     }
 }
 
-UIFont* Graphics::UIFont::Get()
+UIFont* UIFont::Get()
 {
     ASSERT(sUIFont != nullptr, "UIFont: is not initialized");
     return sUIFont.get();
 }
 
-Graphics::UIFont::~UIFont()
+UIFont::~UIFont()
 {
     ASSERT(mFontFactory == nullptr && mFontWrapper == nullptr, "UIFont: terminate must be called");
 }
 
-void Graphics::UIFont::Initialize(FontType font)
+void UIFont::Initialize(FontType font)
 {
     mFontType = font;
     auto device = GraphicsSystem::Get()->GetDevice();
@@ -75,20 +75,20 @@ void Graphics::UIFont::Initialize(FontType font)
     ASSERT(SUCCEEDED(hr), "UIFont: failed to create font wrapper");
 }
 
-void Graphics::UIFont::Terminate()
+void UIFont::Terminate()
 {
     SafeRelease(mFontWrapper);
     SafeRelease(mFontFactory);
 }
 
-void Graphics::UIFont::DrawString(const wchar_t* str, const Math::Vector3& position, const Color& color, float size)
+void UIFont::DrawString(const wchar_t* str, const Math::Vector3& position, const Color& color, float size)
 {
     int len = (int)wcslen(str);
     auto context = GraphicsSystem::Get()->GetContext();
     mFontWrapper->DrawString(context, str, size, position.x, position.y, ToFontColor(color), FW1_RESTORESTATE);
 }
 
-float Graphics::UIFont::GetStringWidth(const wchar_t* str, float size) const
+float UIFont::GetStringWidth(const wchar_t* str, float size) const
 {
     GraphicsSystem* gs = GraphicsSystem::Get();
     FW1_RECTF layoutRect;
