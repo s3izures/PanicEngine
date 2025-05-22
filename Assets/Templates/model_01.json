@@ -34,8 +34,8 @@
             "Radius": 1.0
         },
         "UITextComponent": {
-            "Text": "NARRATOR: (Black screen with text; The sound of buzzing bees can be heard) \nAccording to all known laws of aviation, there is no way a bee should be able to fly. \nIts wings are too small to get its fat little body off the ground. \nThe bee, of course, flies anyway because bees don't care what humans think is impossible. ",
-            "Position": [ 10.0, 300.0 ],
+            "Text": "PanicEngine",
+            "Position": [ 10.0, 10.0 ],
             "Size": 50,
             "Color": [ 1.0, 1.0, 0.0, 1.0 ]
         }
