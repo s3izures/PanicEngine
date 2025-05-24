@@ -41,7 +41,7 @@ void RenderService::Render()
     mStandardEffect.SetCamera(camera);
     for (Entry& entry : mRenderEntries)
     {
-        entry.renderGroup.transform = *entry.transformComponent;
+        entry.renderGroup.transform = entry.transformComponent->GetWorldTransform();
     }
 
     mShadowEffect.Begin();
@@ -119,7 +119,7 @@ void RenderService::Unregister(const RenderObjectComponent* renderObjectComponen
         {
             return entry.renderComponent == renderObjectComponent;
         });
-    if (iter == mRenderEntries.end())
+    if (iter != mRenderEntries.end())
     {
         iter->renderGroup.Terminate();
         mRenderEntries.erase(iter);

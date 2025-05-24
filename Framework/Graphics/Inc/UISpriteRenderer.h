@@ -19,7 +19,7 @@ namespace PanicEngine::Graphics
 
         void BeginRender();
         void EndRender();
-        void Render(const UISprite* uiSprite);
+        void Render(const UISprite& uiSprite);
 
     private:
         DirectX::CommonStates* mCommonStates = nullptr;

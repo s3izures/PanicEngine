@@ -80,20 +80,20 @@ void UISpriteRenderer::EndRender()
     context->RSSetState(rasterizerState);
 }
 
-void UISpriteRenderer::Render(const UISprite* uiSprite)
+void UISpriteRenderer::Render(const UISprite& uiSprite)
 {
-    const Texture* texture = TextureCache::Get()->GetTexture(uiSprite->mTextureId);
+    const Texture* texture = TextureCache::Get()->GetTexture(uiSprite.mTextureId);
     if (texture != nullptr)
     {
         mSpriteBatch->Draw(
             (ID3D11ShaderResourceView*)texture->GetRawData(),
-            uiSprite->mPosition,
-            &uiSprite->mRect,
-            uiSprite->mColor,
-            uiSprite->mRotation,
-            uiSprite->mOrigin,
-            uiSprite->mScale,
-            uiSprite->mFlip
+            uiSprite.mPosition,
+            &uiSprite.mRect,
+            uiSprite.mColor,
+            uiSprite.mRotation,
+            uiSprite.mOrigin,
+            uiSprite.mScale,
+            uiSprite.mFlip
         );
     }
 }

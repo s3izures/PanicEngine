@@ -4,9 +4,9 @@
 #include "GameObject.h"
 #include "GameWorld.h"
 
-#include "Component.h"
 #include "AnimatorComponent.h"
 #include "CameraComponent.h"
+#include "Component.h"
 #include "FPSCameraComponent.h"
 #include "MeshComponent.h"
 #include "ModelComponent.h"
@@ -14,21 +14,25 @@
 #include "SoundBankComponent.h"
 #include "SoundEffectComponent.h"
 #include "TransformComponent.h"
-#include "UITextComponent.h"
+#include "UIButtonComponent.h"
 #include "UISpriteComponent.h"
+#include "UITextComponent.h"
 
 using namespace PanicEngine;
 
 namespace
 {
-    CustomComponentCB TryMake;
-    CustomComponentCB TryGet;
+    CustomComponentCallback TryMake;
+    CustomComponentCallback TryGet;
 
     Component* AddComponent(const std::string& componentName, GameObject& gameObject)
     {
         Component* newComponent = nullptr;
-
-        if (componentName == "CameraComponent")
+        if (componentName == "AnimatorComponent")
+        {
+            newComponent = gameObject.AddComponent<AnimatorComponent>();
+        }
+        else if (componentName == "CameraComponent")
         {
             newComponent = gameObject.AddComponent<CameraComponent>();
         }
@@ -36,17 +40,9 @@ namespace
         {
             newComponent = gameObject.AddComponent<FPSCameraComponent>();
         }
-        else if (componentName == "TransformComponent")
-        {
-            newComponent = gameObject.AddComponent<TransformComponent>();
-        }
         else if (componentName == "MeshComponent")
         {
             newComponent = gameObject.AddComponent<MeshComponent>();
-        }
-        else if (componentName == "AnimatorComponent")
-        {
-            newComponent = gameObject.AddComponent<AnimatorComponent>();
         }
         else if (componentName == "ModelComponent")
         {
@@ -56,21 +52,29 @@ namespace
         {
             newComponent = gameObject.AddComponent<RigidBodyComponent>();
         }
-        else if (componentName == "SoundEffectComponent")
-        {
-            newComponent = gameObject.AddComponent<SoundEffectComponent>();
-        }
         else if (componentName == "SoundBankComponent")
         {
             newComponent = gameObject.AddComponent<SoundBankComponent>();
         }
-        else if (componentName == "UITextComponent")
+        else if (componentName == "SoundEffectComponent")
         {
-            newComponent = gameObject.AddComponent<UITextComponent>();
+            newComponent = gameObject.AddComponent<SoundEffectComponent>();
+        }
+        else if (componentName == "TransformComponent")
+        {
+            newComponent = gameObject.AddComponent<TransformComponent>();
+        }
+        else if (componentName == "UIButtonComponent")
+        {
+            newComponent = gameObject.AddComponent<UIButtonComponent>();
         }
         else if (componentName == "UISpriteComponent")
         {
             newComponent = gameObject.AddComponent<UISpriteComponent>();
+        }
+        else if (componentName == "UITextComponent")
+        {
+            newComponent = gameObject.AddComponent<UITextComponent>();
         }
         else
         {
@@ -80,76 +84,79 @@ namespace
 
         return newComponent;
     }
+}
 
-    Component* GetComponent(const std::string& componentName, GameObject& gameObject)
+Component* GetComponent(const std::string& componentName, GameObject& gameObject)
+{
+    Component* component = nullptr;
+    if (componentName == "AnimatorComponent")
     {
-        Component* component = nullptr;
-
-        if (componentName == "CameraComponent")
-        {
-            component = gameObject.GetComponent<CameraComponent>();
-        }
-        else if (componentName == "FPSCameraComponent")
-        {
-            component = gameObject.GetComponent<FPSCameraComponent>();
-        }
-        else if (componentName == "TransformComponent")
-        {
-            component = gameObject.GetComponent<TransformComponent>();
-        }
-        else if (componentName == "MeshComponent")
-        {
-            component = gameObject.GetComponent<MeshComponent>();
-        }
-        else if (componentName == "AnimatorComponent")
-        {
-            component = gameObject.GetComponent<AnimatorComponent>();
-        }
-        else if (componentName == "ModelComponent")
-        {
-            component = gameObject.GetComponent<ModelComponent>();
-        }
-        else if (componentName == "RigidBodyComponent")
-        {
-            component = gameObject.GetComponent<RigidBodyComponent>();
-        }
-        else if (componentName == "SoundEffectComponent")
-        {
-            component = gameObject.GetComponent<SoundEffectComponent>();
-        }
-        else if (componentName == "SoundBankComponent")
-        {
-            component = gameObject.GetComponent<SoundBankComponent>();
-        }
-        else if (componentName == "UITextComponent")
-        {
-            component = gameObject.GetComponent<UITextComponent>();
-        }
-        else if (componentName == "UISpriteComponent")
-        {
-            component = gameObject.GetComponent<UISpriteComponent>();
-        }
-        else
-        {
-            component = TryGet(componentName, gameObject);
-            ASSERT(component != nullptr, "GameObjectFactory: component [%s] is not valid", componentName.c_str());
-        }
-
-        return component;
+        component = gameObject.GetComponent<AnimatorComponent>();
     }
+    else if (componentName == "CameraComponent")
+    {
+        component = gameObject.GetComponent<CameraComponent>();
+    }
+    else if (componentName == "FPSCameraComponent")
+    {
+        component = gameObject.GetComponent<FPSCameraComponent>();
+    }
+    else if (componentName == "MeshComponent")
+    {
+        component = gameObject.GetComponent<MeshComponent>();
+    }
+    else if (componentName == "ModelComponent")
+    {
+        component = gameObject.GetComponent<ModelComponent>();
+    }
+    else if (componentName == "RigidBodyComponent")
+    {
+        component = gameObject.GetComponent<RigidBodyComponent>();
+    }
+    else if (componentName == "TransformComponent")
+    {
+        component = gameObject.GetComponent<TransformComponent>();
+    }
+    else if (componentName == "SoundBankComponent")
+    {
+        component = gameObject.GetComponent<SoundBankComponent>();
+    }
+    else if (componentName == "SoundEffectComponent")
+    {
+        component = gameObject.GetComponent<SoundEffectComponent>();
+    }
+    else if (componentName == "UIButtonComponent")
+    {
+        component = gameObject.GetComponent<UIButtonComponent>();
+    }
+    else if (componentName == "UISpriteComponent")
+    {
+        component = gameObject.GetComponent<UISpriteComponent>();
+    }
+    else if (componentName == "UITextComponent")
+    {
+        component = gameObject.GetComponent<UITextComponent>();
+    }
+    else
+    {
+        component = TryGet(componentName, gameObject);
+        ASSERT(component != nullptr, "GameObjectFactory: component [%s] is not valid", componentName.c_str());
+    }
+
+    return component;
 }
 
-void GameObjectFactory::SetCustomMake(CustomComponentCB cb)
+void GameObjectFactory::SetCustomMake(CustomComponentCallback callback)
 {
-    TryMake = cb; //cb = callback
+    TryMake = callback;
 }
 
-void GameObjectFactory::SetCustomGet(CustomComponentCB cb)
+void GameObjectFactory::SetCustomGet(CustomComponentCallback callback)
 {
-    TryGet = cb;
+    TryGet = callback;
 }
 
-void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObject& gameObject, GameWorld& world)
+void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObject& gameObject, GameWorld& gameWorld)
 {
     FILE* file = nullptr;
     auto err = fopen_s(&file, templatePath.u8string().c_str(), "r");
@@ -164,15 +171,27 @@ void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObje
     auto components = doc["Components"].GetObj();
     for (auto& component : components)
     {
-        //create
-
-        //add
-
-        //apply
+        // create the component
+        // add the component
+        // apply the data
         Component* newComponent = AddComponent(component.name.GetString(), gameObject);
         if (newComponent != nullptr)
         {
             newComponent->Deserialize(component.value);
+        }
+    }
+    if (doc.HasMember("Children"))
+    {
+        auto children = doc["Children"].GetObj();
+        for (auto& child : children)
+        {
+            std::string name = child.name.GetString();
+            std::filesystem::path childTemplate = child.value["Template"].GetString();
+            GameObject* childGO = gameWorld.CreateGameObject(name, childTemplate);
+
+            GameObjectFactory::OverrideDeserialize(child.value, *childGO);
+            gameObject.AddChild(childGO);
+            childGO->SetParent(&gameObject);
         }
     }
 }

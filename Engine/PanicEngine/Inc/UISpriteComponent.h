@@ -1,4 +1,5 @@
 #pragma once
+
 #include "UIComponent.h"
 
 namespace PanicEngine
@@ -14,11 +15,10 @@ namespace PanicEngine
         void Deserialize(const rapidjson::Value& value) override;
 
         Math::Vector2 GetPosition(bool includeOrigin = true);
-
     private:
         std::filesystem::path mTexturePath;
         DirectX::XMFLOAT2 mPosition;
-        RECT mRect = { 0,0,0,0 };
+        RECT mRect = { 0, 0, 0, 0 };
         Graphics::UISprite mUISprite;
     };
 }

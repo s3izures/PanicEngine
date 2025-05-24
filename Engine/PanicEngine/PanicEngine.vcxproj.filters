@@ -114,6 +114,9 @@
     <ClInclude Include="Inc\UISpriteComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\UIButtonComponent.h">
+      <Filter>Inc\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -183,6 +186,9 @@
       <Filter>Src\Components</Filter>
     </ClCompile>
     <ClCompile Include="Src\UISpriteComponent.cpp">
+      <Filter>Src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\UIButtonComponent.cpp">
       <Filter>Src\Components</Filter>
     </ClCompile>
   </ItemGroup>

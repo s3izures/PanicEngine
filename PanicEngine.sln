@@ -83,6 +83,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 		Assets\Templates\fps_camera.json = Assets\Templates\fps_camera.json
 		Assets\Templates\ground_obj.json = Assets\Templates\ground_obj.json
 		Assets\Templates\mesh_obj.json = Assets\Templates\mesh_obj.json
+		Assets\Templates\test_button.json = Assets\Templates\test_button.json
 		Assets\Templates\transform_obj.json = Assets\Templates\transform_obj.json
 	EndProjectSection
 EndProject
@@ -95,6 +96,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{49F1379F-A0D6-4B38-BCED-148A44765AB5}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\Levels\test_level.json = Assets\Templates\Levels\test_level.json
+		Assets\Templates\Levels\test_screen.json = Assets\Templates\Levels\test_screen.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{C2E15A27-34AB-4D6B-AFF2-172C52E36E58}"

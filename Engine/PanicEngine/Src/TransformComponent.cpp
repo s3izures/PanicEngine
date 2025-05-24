@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "TransformComponent.h"
+#include "GameObject.h"
 
 using namespace PanicEngine;
 using namespace PanicEngine::Graphics;
@@ -37,4 +38,25 @@ void TransformComponent::Deserialize(const rapidjson::Value& value)
         scale.y = s[1].GetFloat();
         scale.z = s[2].GetFloat();
     }
+}
+
+Transform TransformComponent::GetWorldTransform() const
+{
+    Transform worldTransform = *this;
+    const GameObject* parent = GetOwner().GetParent();
+    if (parent != nullptr)
+    {
+        Math::Matrix4 matWorld = GetMatrix4();
+        while (parent != nullptr)
+        {
+            const TransformComponent* transformComponent = parent->GetComponent<TransformComponent>();
+            ASSERT(transformComponent != nullptr, "TransformComponent: parent does not have a transform");
+            matWorld = matWorld * transformComponent->GetMatrix4();
+            parent = parent->GetParent();
+        }
+        worldTransform.position = Math::GetTranslation(matWorld);
+        worldTransform.rotation = Math::Quaternion::CreateFromRotationMatrix(matWorld);
+        worldTransform.scale = Math::GetScale(matWorld);
+    }
+    return worldTransform;
 }

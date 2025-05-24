@@ -2,6 +2,7 @@
 #include "UISpriteComponent.h"
 #include "GameWorld.h"
 #include "UIRenderService.h"
+#include "UIButtonComponent.h"
 
 using namespace PanicEngine;
 using namespace PanicEngine::Graphics;
@@ -27,7 +28,27 @@ void UISpriteComponent::Terminate()
 
 void UISpriteComponent::Render()
 {
-    UISpriteRenderer::Get()->Render(&mUISprite);
+    Math::Vector2 worldPosition = GetPosition(false);
+    GameObject* parent = GetOwner().GetParent();
+    while (parent != nullptr)
+    {
+        UISpriteComponent* spriteComponent = parent->GetComponent<UISpriteComponent>();
+        if (spriteComponent != nullptr)
+        {
+            worldPosition += spriteComponent->GetPosition();
+        }
+        else
+        {
+            UIButtonComponent* buttonComponent = parent->GetComponent<UIButtonComponent>();
+            if (buttonComponent != nullptr)
+            {
+                worldPosition += buttonComponent->GetPosition();
+            }
+        }
+        parent = parent->GetParent();
+    }
+    mUISprite.SetPosition({ mPosition.x, mPosition.y });
+    UISpriteRenderer::Get()->Render(mUISprite);
 }
 
 void UISpriteComponent::Deserialize(const rapidjson::Value& value)
@@ -47,7 +68,7 @@ void UISpriteComponent::Deserialize(const rapidjson::Value& value)
         auto scale = value["Scale"].GetArray();
         const float x = scale[0].GetFloat();
         const float y = scale[1].GetFloat();
-        mUISprite.SetScale({ x,y });
+        mUISprite.SetScale({ x, y });
     }
     if (value.HasMember("Color"))
     {
@@ -56,7 +77,7 @@ void UISpriteComponent::Deserialize(const rapidjson::Value& value)
         const float g = color[1].GetFloat();
         const float b = color[2].GetFloat();
         const float a = color[3].GetFloat();
-        mUISprite.SetColor({ r,g,b,a });
+        mUISprite.SetColor({ r, g, b, a });
     }
     if (value.HasMember("Rotation"))
     {
@@ -74,25 +95,71 @@ void UISpriteComponent::Deserialize(const rapidjson::Value& value)
     if (value.HasMember("Pivot"))
     {
         std::string pivot = value["Pivot"].GetString();
-        if (pivot == "TopLeft")         { mUISprite.SetPivot(Pivot::TopLeft); }
-        else if (pivot == "Top")        { mUISprite.SetPivot(Pivot::Top); }
-        else if (pivot == "TopRight")   { mUISprite.SetPivot(Pivot::TopRight); }
-        else if (pivot == "Left")       { mUISprite.SetPivot(Pivot::Left); }
-        else if (pivot == "Center")     { mUISprite.SetPivot(Pivot::Center); }
-        else if (pivot == "Right")      { mUISprite.SetPivot(Pivot::Right); }
-        else if (pivot == "BottomLeft") { mUISprite.SetPivot(Pivot::BottomLeft); }
-        else if (pivot == "Bottom")     { mUISprite.SetPivot(Pivot::Bottom); }
-        else if (pivot == "BottomRight"){ mUISprite.SetPivot(Pivot::BottomRight); }
-        else { ASSERT(false, "UISpriteComponent: invalid pivot %s", pivot.c_str()); }
+        if (pivot == "TopLeft")
+        {
+            mUISprite.SetPivot(Pivot::TopLeft);
+        }
+        else if (pivot == "Top")
+        {
+            mUISprite.SetPivot(Pivot::Top);
+        }
+        else if (pivot == "TopRight")
+        {
+            mUISprite.SetPivot(Pivot::TopRight);
+        }
+        else if (pivot == "Left")
+        {
+            mUISprite.SetPivot(Pivot::Left);
+        }
+        else if (pivot == "Center")
+        {
+            mUISprite.SetPivot(Pivot::Center);
+        }
+        else if (pivot == "Right")
+        {
+            mUISprite.SetPivot(Pivot::Right);
+        }
+        else if (pivot == "BottomLeft")
+        {
+            mUISprite.SetPivot(Pivot::BottomLeft);
+        }
+        else if (pivot == "Bottom")
+        {
+            mUISprite.SetPivot(Pivot::Bottom);
+        }
+        else if (pivot == "BottomRight")
+        {
+            mUISprite.SetPivot(Pivot::BottomRight);
+        }
+        else
+        {
+            ASSERT(false, "UISpriteComponent: invalid pivot %s", pivot.c_str());
+        }
     }
+
     if (value.HasMember("Flip"))
     {
         std::string flip = value["Flip"].GetString();
-        if (flip == "None")             { mUISprite.SetFlip(Flip::None); }
-        else if (flip == "Horizontal")  { mUISprite.SetFlip(Flip::Horizontal); }
-        else if (flip == "Vertical")    { mUISprite.SetFlip(Flip::Vertical); }
-        else if (flip == "Both")        { mUISprite.SetFlip(Flip::Both); }
-        else { ASSERT(false, "UiSpriteComponent: invalid flip %s", flip.c_str()); }
+        if (flip == "None")
+        {
+            mUISprite.SetFlip(Flip::None);
+        }
+        else if (flip == "Horizontal")
+        {
+            mUISprite.SetFlip(Flip::Horizontal);
+        }
+        else if (flip == "Vertical")
+        {
+            mUISprite.SetFlip(Flip::Vertical);
+        }
+        else if (flip == "Both")
+        {
+            mUISprite.SetFlip(Flip::Both);
+        }
+        else
+        {
+            ASSERT(false, "UISpriteComponent: invalid flip %s", flip.c_str());
+        }
     }
 }
 

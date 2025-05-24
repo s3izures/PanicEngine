@@ -6,13 +6,13 @@ namespace PanicEngine
     class GameWorld;
     class Component;
 
-    using CustomComponentCB = std::function<Component* (const std::string&, GameObject&)>;
+    using CustomComponentCallback = std::function<Component* (const std::string&, GameObject&)>;
 
     namespace GameObjectFactory
     {
-        void SetCustomMake(CustomComponentCB cb);
-        void SetCustomGet(CustomComponentCB cb);
-        void Make(const std::filesystem::path& templatePath, GameObject& gameObject, GameWorld& world);
+        void SetCustomMake(CustomComponentCallback callback);
+        void SetCustomGet(CustomComponentCallback callback);
+        void Make(const std::filesystem::path& templatePath, GameObject& gameObject, GameWorld& gameWorld);
         void OverrideDeserialize(const rapidjson::Value& value, GameObject& gameObject);
     }
 }

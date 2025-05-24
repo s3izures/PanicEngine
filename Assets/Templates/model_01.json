@@ -1,7 +1,7 @@
 {
     "Components": {
         "TransformComponent": {
-            "Position": [ 0.0, 20.0, 0.0 ],
+            "Position": [ 0.0, 10.0, 0.0 ],
             "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
             "Scale": [ 1.0, 1.0, 1.0 ]
         },
@@ -23,21 +23,25 @@
             }
         },
         "SoundEffectComponent": {
-            "FileName": "photongun1.wav",
+            "FileName": "../../Assets/Sounds/photongun1.wav",
             "Looping": true
         },
         "CustomDebugDrawComponent": {
-            "Transform": [ 0.0, 1.0, 0.0 ],
-            "Color": [ 1.0, 1.0, 0.0, 1.0 ],
+            "Position": [ 0.0, 1.0, 0.0 ],
+            "Color": [ 0.8, 1.0, 0.0, 1.0 ],
             "Slices": 30,
             "Rings": 30,
             "Radius": 1.0
-        },
-        "UITextComponent": {
-            "Text": "PanicEngine",
-            "Position": [ 10.0, 10.0 ],
-            "Size": 50,
-            "Color": [ 1.0, 1.0, 0.0, 1.0 ]
+        }
+    },
+    "Children": {
+        "Mesh_Test": {
+            "Template": "../../Assets/Templates/mesh_obj.json",
+            "Components": {
+                "TransformComponent": {
+                    "Position": [ 1, 1, 0 ]
+                }
+            }
         }
     }
 }
