@@ -26,6 +26,7 @@
 #include "SoundEffectComponent.h"
 #include "TransformComponent.h"
 #include "UITextComponent.h"
+#include "UISpriteComponent.h"
 
 //Services
 #include "Service.h"

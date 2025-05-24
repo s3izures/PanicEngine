@@ -167,6 +167,7 @@
     <ClInclude Include="Inc\TypeIds.h" />
     <ClInclude Include="Inc\UIComponent.h" />
     <ClInclude Include="Inc\UIRenderService.h" />
+    <ClInclude Include="Inc\UISpriteComponent.h" />
     <ClInclude Include="Inc\UITextComponent.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
@@ -194,6 +195,7 @@
     <ClCompile Include="Src\SoundEffectComponent.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
     <ClCompile Include="Src\UIRenderService.cpp" />
+    <ClCompile Include="Src\UISpriteComponent.cpp" />
     <ClCompile Include="Src\UITextComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
