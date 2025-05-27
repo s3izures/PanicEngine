@@ -1,0 +1,23 @@
+{
+    "Capacity": 100,
+    "Services": {
+        "CameraService": {
+
+        },
+        "RenderService": {
+            "Direction": [ 1.0, -1.0, 0.0 ],
+            "Ambient": [ 0.5, 0.5, 0.5, 1.0 ],
+            "Diffuse": [ 0.7, 0.7, 0.7, 1.0 ],
+            "Specular": [ 0.9, 0.9, 0.9, 1.0 ]
+        },
+        "PhysicsService": {
+
+        },
+        "CustomDebugDrawService": {
+
+        },
+        "UIRenderService": {
+
+        }
+    }
+}

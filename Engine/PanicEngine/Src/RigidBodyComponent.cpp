@@ -35,6 +35,10 @@ void RigidBodyComponent::DebugUI()
 
 }
 
+void RigidBodyComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void RigidBodyComponent::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("Mass"))

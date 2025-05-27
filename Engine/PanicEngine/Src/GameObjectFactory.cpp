@@ -211,3 +211,22 @@ void GameObjectFactory::OverrideDeserialize(const rapidjson::Value& value, GameO
         }
     }
 }
+
+void GameObjectFactory::SerializeGameObject(rapidjson::Document& doc, const rapidjson::Document& original, GameObject& gameObject)
+{
+    if (original.HasMember("Components"))
+    {
+        auto ogComponents = original["Components"].GetObj();
+        rapidjson::Value components(rapidjson::kObjectType);
+        for (auto& ogData : ogComponents)
+        {
+            Component* ownedComponent = GetComponent(ogData.name.GetString(), gameObject);
+            if (ownedComponent != nullptr)
+            {
+                ownedComponent->Serialize(doc, components, ogData.value);
+            }
+        }
+        doc.SetObject();
+        doc.AddMember("Components", components, doc.GetAllocator());
+    }
+}

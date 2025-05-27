@@ -5,6 +5,8 @@
 #include "GameWorld.h"
 #include "CameraService.h"
 
+#include "SaveUtil.h"
+
 using namespace PanicEngine;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Math;
@@ -36,23 +38,41 @@ void CameraComponent::DebugUI()
     }
 }
 
+void CameraComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+    rapidjson::Value componentValue(rapidjson::kObjectType);
+    Math::Vector3 readValue;
+
+    if (SaveUtil::ReadVector3("Position", readValue, original))
+    {
+        SaveUtil::WriteVector3("Position", readValue, doc, componentValue);
+    }
+    if (SaveUtil::ReadVector3("LookAt", readValue, original))
+    {
+        SaveUtil::WriteVector3("LookAt", readValue, doc, componentValue);
+    }
+    if (SaveUtil::ReadVector3("Direction", readValue, original))
+    {
+        SaveUtil::WriteVector3("Direction", readValue, doc, componentValue);
+    }
+    value.AddMember("CameraComponent", componentValue, doc.GetAllocator());
+    //Psotion + lookat = lookat but value always chhanges
+}
+
 void CameraComponent::Deserialize(const rapidjson::Value& value)
 {
-    if (value.HasMember("Position"))
+    Math::Vector3 readValue;
+    if (SaveUtil::ReadVector3("Position", readValue, value))
     {
-        const auto& pos = value["Position"].GetArray();
-        const float x = pos[0].GetFloat();
-        const float y = pos[1].GetFloat();
-        const float z = pos[2].GetFloat();
-        mCamera.SetPosition({ x, y, z });
+        mCamera.SetPosition(readValue);
     }
-    if (value.HasMember("LookAt"))
+    if (SaveUtil::ReadVector3("LookAt", readValue, value))
     {
-        const auto& pos = value["LookAt"].GetArray();
-        const float x = pos[0].GetFloat();
-        const float y = pos[1].GetFloat();
-        const float z = pos[2].GetFloat();
-        mCamera.SetLookAt({ x, y, z });
+        mCamera.SetLookAt(readValue);
+    }
+    if (SaveUtil::ReadVector3("Direction", readValue, value))
+    {
+        mCamera.SetDirection(readValue);
     }
 }
 

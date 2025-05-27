@@ -51,6 +51,10 @@ void UISpriteComponent::Render()
     UISpriteRenderer::Get()->Render(mUISprite);
 }
 
+void UISpriteComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void UISpriteComponent::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("Texture"))

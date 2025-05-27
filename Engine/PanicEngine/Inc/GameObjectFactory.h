@@ -14,5 +14,6 @@ namespace PanicEngine
         void SetCustomGet(CustomComponentCallback callback);
         void Make(const std::filesystem::path& templatePath, GameObject& gameObject, GameWorld& gameWorld);
         void OverrideDeserialize(const rapidjson::Value& value, GameObject& gameObject);
+        void SerializeGameObject(rapidjson::Document& doc, const rapidjson::Document& original, GameObject& gameObject);
     }
 }

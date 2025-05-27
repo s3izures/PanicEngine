@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "GameObject.h"
+#include "GameWorld.h"
 
 using namespace PanicEngine;
 
@@ -52,6 +53,11 @@ void GameObject::DebugUI()
         for (auto& component : mComponents)
         {
             component->DebugUI();
+        }
+
+        if (!mWorld->IsInEditMode())
+        {
+            mWorld->EditTemplate(mTemplateFile);
         }
     }
     ImGui::PopID();

@@ -13,6 +13,7 @@ namespace PanicEngine
         void Initialize() override;
         void Terminate() override;
         void Update(float deltaTime) override;
+        void Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original) override;
         void Deserialize(const rapidjson::Value& value) override;
 
     private:

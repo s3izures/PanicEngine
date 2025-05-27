@@ -15,6 +15,10 @@ void SoundEffectComponent::Terminate()
     Stop();
 }
 
+void SoundEffectComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void SoundEffectComponent::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("FileName"))

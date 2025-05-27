@@ -117,6 +117,9 @@
     <ClInclude Include="Inc\UIButtonComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\SaveUtil.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -190,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="Src\UIButtonComponent.cpp">
       <Filter>Src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SaveUtil.cpp">
+      <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

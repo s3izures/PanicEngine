@@ -76,7 +76,7 @@ void UISprite::SetRotation(float rotation)
 bool UISprite::IsInSprite(float x, float y) const
 {
     const float width = mRect.right - mRect.left;
-    const float height = mRect.top - mRect.bottom;
+    const float height = mRect.bottom - mRect.top;
     return x >= mPosition.x - mOrigin.x && x <= mPosition.x + width - mOrigin.x &&
         y >= mPosition.y - mOrigin.y && y <= mPosition.y + height - mOrigin.y;
 }
@@ -103,7 +103,7 @@ constexpr DirectX::XMFLOAT2 gOffsets[] =
 void UISprite::UpdateOrigin()
 {
     const float width = mRect.right - mRect.left;
-    const float height = mRect.bottom = mRect.top;
+    const float height = mRect.bottom - mRect.top;
     auto index = static_cast<std::underlying_type_t<Pivot>>(mPivot);
     mOrigin = { width * gOffsets[index].x, height * gOffsets[index].y };
 }

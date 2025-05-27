@@ -93,6 +93,10 @@ void UIButtonComponent::Render()
     UISpriteRenderer::Get()->Render(mButtonStates[buttonState].sprite);
 }
 
+void UIButtonComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void UIButtonComponent::Deserialize(const rapidjson::Value& value)
 {
     const uint32_t buttonStateCount = static_cast<uint32_t>(ButtonState::Count);

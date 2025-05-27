@@ -12,6 +12,7 @@ using namespace PanicEngine;
 namespace
 {
     CustomService TryAddService;
+    std::filesystem::path sEditTemplateFile;
 }
 
 void GameWorld::SetCustomService(CustomService customService)
@@ -94,6 +95,14 @@ void GameWorld::DebugUI()
     {
         service->DebugUI();
     }
+
+    if (mIsEditor)
+    {
+        if (ImGui::Button("Save"))
+        {
+            SaveEditTemplate();
+        }
+    }
 }
 
 GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem::path& templatePath)
@@ -133,7 +142,7 @@ void GameWorld::DestroyGameObject(const GameObjectHandle& handle)
     mToBeDestroyed.push_back(handle.mIndex);
 }
 
-void GameWorld::LoadLevel(const std::filesystem::path levelFile)
+void GameWorld::LoadLevel(const std::filesystem::path levelFile, bool isEditor)
 {
     mLevelFileName = levelFile;
 
@@ -190,6 +199,29 @@ void GameWorld::LoadLevel(const std::filesystem::path levelFile)
         GameObjectFactory::OverrideDeserialize(gameObject.value, *obj);
         obj->Initialize();
     }
+
+    mEditGameObject = nullptr;
+    if (isEditor && !sEditTemplateFile.empty())
+    {
+        GameObject* obj = CreateGameObject("EditObject", sEditTemplateFile);
+        obj->Initialize();
+    }
+    mIsEditor = isEditor;
+}
+
+bool GameWorld::IsInEditMode() const
+{
+    return mIsEditor;
+}
+
+void GameWorld::EditTemplate(const std::filesystem::path& templatePath)
+{
+    sEditTemplateFile = templatePath;
+}
+
+bool GameWorld::IsRequestEdit()
+{
+    return !sEditTemplateFile.empty();
 }
 
 bool GameWorld::IsValid(const GameObjectHandle& handle)
@@ -218,4 +250,33 @@ void GameWorld::ProcessDestroyList()
         mFreeSlots.push_back(index);
     }
     mToBeDestroyed.clear();
+}
+
+void GameWorld::SaveEditTemplate()
+{
+    if (sEditTemplateFile.empty() || mEditGameObject == nullptr)
+    {
+        return;
+    }
+
+    FILE* file = nullptr;
+    auto err = fopen_s(&file, sEditTemplateFile.u8string().c_str(), "r");
+    ASSERT(err == 0 && file != nullptr, "GameWorld: failed to open save file %s.", sEditTemplateFile.u8string().c_str());
+
+    char buffer[65536];
+    rapidjson::FileReadStream readStream(file, buffer, sizeof(buffer));
+    fclose(file);
+
+    rapidjson::Document originalDoc;
+    originalDoc.ParseStream(readStream);
+
+    rapidjson::Document writeDoc;
+    GameObjectFactory::SerializeGameObject(writeDoc, originalDoc, *mEditGameObject);
+
+    err = fopen_s(&file, sEditTemplateFile.u8string().c_str(), "w");
+    ASSERT(err == 0 && file != nullptr, "GameWorld: failed to open save file %s.", sEditTemplateFile.u8string().c_str());
+    rapidjson::FileWriteStream writeStream(file, buffer, sizeof(buffer));
+    rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(writeStream);
+    writeDoc.Accept(writer);
+    fclose(file);
 }

@@ -25,6 +25,10 @@ void ModelComponent::Terminate()
     RenderObjectComponent::Terminate();
 }
 
+void ModelComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void ModelComponent::Deserialize(const rapidjson::Value& value)
 {
     RenderObjectComponent::Deserialize(value);

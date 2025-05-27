@@ -18,6 +18,10 @@ void SoundBankComponent::Terminate()
     StopAll();
 }
 
+void SoundBankComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void SoundBankComponent::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("SoundEffects"))

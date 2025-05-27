@@ -25,6 +25,10 @@ void UITextComponent::Render()
     UIFont::Get()->DrawString(mText.wstring().c_str(), mPosition, mColor, mSize);
 }
 
+void UITextComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value, const rapidjson::Value& original)
+{
+}
+
 void UITextComponent::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("Text"))

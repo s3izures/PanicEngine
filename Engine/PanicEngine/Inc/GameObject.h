@@ -98,6 +98,7 @@ namespace PanicEngine
         uint32_t mUniqueId = 0;
         GameWorld* mWorld = nullptr;
         GameObjectHandle mHandle;
+        std::filesystem::path mTemplateFile;
 
         using Components = std::vector<std::unique_ptr<Component>>;
         Components mComponents;

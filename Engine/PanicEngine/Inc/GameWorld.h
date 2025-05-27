@@ -21,7 +21,10 @@ namespace PanicEngine
         GameObject* CreateGameObject(std::string name, const std::filesystem::path& templatePath = "");
         void DestroyGameObject(const GameObjectHandle& handle);
 
-        void LoadLevel(const std::filesystem::path levelFile);
+        void LoadLevel(const std::filesystem::path levelFile, bool isEditor = false);
+        bool IsInEditMode() const;
+        void EditTemplate(const std::filesystem::path& templatePath);
+        bool IsRequestEdit();
 
         template<class ServiceType>
         ServiceType* AddService()
@@ -57,6 +60,7 @@ namespace PanicEngine
     private:
         bool IsValid(const GameObjectHandle& handle);
         void ProcessDestroyList();
+        void SaveEditTemplate();
 
         struct Slot
         {
@@ -73,7 +77,8 @@ namespace PanicEngine
         Services mServices;
 
         std::filesystem::path mLevelFileName;
-
+        GameObject* mEditGameObject = nullptr;
         bool mInitialized = false;
+        bool mIsEditor = false;
     };
 }

@@ -33,6 +33,7 @@
 #include "CameraService.h"
 #include "RenderService.h"
 #include "UIRenderService.h"
+#include "PhysicsService.h"
 
 namespace PanicEngine
 {
