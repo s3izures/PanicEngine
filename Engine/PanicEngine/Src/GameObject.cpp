@@ -57,7 +57,10 @@ void GameObject::DebugUI()
 
         if (!mWorld->IsInEditMode())
         {
-            mWorld->EditTemplate(mTemplateFile);
+            if (ImGui::Button("Edit"))
+            {
+                mWorld->EditTemplate(mTemplateFile);
+            }
         }
     }
     ImGui::PopID();
