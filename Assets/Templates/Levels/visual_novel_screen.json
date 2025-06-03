@@ -1,0 +1,25 @@
+{
+    "Components": {
+        "CustomDialogueComponent": {
+            "DialogueLines": [
+                "Dear John DeezNutz,\nYou were the biggest asshole in my life.",
+                "Why would you do that to me.\nCunt.\nBitch.",
+                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            ],
+            "TextSize": 24.0,
+            "TextPosition": [ 200, 69 ],
+            "TextColor": [ 1, 1, 1, 1 ]
+        }
+    },
+    "Children": {
+        "NextButton": {
+            "Template": "../../Assets/Templates/test_button.json",
+            "Components": {
+                "UIButtonComponent": {
+                    "Position": [ 800, 400 ],
+                    "Pivot": "TopRight"
+                }
+            }
+        }
+    }
+}

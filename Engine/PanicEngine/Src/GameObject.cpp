@@ -60,6 +60,7 @@ void GameObject::DebugUI()
             if (ImGui::Button("Edit"))
             {
                 mWorld->EditTemplate(mTemplateFile);
+                
             }
         }
     }

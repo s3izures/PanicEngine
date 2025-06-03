@@ -97,7 +97,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{49F137
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\Levels\editor_level.json = Assets\Templates\Levels\editor_level.json
 		Assets\Templates\Levels\test_level.json = Assets\Templates\Levels\test_level.json
-		Assets\Templates\Levels\test_screen.json = Assets\Templates\Levels\test_screen.json
+		Assets\Templates\Levels\visual_novel.json = Assets\Templates\Levels\visual_novel.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{C2E15A27-34AB-4D6B-AFF2-172C52E36E58}"
@@ -108,6 +108,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FW1FontWrapper", "External\FW1FontWrapper\FW1FontWrapper.vcxproj", "{0D034612-14E2-44E7-993A-72344A2CA7BD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "32_HelloEditor", "VGP336\32_HelloEditor\32_HelloEditor.vcxproj", "{6B85630E-9E62-4530-BE70-55A8A92AFD6E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "33_HelloVisualNovel", "VGP336\33_HelloVisualNovel\33_HelloVisualNovel.vcxproj", "{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screens", "Screens", "{9889BEC0-0339-4C72-B98C-03AA0DA4BA30}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Levels\test_screen.json = Assets\Templates\Levels\test_screen.json
+		Assets\Templates\Levels\visual_novel_screen.json = Assets\Templates\Levels\visual_novel_screen.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -333,6 +341,14 @@ Global
 		{6B85630E-9E62-4530-BE70-55A8A92AFD6E}.Release|x64.Build.0 = Release|x64
 		{6B85630E-9E62-4530-BE70-55A8A92AFD6E}.Release|x86.ActiveCfg = Release|Win32
 		{6B85630E-9E62-4530-BE70-55A8A92AFD6E}.Release|x86.Build.0 = Release|Win32
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Debug|x64.ActiveCfg = Debug|x64
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Debug|x64.Build.0 = Debug|x64
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Debug|x86.ActiveCfg = Debug|Win32
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Debug|x86.Build.0 = Debug|Win32
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Release|x64.ActiveCfg = Release|x64
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Release|x64.Build.0 = Release|x64
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Release|x86.ActiveCfg = Release|Win32
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -370,6 +386,8 @@ Global
 		{C2E15A27-34AB-4D6B-AFF2-172C52E36E58} = {6F4F8A25-412F-4011-ADDA-C3C0FEC43C25}
 		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {D68C5266-C8D3-4C9A-8F94-124E86E0A528}
 		{6B85630E-9E62-4530-BE70-55A8A92AFD6E} = {BDF6444D-47ED-4C19-A983-1ABC2E6C9786}
+		{25B0D58E-3AE7-4486-8DC2-81ABBEEE22BF} = {BDF6444D-47ED-4C19-A983-1ABC2E6C9786}
+		{9889BEC0-0339-4C72-B98C-03AA0DA4BA30} = {6F4F8A25-412F-4011-ADDA-C3C0FEC43C25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C184FBC-0DB4-4D62-A125-350B5F50DB8A}

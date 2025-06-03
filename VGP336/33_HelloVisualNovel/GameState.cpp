@@ -1,80 +1,72 @@
-#include "EditTemplateState.h"
-#include "CustomDebugDrawService.h"
-#include "CustomDebugDrawComponent.h"
+#include "GameState.h"
+#include "CustomDialogueComponent.h"
+#include "CustomDialogueService.h"
 
 using namespace PanicEngine;
 using namespace PanicEngine::Math;
 using namespace PanicEngine::Graphics;
 using namespace PanicEngine::Core;
 using namespace PanicEngine::Input;
-using namespace PanicEngine::Audio;
-using namespace PanicEngine::Physics;
 
 namespace
 {
     Service* CustomServiceMake(const std::string& serviceName, GameWorld& gameWorld)
     {
-        if (serviceName == "CustomDebugDrawService")
+        if (serviceName == "CustomDialogueService")
         {
-            return gameWorld.AddService<CustomDebugDrawService>();
+            return gameWorld.AddService<CustomDialogueService>();
         }
         return nullptr;
     }
 
     Component* CustomComponentMake(const std::string& componentName, GameObject& gameObject)
     {
-        if (componentName == "CustomDebugDrawComponent")
+        if (componentName == "CustomDialogueComponent")
         {
-            return gameObject.AddComponent<CustomDebugDrawComponent>();
+            return gameObject.AddComponent<CustomDialogueComponent>();
         }
         return nullptr;
     }
 
     Component* CustomComponentGet(const std::string& componentName, GameObject& gameObject)
     {
-        if (componentName == "CustomDebugDrawComponent")
+        if (componentName == "CustomDialogueComponent")
         {
-            return gameObject.GetComponent<CustomDebugDrawComponent>();
+            return gameObject.GetComponent<CustomDialogueComponent>();
         }
         return nullptr;
     }
 }
 
-void EditTemplateState::Initialize()
+void GameState::Initialize()
 {
     //adds delegate callback to create a custom service
     GameWorld::SetCustomService(CustomServiceMake);
     GameObjectFactory::SetCustomMake(CustomComponentMake);
     GameObjectFactory::SetCustomGet(CustomComponentGet);
 
-    mGameWorld.LoadLevel(L"../../Assets/Templates/Levels/editor_level.json", true);
-    PhysicsService* ps = mGameWorld.GetService<PhysicsService>();
-    ps->SetEnabled(false);
+    mGameWorld.LoadLevel(L"../../Assets/Templates/Levels/visual_novel.json");
 }
 
-void EditTemplateState::Terminate()
+void GameState::Terminate()
 {
-    mGameWorld.EditTemplate("");
     mGameWorld.Terminate();
 }
 
-void EditTemplateState::Update(float deltaTime)
+void GameState::Update(float deltaTime)
 {
     mGameWorld.Update(deltaTime);
 }
 
-void EditTemplateState::Render()
+void GameState::Render()
 {
     mGameWorld.Render();
+    
 }
 
-void EditTemplateState::DebugUI()
+void GameState::DebugUI()
 {
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
     mGameWorld.DebugUI();
-    if (ImGui::Button("Exit"))
-    {
-        MainApp().ChangeState("GameState");
-    }
     ImGui::End();
 }

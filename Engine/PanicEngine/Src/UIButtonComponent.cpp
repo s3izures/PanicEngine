@@ -89,7 +89,7 @@ void UIButtonComponent::Render()
         parent = parent->GetParent();
     }
 
-    mButtonStates[buttonState].sprite.SetPosition({ mPosition.x, mPosition.y });
+    mButtonStates[buttonState].sprite.SetPosition({ worldPosition.x, worldPosition.y });
     UISpriteRenderer::Get()->Render(mButtonStates[buttonState].sprite);
 }
 
