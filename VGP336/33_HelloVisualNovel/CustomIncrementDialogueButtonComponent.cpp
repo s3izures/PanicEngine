@@ -18,3 +18,9 @@ void CustomIncrementDialogueButtonComponent::Initialize()
     mDialogue = GetOwner().GetParent()->GetComponent<CustomDialogueComponent>();
     mUiButton->SetCallback(IncrementDialogueIndex);
 }
+
+void CustomIncrementDialogueButtonComponent::Terminate()
+{
+    mUiButton = nullptr;
+    mDialogue = nullptr;
+}
