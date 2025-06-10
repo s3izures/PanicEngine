@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "CustomDialogueComponent.h"
 #include "CustomDialogueService.h"
+#include "CustomIncrementDialogueButtonComponent.h"
 
 using namespace PanicEngine;
 using namespace PanicEngine::Math;
@@ -25,6 +26,10 @@ namespace
         {
             return gameObject.AddComponent<CustomDialogueComponent>();
         }
+        else if (componentName == "CustomIncrementDialogueButtonComponent")
+        {
+            return gameObject.AddComponent<CustomIncrementDialogueButtonComponent>();
+        }
         return nullptr;
     }
 
@@ -33,6 +38,10 @@ namespace
         if (componentName == "CustomDialogueComponent")
         {
             return gameObject.GetComponent<CustomDialogueComponent>();
+        }
+        else if (componentName == "CustomIncrementDialogueButtonComponent")
+        {
+            return gameObject.GetComponent<CustomIncrementDialogueButtonComponent>();
         }
         return nullptr;
     }

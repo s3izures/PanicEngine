@@ -3,8 +3,9 @@
 
 enum class CustomComponentId
 {
-    CustomDialogueComponent = static_cast<uint32_t>(PanicEngine::ComponentId::Count)
+    CustomDialogueComponent = static_cast<uint32_t>(PanicEngine::ComponentId::Count),
     //New components here
+    CustomIncrementDialogueButtonComponent
 };
 
 enum class CustomServiceId

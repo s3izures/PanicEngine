@@ -133,12 +133,14 @@
   <ItemGroup>
     <ClCompile Include="CustomDialogueComponent.cpp" />
     <ClCompile Include="CustomDialogueService.cpp" />
+    <ClCompile Include="CustomIncrementDialogueButtonComponent.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomDialogueComponent.h" />
     <ClInclude Include="CustomDialogueService.h" />
+    <ClInclude Include="CustomIncrementDialogueButtonComponent.h" />
     <ClInclude Include="CustomTypeId.h" />
     <ClInclude Include="GameState.h" />
   </ItemGroup>

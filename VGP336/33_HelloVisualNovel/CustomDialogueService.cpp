@@ -26,8 +26,3 @@ void CustomDialogueService::Unregister(const CustomDialogueComponent* dialogueCo
         mDialogueComponents.erase(iter);
     }
 }
-
-void CustomDialogueService::RegisterButton(const PanicEngine::UIButtonComponent* uiButton)
-{
-    mUiButton = uiButton;
-}

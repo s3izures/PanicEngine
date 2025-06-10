@@ -11,11 +11,7 @@ public:
     void Register(const CustomDialogueComponent* dialogueComponent);
     void Unregister(const CustomDialogueComponent* dialogueComponent);
 
-    void RegisterButton(const PanicEngine::UIButtonComponent* uiButton);
-
 private:
     using CustomDialogueComponents = std::vector<const CustomDialogueComponent*>;
     CustomDialogueComponents mDialogueComponents;
-
-    const PanicEngine::UIButtonComponent* mUiButton = nullptr;
 };

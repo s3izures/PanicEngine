@@ -2,9 +2,10 @@
     "Components": {
         "CustomDialogueComponent": {
             "DialogueLines": [
-                "Dear John DeezNutz,\nYou were the biggest asshole in my life.",
-                "Why would you do that to me.\nCunt.\nBitch.",
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                "Dear John DeezNutz,\nYou were the biggest man in my life.",
+                "Why tho.",
+                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA TEST TEST \nTEST TEST",
+                "AAAAAAAAAeAA TEST TEST \nTEST TEST\ntETSTSTSTSTSSYTSTSSGHSHJhjbds fbdhjbhjsdahbjdas hahah\nok im done"
             ],
             "TextSize": 24.0,
             "TextPosition": [ 200, 69 ],
@@ -13,7 +14,7 @@
     },
     "Children": {
         "NextButton": {
-            "Template": "../../Assets/Templates/test_button.json",
+            "Template": "../../Assets/Templates/dialogue_button.json",
             "Components": {
                 "UIButtonComponent": {
                     "Position": [ 800, 400 ],

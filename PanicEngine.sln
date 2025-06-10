@@ -80,6 +80,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "29_HelloGameObject", "VGP33
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{6F4F8A25-412F-4011-ADDA-C3C0FEC43C25}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\dialogue_button.json = Assets\Templates\dialogue_button.json
 		Assets\Templates\fps_camera.json = Assets\Templates\fps_camera.json
 		Assets\Templates\ground_obj.json = Assets\Templates\ground_obj.json
 		Assets\Templates\mesh_obj.json = Assets\Templates\mesh_obj.json
